@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,11 +18,13 @@ public class Amizade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@JoinColumn(name="id_origem", referencedColumnName="id")
 	@ManyToOne
-	private Usuario usuario1;
+	private Usuario usuarioOrigem;
 
+	@JoinColumn(name="id_destino", referencedColumnName="id")
 	@ManyToOne
-	private Usuario usuario2;
+	private Usuario usuarioDestino;
 
 	public Integer getId() {
 		return id;
@@ -32,18 +35,18 @@ public class Amizade {
 	}
 
 	public Usuario getUsuario1() {
-		return usuario1;
+		return usuarioOrigem;
 	}
 
 	public void setUsuario1(Usuario usuario1) {
-		this.usuario1 = usuario1;
+		this.usuarioOrigem = usuario1;
 	}
 
 	public Usuario getUsuario2() {
-		return usuario2;
+		return usuarioDestino;
 	}
 
 	public void setUsuario2(Usuario usuario2) {
-		this.usuario2 = usuario2;
+		this.usuarioDestino = usuario2;
 	}
 }
