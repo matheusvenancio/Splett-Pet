@@ -9,12 +9,14 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import splett.usuario.TipoUsuario;
 import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
 
 @ManagedBean(name = "sessionMB")
 @SessionScoped
 public class SessionMB {
+	@ManagedProperty(value = "#{usuarioLogado}")
 	private Usuario usuarioLogado;
 
 	@ManagedProperty(value = "#{usuarioVisualizado}")
@@ -22,16 +24,16 @@ public class SessionMB {
 
 	@ManagedProperty(value = "#{usuarioDao}")
 	private UsuarioDao usuarioDao;
-	
+
 	@PostConstruct
 	public void init() {
-		usuarioVisualizado = getUsuarioLogado();
-	}
-
-	public Usuario getUsuarioLogado() {
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
+		usuarioVisualizado = usuarioLogado;
+	}
+
+	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
 
@@ -40,6 +42,18 @@ public class SessionMB {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean isSelfProfile() {
+		return usuarioVisualizado == usuarioLogado;
+	}
+
+	public boolean isUserAdm() {
+		return usuarioLogado.getTipo().equals(TipoUsuario.ROLE_ADMIN);
+	}
+
+	public boolean isManagementAllowed() {
+		return isSelfProfile() || isUserAdm();
 	}
 
 	public UsuarioDao getUsuarioDao() {

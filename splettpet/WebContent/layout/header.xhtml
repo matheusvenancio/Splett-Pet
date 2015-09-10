@@ -14,17 +14,14 @@
 		</f:facet>
 		<f:facet name="right">
 			<h:form id="infoForm">
+
 				<h:outputText id="bemVindo" value="Bem vindo(a), "
 					style="font-weight:bold; font-size:0.8em;" />
 				<h:commandLink id="nome"
 					value="#{sessionMB.usuarioLogado.getPrimeiroNome()}"
 					style="font-weight:bold; padding-right: 50px; margin-right: auto; font-size:0.8em;" />
 				<br />
-				<p:overlayPanel id="infoPanel" for="nome" showEffect="blind"
-					hideEffect="fade" showEvent="mouseover" hideEvent="mousedown"
-					dismissable="true" showCloseIcon="false">
-					<ui:include src="infoPanel.xhtml" />
-				</p:overlayPanel>
+
 			</h:form>
 		</f:facet>
 	</p:toolbar>

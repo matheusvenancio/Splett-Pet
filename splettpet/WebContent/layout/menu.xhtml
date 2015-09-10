@@ -3,15 +3,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 	<h:form>
 		<p:menubar style="">
-			<p:menuitem id="postagensMn" value="Postagens" action="home"/>
+			<p:menuitem id="postagensMn" value="Postagens" action="home" />
 
-			<p:menuitem id="fotosvideosMn" value="Fotos e Vídeos" action="home"/>
-			
-			<p:menuitem id="animaisMn" value="Animais" action="home"/>
-			
+			<p:menuitem id="fotosvideosMn" value="Fotos e Vídeos" action="home" />
+
+			<p:menuitem id="animaisMn" value="Animais" action="home" />
+
+			<p:menuitem id="amigosMn" value="Amigos" action="home"
+				rendered="#{sessionMB.isManagementAllowed()}" />
+
 		</p:menubar>
 
 	</h:form>
