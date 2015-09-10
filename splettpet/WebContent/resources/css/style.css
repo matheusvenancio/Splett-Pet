@@ -1,0 +1,313 @@
+body {
+	margin: 0px 0;
+	text-align: justify;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background-color: #E9EAED;
+}
+
+.main {
+	background: url('../../resources/img/login_background/slide1.jpg')
+		no-repeat center top fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#loginPanel {
+	width: 350px;
+	height: 500px;
+	float: left;
+	margin-bottom: 0px;
+	margin-top: 8%;
+	float: left;
+}
+
+#loginHeaderText {
+	float: left;
+	font-size: 1.5em;
+	margin: 10px;
+	font-family: "Arial", Arial, sans-serif;
+}
+
+.loginButton {
+	position: relative;
+	width: 101%;
+	border: 1px solid #4297d7;
+	background-color: #2191c0;
+	background: url('../../resources/img/button_background.png') 50% 50%
+		repeat-x;
+	color: #eaf5f7;
+	font-weight: bold;
+	margin-top: 25px;
+	cursor: pointer;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 1.5em !important;
+	padding: 7px;
+}
+
+.loginButton:active {
+	padding-top: 3.4%;
+	padding-bottom: 1.4%;
+	padding-left: 3.4%;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.fixedTb {
+	width: 99%;
+	height: 30px;
+	margin: 1px;
+	border-style: none;
+	font-size: 2em;
+}
+
+.fixedTbLink {
+	padding-right: 20px;
+	margin-left: 40px;
+	margin-right: auto;
+	text-decoration: none;
+}
+
+.animaisTable {
+	float: right;
+}
+
+.botaoSair {
+	color: blue;
+}
+
+.titulo1 {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.label {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.centro {
+	text-align: center;
+}
+
+.esquerda {
+	text-align: left;
+}
+
+.direita {
+	text-align: right;
+}
+
+.fonte {
+	font-size: 15px;
+}
+
+.botaoCRUD {
+	margin: 0px;
+}
+
+.CRUDform {
+	margin-bottom: 1%;
+}
+
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+a img {
+	border: none;
+	vertical-align: middle;
+}
+
+#footer {
+	clear: both;
+	width: 1000px;
+	margin: 0 auto;
+	position: relative;
+	bottom: 0;
+	background: url() repeat-x left top;
+	background: #86B5D9;
+}
+
+#footer p {
+	width: 100%;
+	margin: 0;
+	padding: 5px 2px;
+	font-size: 11px;
+	text-align: center;
+}
+
+#footer .legal {
+	float: left;
+	height: 12px;
+	font: 8pt Arial;
+	text-align: center;
+}
+
+.tamanhoCaixaOpcoes {
+	width: 200px;
+	height: 23px;
+}
+
+.metade {
+	width: 50%;
+}
+
+.umterco {
+	width: 33%;
+}
+
+.noventa {
+	width: 90%;
+}
+
+.noventaecinco {
+	width: 95%;
+}
+
+.cinco {
+	width: 5%;
+}
+
+.dez {
+	width: 10%;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.planoEnsino16 {
+	background-image: url('../../resources/img/16/exam_16.png') !important
+}
+
+.planoTrabalho16 {
+	background-image: url('../../resources/img/16/teacher_write_16.png')
+		!important
+}
+
+.atendimento16 {
+	background-image:
+		url('../../resources/img/16/attendance_list_clock_16.png') !important
+}
+
+.attach16 {
+	background-image: url('../../resources/img/16/attach.png') !important
+}
+
+.ok16 {
+	background-image: url('../../resources/img/16/button_ok.png') !important
+}
+
+.salvar16 {
+	background-image: url('../../resources/img/16/button_ok.png') !important
+}
+
+.download16 {
+	background-image: url('../../resources/img/16/down_blue.png') !important
+}
+
+.cancel16 {
+	background-image: url('../../resources/img/16/cancel.png') !important
+}
+
+.cancelar16 {
+	background-image: url('../../resources/img/16/cancel.png') !important
+}
+
+.fechar16 {
+	background-image: url('../../resources/img/16/cancel.png') !important
+}
+
+.error16 {
+	background-image: url('../../resources/img/16/error.png') !important
+}
+
+.remover16 {
+	background-image: url('../../resources/img/16/remove.png') !important
+}
+
+.home16 {
+	background-image: url('../../resources/img/16/home_16.png') !important
+}
+
+.editar16 {
+	background-image: url('../../resources/img/16/editar-icone.png')
+		!important
+}
+
+.tools16 {
+	background-image: url('../../resources/img/16/ferramentas.png')
+		!important
+}
+
+.escola16 {
+	background-image: url('../../resources/img/16/bank_16_hot.png')
+		!important
+}
+
+.save16 {
+	background-image: url('../../resources/img/16/save.png') !important
+}
+
+.user16 {
+	background-image: url('../../resources/img/16/admin_16.png') !important
+}
+
+.teacher16 {
+	background-image: url('../../resources/img/16/teacher_clock_16.png')
+		!important
+}
+
+.report16 {
+	background-image: url('../../resources/img/16/report.png') !important;
+}
+
+.info16 {
+	background-image: url('../../resources/img/16/info.gif') !important
+}
+
+.pdf16 {
+	background-image: url('../../resources/img/16/pdf.png') !important
+}
+
+.android16 {
+	background-image: url('../../resources/img/16/android16.png') !important
+}
+
+.android216 {
+	background-image: url('../../resources/img/16/notification.png')
+		!important
+}
+
+.coisa {
+	margin-top: 100px;
+}
+
+.coluna1 {
+	width: 11%;
+	padding: 0 !important;
+}
+
+.coluna2 {
+	padding: 0 !important;
+}
+
+.postText {
+	font-size: 1.2em;
+}
+
+.post {
+	margin-bottom: 5px;
+}

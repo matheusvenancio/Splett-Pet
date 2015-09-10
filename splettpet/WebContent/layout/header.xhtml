@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:toolbar id="fixedTb" styleClass="fixedTb">
+		<f:facet name="left">
+			<p:link outcome="perfil" value="SplettPet" styleClass="fixedTbLink" />
+		</f:facet>
+		<f:facet name="right">
+			<h:form id="infoForm">
+				<h:outputText id="bemVindo" value="Bem vindo(a), "
+					style="font-weight:bold; font-size:0.8em;" />
+				<h:commandLink id="nome"
+					value="#{sessionMB.usuarioLogado.getPrimeiroNome()}"
+					style="font-weight:bold; padding-right: 50px; margin-right: auto; font-size:0.8em;" />
+				<br />
+				<p:overlayPanel id="infoPanel" for="nome" showEffect="blind"
+					hideEffect="fade" showEvent="mouseover" hideEvent="mousedown"
+					dismissable="true" showCloseIcon="false">
+					<ui:include src="infoPanel.xhtml" />
+				</p:overlayPanel>
+			</h:form>
+		</f:facet>
+	</p:toolbar>
+
+
+</ui:composition>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<div>
+			<div
+				style="background-color: #6DB6D5; padding: 10px; border-style: solid; border-width: 1px;">
+				<div align="left">
+					<p:graphicImage library="img" name="android_icon.png"
+						style="width:10%; border-style:solid; border-color:white; background-color:white" />					
+				</div>
+			</div>
+			<ui:include src="../layout/menu.xhtml" />
+
+			<p:panel style="margin-top:20px;">
+				<div style="width: 35%; height: 100%	">
+					<p:panelGrid id="dadosPessoais" columns="2" layout="tabular"
+						style="width:90%; border-style:solid; border-width:1px;">
+						<f:facet name="header">
+							<h:outputText value="Dados Pessoais" />
+						</f:facet>
+						<h:outputText styleClass="coisa" value="Data de Nascimento:" />
+						<h:outputText value="18/05/1997" />
+
+						<h:outputText styleClass="coisa" value="E-mail:" />
+						<h:outputText value="gui.ads97@gmail.com" />
+
+						<h:outputText styleClass="coisa" value="Gênero:" />
+						<h:outputText value="Masculino" />
+
+						<h:outputText styleClass="coisa" value="Animal Favorito:" />
+						<h:outputText value="Cachorro" />
+
+					</p:panelGrid>
+
+					<p:panelGrid id="disponibilidade" columns="2" layout="tabular"
+						style="margin-top:20px; width:90%; border-style:solid; border-width:1px;">
+						<f:facet name="header">
+							<h:outputText value="Disponibilidade" />
+						</f:facet>
+						<h:outputText styleClass="coisa" value="Agosto:" />
+						<h:outputText value="28, 29, 30, 31" />
+
+						<h:outputText styleClass="coisa" value="Setembro:" />
+						<h:outputText value="Sem Disponibilidade" />
+
+						<h:outputText styleClass="coisa" value="Outubro:" />
+						<h:outputText value="05, 06, 07, 08, 15, 16, 17, 18" />
+
+						<h:outputText styleClass="coisa" value="Novembro:" />
+						<h:outputText value="Sem Disponibilidade" />
+
+					</p:panelGrid>
+
+				</div>
+
+				<p:spacer height="150px;" />
+
+			</p:panel>
+		</div>
+
+		<!--PanielGrid, para as janelinhas de informção, div separa as coisas table para posts, menubar com itens com as funcionalidades do sistemas a parte administrativas ficam em cima-->
+
+
+	</ui:define>
+</ui:composition>
