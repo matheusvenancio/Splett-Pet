@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -25,16 +24,17 @@
 						<f:facet name="header">
 							<h:outputText value="Dados Pessoais" />
 						</f:facet>
-						<h:outputText styleClass="coisa" value="Data de Nascimento:" />
-						<h:outputText value="18/05/1997" />
 
-						<h:outputText styleClass="coisa" value="E-mail:" />
+						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
+						<h:outputText value="#{sessionMB.usuarioVisualizado.dataNascimento}" />
+
+						<h:outputLabel styleClass="coisa" value="E-mail:" />
 						<h:outputText value="gui.ads97@gmail.com" />
 
-						<h:outputText styleClass="coisa" value="Gênero:" />
+						<h:outputLabel styleClass="coisa" value="Gênero:" />
 						<h:outputText value="Masculino" />
 
-						<h:outputText styleClass="coisa" value="Animal Favorito:" />
+						<h:outputLabel styleClass="coisa" value="Animal Favorito:" />
 						<h:outputText value="Cachorro" />
 
 					</p:panelGrid>

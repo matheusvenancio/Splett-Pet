@@ -290,6 +290,7 @@ public class Usuario {
     }
 
     public int hashCode() {
-	return id != null ? this.getClass().hashCode() + id.hashCode() : super.hashCode();
-    }
+		return id != null ? this.getClass().hashCode() + id.hashCode() : super
+				.hashCode();
+	}
 }

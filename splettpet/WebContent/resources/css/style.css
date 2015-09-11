@@ -180,6 +180,10 @@ a img {
 	width: 10%;
 }
 
+.menuBarItem {
+	margin-right: 3px;
+}
+
 .ui-panelgrid td, .ui-panelgrid tr {
 	border-style: none !important
 }
