@@ -10,23 +10,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import splett.amizade.Amizade;
 import splett.animal.Animal;
-import splett.avaliacao.Avaliacao;
-import splett.disponibilidade.Disponibilidade;
-import splett.foto.Foto;
 import splett.genero.Genero;
-import splett.mensagem.Mensagem;
-import splett.postagem.Postagem;
 import splett.usuario.endereco.Endereco;
-import splett.video.Video;
 
 @Entity
 @Table(name = "tbUsuario")
@@ -66,33 +58,6 @@ public class Usuario {
     @OneToMany(mappedBy = "dono")
     private List<Animal> animais;
 
-    @OneToMany
-    @JoinColumn(name = "amigo_id", referencedColumnName = "id")
-    private List<Amizade> amigos;
-
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    @OneToMany
-    private List<Postagem> postagens;
-
-    @OneToMany
-    private List<Disponibilidade> disponibilidade;
-
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    @OneToMany
-    private List<Foto> fotos;
-
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    @OneToMany
-    private List<Video> videos;
-
-    @JoinColumn(name = "usuario_avaliado_id", referencedColumnName = "id")
-    @OneToMany
-    private List<Avaliacao> avaliacoesRecebidas;
-
-    @JoinColumn(name = "usuario_receptor_id", referencedColumnName = "id")
-    @OneToMany
-    private List<Mensagem> mensagensRecebidas;
-
     private boolean sexo_isPublico;
 
     private boolean telefoneFixo_isPublico;
@@ -109,23 +74,6 @@ public class Usuario {
 
     public void setFotoPerfil(String fotoPerfil) {
 	this.fotoPerfil = fotoPerfil;
-
-    }
-
-    public List<Avaliacao> getAvaliacoesRecebidas() {
-	return avaliacoesRecebidas;
-    }
-
-    public void setAvaliacoesRecebidas(List<Avaliacao> avaliacoes) {
-	this.avaliacoesRecebidas = avaliacoes;
-    }
-
-    public List<Mensagem> getMensagensRecebidas() {
-	return mensagensRecebidas;
-    }
-
-    public void setMensagensRecebidas(List<Mensagem> mensagens) {
-	this.mensagensRecebidas = mensagens;
     }
 
     public boolean isSexo_isPublico() {
@@ -174,30 +122,6 @@ public class Usuario {
 
     public void setAnimais(List<Animal> animais) {
 	this.animais = animais;
-    }
-
-    public List<Postagem> getPostagens() {
-	return postagens;
-    }
-
-    public void setPostagens(List<Postagem> postagens) {
-	this.postagens = postagens;
-    }
-
-    public List<Foto> getFotos() {
-	return fotos;
-    }
-
-    public void setFotos(List<Foto> fotos) {
-	this.fotos = fotos;
-    }
-
-    public List<Video> getVideos() {
-	return videos;
-    }
-
-    public void setVideos(List<Video> videos) {
-	this.videos = videos;
     }
 
     public Date getDataNascimento() {
@@ -290,7 +214,6 @@ public class Usuario {
     }
 
     public int hashCode() {
-		return id != null ? this.getClass().hashCode() + id.hashCode() : super
-				.hashCode();
-	}
+	return id != null ? this.getClass().hashCode() + id.hashCode() : super.hashCode();
+    }
 }

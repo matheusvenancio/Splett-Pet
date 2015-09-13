@@ -14,27 +14,27 @@ import javax.persistence.TemporalType;
 @Table(name = "tbDisponibilidade")
 public class Disponibilidade {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Temporal(TemporalType.DATE)
-	private Date data;
+    @Temporal(TemporalType.DATE)
+    private Date data;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public Date getData() {
-		return data;
-	}
+    public Date getData() {
+	return data;
+    }
 
-	public void setData(Date data) {
-		this.data = data;
-	}
+    public void setData(Date data) {
+	this.data = data;
+    }
 
 }

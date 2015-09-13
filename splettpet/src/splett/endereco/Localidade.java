@@ -7,53 +7,52 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="log_localidade")
-public class Localidade implements Serializable
-{
-	private static final long serialVersionUID = 1L;
+@Table(name = "log_localidade")
+public class Localidade implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="LOC_NU_SEQUENCIAL")
-	private Integer id;
-	
-	@Column(name="LOC_NO", nullable=false)
-	private String nome;
-	
-	@Column(name="CEP")
-	private String cep;
-	
-	@Column(name="UFE_SG")
-	private String uf;
+    @Id
+    @Column(name = "LOC_NU_SEQUENCIAL")
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "LOC_NO", nullable = false)
+    private String nome;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "CEP")
+    private String cep;
 
-	public String getNome() {
-		return nome;
-	}
+    @Column(name = "UFE_SG")
+    private String uf;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public String getCep() {
-		return cep;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public String getUf() {
-		return uf;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
 
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
+    public String getCep() {
+	return cep;
+    }
+
+    public void setCep(String cep) {
+	this.cep = cep;
+    }
+
+    public String getUf() {
+	return uf;
+    }
+
+    public void setUf(String uf) {
+	this.uf = uf;
+    }
 }

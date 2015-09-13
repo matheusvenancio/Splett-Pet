@@ -18,60 +18,72 @@ import splett.usuario.Usuario;
 @Table(name = "tbMensagem")
 public class Mensagem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	private String texto;
+    private String texto;
 
-	@Temporal(TemporalType.DATE)
-	private Date data;
+    @Temporal(TemporalType.DATE)
+    private Date data;
 
-	@Temporal(TemporalType.DATE)
-	private Date hora;
+    @Temporal(TemporalType.DATE)
+    private Date hora;
 
-	@JoinColumn(referencedColumnName = "id", name = "usuario_emissor_id")
-	@ManyToOne
-	private Usuario emissor;
+    @JoinColumn(referencedColumnName = "id", name = "usuario_emissor_id")
+    @ManyToOne
+    private Usuario emissor;
 
-	public int getId() {
-		return id;
-	}
+    @JoinColumn(referencedColumnName = "id", name = "usuario_receptor_id")
+    @ManyToOne
+    private Usuario receptor;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getTexto() {
-		return texto;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
+    public String getTexto() {
+	return texto;
+    }
 
-	public Date getData() {
-		return data;
-	}
+    public void setTexto(String texto) {
+	this.texto = texto;
+    }
 
-	public void setData(Date data) {
-		this.data = data;
-	}
+    public Date getData() {
+	return data;
+    }
 
-	public Date getHora() {
-		return hora;
-	}
+    public void setData(Date data) {
+	this.data = data;
+    }
 
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
+    public Date getHora() {
+	return hora;
+    }
 
-	public Usuario getEmissor() {
-		return emissor;
-	}
+    public void setHora(Date hora) {
+	this.hora = hora;
+    }
 
-	public void setEmissor(Usuario emissor) {
-		this.emissor = emissor;
-	}
+    public Usuario getEmissor() {
+	return emissor;
+    }
+
+    public void setEmissor(Usuario emissor) {
+	this.emissor = emissor;
+    }
+
+    public Usuario getReceptor() {
+	return receptor;
+    }
+
+    public void setReceptor(Usuario receptor) {
+	this.receptor = receptor;
+    }
 
 }

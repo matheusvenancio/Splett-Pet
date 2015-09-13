@@ -6,55 +6,69 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import splett.usuario.Usuario;
 
 @Entity
 @Table(name = "tbPostagem")
 public class Postagem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	private String texto;
+    private String texto;
 
-	@Temporal(TemporalType.DATE)
-	private Date dataPostagem;
+    @Temporal(TemporalType.DATE)
+    private Date dataPostagem;
 
-	private String foto;	
+    private String foto;
+    
+    @OneToOne
+    private Usuario usuario;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public String getTexto() {
-		return texto;
-	}
+    public String getTexto() {
+	return texto;
+    }
 
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
+    public void setTexto(String texto) {
+	this.texto = texto;
+    }
 
-	public Date getDataPostagem() {
-		return dataPostagem;
-	}
+    public Date getDataPostagem() {
+	return dataPostagem;
+    }
 
-	public void setDataPostagem(Date dataPostagem) {
-		this.dataPostagem = dataPostagem;
-	}
+    public void setDataPostagem(Date dataPostagem) {
+	this.dataPostagem = dataPostagem;
+    }
 
-	public String getFoto() {
-		return foto;
-	}
+    public String getFoto() {
+	return foto;
+    }
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+    public void setFoto(String foto) {
+	this.foto = foto;
+    }
+
+    public Usuario getUsuario() {
+	return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
+    }
 
 }

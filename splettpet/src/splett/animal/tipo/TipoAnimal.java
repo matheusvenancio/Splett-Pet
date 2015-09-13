@@ -10,30 +10,30 @@ import javax.persistence.Table;
 @Table(name = "tbTipoAnimal")
 public class TipoAnimal {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private String nome; 
+    private String nome;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	@Override
-	public String toString() {
-		return this.nome;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+	return this.nome;
+    }
 }

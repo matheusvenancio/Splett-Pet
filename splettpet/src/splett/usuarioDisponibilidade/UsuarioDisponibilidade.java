@@ -11,32 +11,32 @@ import splett.usuario.Usuario;
 
 public class UsuarioDisponibilidade {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@JoinColumn(referencedColumnName = "id", name = "usuario_id")
-	@ManyToOne
-	private Usuario usuario;
+    @JoinColumn(referencedColumnName = "id", name = "usuario_id")
+    @ManyToOne
+    private Usuario usuario;
 
-	@JoinColumn(referencedColumnName = "id", name = "disponibilidade_id")
-	@ManyToOne
-	private Disponibilidade disponibilidade;
+    @JoinColumn(referencedColumnName = "id", name = "disponibilidade_id")
+    @ManyToOne
+    private Disponibilidade disponibilidade;
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public Usuario getUsuario() {
+	return usuario;
+    }
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
+    }
 
-	public Disponibilidade getDisponibilidade() {
-		return disponibilidade;
-	}
+    public Disponibilidade getDisponibilidade() {
+	return disponibilidade;
+    }
 
-	public void setDisponibilidade(Disponibilidade disponibilidade) {
-		this.disponibilidade = disponibilidade;
-	}
+    public void setDisponibilidade(Disponibilidade disponibilidade) {
+	this.disponibilidade = disponibilidade;
+    }
 
 }

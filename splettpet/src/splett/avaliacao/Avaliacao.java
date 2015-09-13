@@ -14,48 +14,48 @@ import splett.usuario.Usuario;
 @Table(name = "tbAvaliacao")
 public class Avaliacao {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	private String texto;
-	
-	private int pontuacao;
-		
-	@JoinColumn(referencedColumnName="id", name="usuario_avaliador_id")
-	@ManyToOne
-	private Usuario avaliador;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    private String texto;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private int pontuacao;
 
-	public String getTexto() {
-		return texto;
-	}
+    @JoinColumn(referencedColumnName = "id", name = "usuario_avaliador_id")
+    @ManyToOne
+    private Usuario avaliador;
 
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public int getPontuacao() {
-		return pontuacao;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public void setPontuacao(int pontuacao) {
-		this.pontuacao = pontuacao;
-	}
+    public String getTexto() {
+	return texto;
+    }
 
-	public Usuario getAvaliador() {
-		return avaliador;
-	}
+    public void setTexto(String texto) {
+	this.texto = texto;
+    }
 
-	public void setAvaliador(Usuario avaliador) {
-		this.avaliador = avaliador;
-	}
-	
+    public int getPontuacao() {
+	return pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+	this.pontuacao = pontuacao;
+    }
+
+    public Usuario getAvaliador() {
+	return avaliador;
+    }
+
+    public void setAvaliador(Usuario avaliador) {
+	this.avaliador = avaliador;
+    }
+
 }
