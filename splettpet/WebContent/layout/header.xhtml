@@ -12,8 +12,28 @@
 		<f:facet name="left">
 			<p:link outcome="perfil" value="SplettPet" styleClass="fixedTbLink" />
 		</f:facet>
+
 		<f:facet name="right">
 			<h:form id="infoForm">
+				<p:commandButton style="font-weight:bold; font-size:0.6em; "
+					id="opcoesAdministrativasBt" value="Opções Administrativas"
+					type="button" />
+				<p:menu overlay="true" trigger="opcoesAdministrativasBt"
+					my="left top" at="left bottom">
+
+					<p:menuitem value="Usuários" outcome="admusuario" />
+
+					<p:menuitem value="Animais" outcome="admanimal" />
+
+					<p:menuitem value="Tipos de animais" outcome="admtipoanimal" />
+
+					<p:menuitem value="Raças" outcome="admraca" />
+
+				</p:menu>
+
+				<span class="ui-separator"> <span
+					class="ui-icon ui-icon-grip-dotted-vertical" />
+				</span>
 
 				<h:outputText id="bemVindo" value="Bem vindo(a), "
 					style="font-weight:bold; font-size:0.8em;" />

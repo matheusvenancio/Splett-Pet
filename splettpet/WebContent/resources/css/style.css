@@ -74,6 +74,10 @@ table {
 	text-decoration: none;
 }
 
+#opcoesAdministrativasBt {
+	font-size: 0.1em !important;
+}
+
 .animaisTable {
 	float: right;
 }
@@ -289,6 +293,10 @@ a img {
 .android216 {
 	background-image: url('../../resources/img/16/notification.png')
 		!important
+}
+
+.plus16 {
+	background-image: url('../../resources/img/16/plus.png') !important
 }
 
 .coisa {

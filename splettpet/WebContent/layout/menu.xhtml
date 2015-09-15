@@ -5,15 +5,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	<h:form>
-		<p:menubar >
-			<p:menuitem styleClass="menuBarItem" id="postagensMn" value="Postagens" action="home" />
+		<p:menubar>
+			<p:menuitem styleClass="menuBarItem" id="postagensMn"
+				value="Postagens" action="home" />
 
-			<p:menuitem styleClass="menuBarItem" id="fotosvideosMn" value="Fotos e Vídeos" action="home" />
+			<p:menuitem styleClass="menuBarItem" id="fotosvideosMn"
+				value="Fotos e Vídeos" action="home" />
 
-			<p:menuitem styleClass="menuBarItem" id="animaisMn" value="Animais" action="home" />
+			<p:menuitem styleClass="menuBarItem" id="animaisMn" value="Animais"
+				action="home" />
 
-			<p:menuitem styleClass="menuBarItem" id="amigosMn" value="Amigos" action="home"
-				rendered="#{sessionMB.isManagementAllowed()}" />
+			<p:menuitem styleClass="menuBarItem" id="amigosMn" value="Amigos"
+				action="home" rendered="#{sessionMB.isManagementAllowed()}" />
+
+			<f:facet name="options">
+				<p:commandButton icon="plus16" value="Adicionar amigo"
+					rendered="#{sessionMB.isFriendshipRequestAllowed()}" />
+			</f:facet>
 
 		</p:menubar>
 
