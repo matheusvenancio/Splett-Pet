@@ -35,6 +35,11 @@
 						filterMatchMode="contains">
 						<h:outputText value="#{raca.porte}" />
 					</p:column>
+					
+					<p:column headerText="Tipo" filterBy="#{raca.tipoAnimal.nome}"
+						filterMatchMode="contains">
+						<h:outputText value="#{raca.tipoAnimal.nome}" />
+					</p:column>
 
 					<p:column headerText="Ações">
 						<p:panelGrid columns="2">
@@ -79,7 +84,7 @@
 					<p:message for="porte" />
 
 					<h:outputLabel id="tipoLb" value="Tipo:" for="tipo" />
-					<p:autoComplete id="tipo" value="#{racaMB.raca}"
+					<p:autoComplete id="tipo" value="#{racaMB.raca.tipoAnimal}"
 						size="15" completeMethod="#{tipoAnimalDao.pesquisarPorNome}"
 						converter="#{tipoAnimalConverter}" dropdown="true"
 						forceSelection="true" minQueryLength="3" />
