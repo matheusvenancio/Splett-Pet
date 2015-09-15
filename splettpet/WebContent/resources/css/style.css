@@ -78,6 +78,13 @@ table {
 	font-size: 0.1em !important;
 }
 
+.fotoPerfil {
+	width: 12%;
+	border-style: solid;
+	border-color: white;
+	background-color: white
+}
+
 .animaisTable {
 	float: right;
 }

@@ -17,7 +17,7 @@
 			<h:form id="infoForm">
 				<p:commandButton style="font-weight:bold; font-size:0.6em; "
 					id="opcoesAdministrativasBt" value="Opções Administrativas"
-					type="button" />
+					type="button" rendered="#{sessionMB.isUserAdm()}" />
 				<p:menu overlay="true" trigger="opcoesAdministrativasBt"
 					my="left top" at="left bottom">
 
@@ -39,8 +39,17 @@
 					style="font-weight:bold; font-size:0.8em;" />
 				<h:commandLink id="nome"
 					value="#{sessionMB.usuarioLogado.getPrimeiroNome()}"
-					style="font-weight:bold; padding-right: 50px; margin-right: auto; font-size:0.8em;" />
-				<br />
+					style="font-weight:bold;  margin-right: auto; font-size:0.8em;" />
+
+				<span class="ui-separator"> <span
+					class="ui-icon ui-icon-grip-dotted-vertical" />
+				</span>
+
+				<h:outputLink
+					value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+					<h:outputText value="Sair" styleClass="botaoSair"
+						style="padding-right: 50px;" />
+				</h:outputLink>
 
 			</h:form>
 		</f:facet>
