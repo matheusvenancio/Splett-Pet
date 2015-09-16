@@ -58,7 +58,7 @@ public class Usuario {
     @OneToMany(mappedBy = "dono")
     private List<Animal> animais;
 
-    private boolean sexo_isPublico;
+    private boolean genero_isPublico;
 
     private boolean telefoneFixo_isPublico;
 
@@ -76,12 +76,12 @@ public class Usuario {
 	this.fotoPerfil = fotoPerfil;
     }
 
-    public boolean isSexo_isPublico() {
-	return sexo_isPublico;
+    public boolean isGenero_isPublico() {
+	return genero_isPublico;
     }
 
-    public void setSexo_isPublico(boolean sexo_isPublico) {
-	this.sexo_isPublico = sexo_isPublico;
+    public void setGenero_isPublico(boolean genero_isPublico) {
+	this.genero_isPublico = genero_isPublico;
     }
 
     public boolean isTelefoneFixo_isPublico() {

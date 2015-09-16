@@ -27,7 +27,9 @@
 
 						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
 						<h:outputText
-							value="#{sessionMB.usuarioVisualizado.dataNascimento}" />
+							value="#{sessionMB.usuarioVisualizado.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
+						</h:outputText>
 
 						<h:outputLabel styleClass="coisa" value="E-mail:" />
 						<h:outputText value="#{sessionMB.usuarioVisualizado.email}" />
