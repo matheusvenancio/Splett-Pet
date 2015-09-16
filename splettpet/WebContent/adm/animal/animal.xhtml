@@ -31,9 +31,9 @@
 						<h:outputText value="#{ani.nome}" />
 					</p:column>
 
-					<p:column headerText="Tipo" filterBy="#{ani.tipoAnimal.nome}"
+					<p:column headerText="Tipo" filterBy="#{ani.raca.tipoanimal.nome}"
 						filterMatchMode="contains">
-						<h:outputText value="#{ani.tipoAnimal}" />
+						<h:outputText value="#{ani.raca.tipoanimal.nome}" />
 					</p:column>
 
 					<p:column headerText="Raça" filterBy="#{ani.raca.nome}"
