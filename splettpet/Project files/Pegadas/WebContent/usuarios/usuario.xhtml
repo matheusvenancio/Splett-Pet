@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<f:metadata>
+			<f:viewParam name="view" value="#{usuarioMB.usernameView}" />
+			<f:event type="preRenderView" listener="#{usuarioMB.loadPaginaUsr}" />
+		</f:metadata>
+
+	</h:head>
+
+
+
+	<ui:define name="body">
+		<h:form>
+			<p:panelGrid style="width:70%; margin: 0 auto;" styleClass="semBorda">
+				<p:row>
+					<p:column colspan="3" style="text-align:right !important;">
+						<h:outputText value="Membro desde: " styleClass="f6" />
+						<h:outputText value="#{usuarioMB.usuarioView.dataCadastro}"
+							styleClass="f6">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="f5" colspan="2">
+						<h:outputText
+							value="#{usuarioMB.usuarioView.nome} #{usuarioMB.usuarioView.sobrenome}" />
+					</p:column>
+					<p:column>
+						<p:button value="enviar mensagem" outcome="novaMensagem"
+							style="float:right; font-size:13px !important; display: table-cell; vertical-align: bottom !important;text-align:right !important;">
+							<f:param name="to" value="#{usuarioMB.usuarioView.username}" />
+						</p:button>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column rowspan="3" style="width:320px;">
+						<h:graphicImage id="imgAvatar"
+							value="/image?nome=#{usuarioMB.usuario.avatar.nome}" height="300"
+							width="250" onclick="imgAvatar.show()" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText
+							value=" de #{usuarioMB.usuarioView.endereco.estado.nome}"
+							rendered="#{usuarioMB.usuarioView.endereco.estado != null}"
+							styleClass="f5" />
+						<h:outputText value=","
+							rendered="#{usuarioMB.usuarioView.endereco.estado != null and usuarioMB.usuarioView.endereco.cidade != null}"
+							styleClass="f5" />
+						<p:spacer width="5" />
+						<h:outputText
+							value="#{usuarioMB.usuarioView.endereco.cidade.nome}."
+							styleClass="f5"
+							rendered="#{usuarioMB.usuarioView.endereco.cidade != null}" />
+						<h:outputText value="Estado e Cidade desconhecidos."
+							rendered="#{usuarioMB.usuarioView.endereco.estado == null and usuarioMB.usuarioView.endereco.cidade == null}"
+							styleClass="fSmallCaps, f6" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column style="height:150px;" colspan="2">
+						<h:panelGrid>
+							<p:fieldset legend="Sobre..." style="width:320px; height:110px">
+								<h:outputText value="#{usuarioMB.usuarioView.bio}"
+									style=" text-align: center;" styleClass="f6" />
+								<h:outputText value="Nada para exibir."
+									style="text-align: center;" tyleClass="f6"
+									rendered="#{usuarioMB.usuarioView.bio == null}" />
+							</p:fieldset>
+						</h:panelGrid>
+
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
+			<p:panelGrid style="width:70%; margin: 0 auto;" styleClass="semBorda">
+				<p:row>
+					<p:column style="height:150px;" colspan="2">
+						<h:panelGrid>
+							<p:fieldset legend="Contato" style="width:670px; height:110px">
+								<h:outputText value="E-mail: #{usuarioMB.usuarioView.email}"
+									rendered="#{usuarioMB.usuarioView.preferencias.exibirEmail}"
+									style=" text-align: center;" styleClass="f6" />
+								<br />
+								<h:outputText
+									value="Telefone Residencial: #{usuarioMB.usuarioView.telefoneRes}"
+									rendered="#{usuarioMB.usuarioView.preferencias.exibirTelefone}"
+									style=" text-align: center;" styleClass="f6" />
+								<br />
+								<h:outputText
+									value="Telefone Celular: #{usuarioMB.usuarioView.telefoneCel}"
+									rendered="#{usuarioMB.usuarioView.preferencias.exibirTelefone}"
+									style=" text-align: center;" styleClass="f6" />
+								<br />
+							</p:fieldset>
+						</h:panelGrid>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:panelGrid style="width:70%; margin: 0 auto;" styleClass="semBorda">
+				<p:row>
+					<p:column>
+						<p:dataTable value="#{usuarioMB.publicacoesByUsr}" var="pbl"
+							id="anexos" paginator="true" rows="5"
+							paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+							rowsPerPageTemplate="5,10,15" type="none"
+							paginatorPosition="bottom" emptyMessage="Nada para exibir."
+							style="width:100%; text-align: center; margin-top: 0px; ">
+
+							<f:facet name="header">
+								<h:outputText value="Ultimas atividades" />
+							</f:facet>
+
+							<p:column>
+								<h:panelGrid columns="2" styleClass="alignCenter">
+									<p:column width="200">
+										<h:outputText value="#{pbl.titulo}" styleClass="f6"
+											style="margin-left: 0px !important;" />
+									</p:column>
+									<p:button value="Ir para a publica‹o" outcome="publicacao"
+										style="font-size:10px !important; margin-right: 0px !important;">
+										<f:param name="id" value="#{pbl.idPublicacao}" />
+									</p:button>
+								</h:panelGrid>
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+
+		<p:dialog header="imgAvatar" widgetVar="imgAvatar" modal="false"
+			draggable="true" resizable="false" width="320">
+
+			<p:imageSwitch effect="fade">
+				<p:graphicImage
+					value="/resources/upload/avatar/#{usuarioMB.usuarioView.avatar.nome}"
+					width="300" />
+			</p:imageSwitch>
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+		<f:metadata>
+			<f:viewParam name="id" value="#{eventoMB.idEvtFace}" />
+			<f:event type="preRenderView" listener="#{eventoMB.pegarEventoFace}" />
+			<f:event type="preRenderView"
+				listener="#{eventoMB.criarEvento(eventoMB.evento)}" />
+
+
+
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+
+		<h:form id="tabelaEventoForm">
+			<p:panel styleClass="alignCenter" style="width:300px">
+				<h:panelGrid columns="2">
+
+					<h:outputText value="Evento criado com sucesso" styleClass="f5" />
+					<p:commandButton value="OK" action="index" style="font-size:13px !important"/>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

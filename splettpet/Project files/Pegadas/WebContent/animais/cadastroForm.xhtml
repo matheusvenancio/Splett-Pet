@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<p:panel header="">
+		<p:panelGrid style="width:100%">
+			<p:row>
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column style="width:20%">
+							<h:outputText value="Nome: *" />
+						</p:column>
+						<p:column colspan="2" style="width:75%">
+							<p:inputText id="nomeTf" value="#{animalMB.animal.nome}"
+								required="true" requiredMessage="Campo 'Nome' é obrigatório" />
+						</p:column>
+						<p:column>
+							<p:message id="nomeMsg" for="nomeTf" display="icon" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column style="width:20%">
+						</p:column>
+						<p:column style="width:40%">
+							<p:selectOneRadio id="selectFA"
+								value="#{animalMB.animal.divisaoIdade}" required="true"
+								requiredMessage="">
+								<f:selectItems value="#{divisaoIdadeProvider.diviIdade}"
+									var="di" itemLabel="#{di.label}" itemValue="#{di}" />
+								<p:ajax listener="#{publicacaoMB.gerarCampoOutros}"
+									update="idadeTf" />
+							</p:selectOneRadio>
+						</p:column>
+						<p:column style="width:35%">
+							<h:outputText value="Idade: " />
+							<h:outputText value="(se conhecida) " styleClass="fonteObs" />
+							<p:inputMask id="idadeTf" value="#{animalMB.animal.idade}"
+								mask="9?9" maxlength="2" validatorMessage="Apenas números"
+								size="2" disabled="#{! publicacaoMB.idadeEspec}" />
+						</p:column>
+						<p:column>
+							<p:message id="selectFaMsg" for="selectFA" display="icon" />
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column style="width:20%">
+							<h:outputText value="Sexo: *" />
+						</p:column>
+						<p:column style="width:75%">
+							<p:selectOneRadio id="sexoSelect" value="#{animalMB.animal.sexo}">
+								<f:selectItems value="#{sexoProvider.sexos}" var="sexo"
+									itemLabel="#{sexo.label}" itemValue="#{sexo}" />
+							</p:selectOneRadio>
+						</p:column>
+						<p:column>
+							<p:message id="sexoMsg" for="sexoSelect" display="icon" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:column style="width:20%">
+					<h:outputText value="Categoria: *" />
+				</p:column>
+				<p:column style="width:40%">
+					<p:selectOneButton id="selectCategoria"
+						value="#{animalMB.animal.categoria}"
+						converter="#{categoriaConverter}" immediate="true" required="true"
+						requiredMessage="O campo 'Categoria' é obrigatório">
+						<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+							itemLabel="#{cat.nome}" itemValue="#{cat}" />
+						<p:ajax event="change"
+							listener="#{publicacaoMB.esconderCampoOutros()}"
+							update="btOutroCategoria selectCategoriaOutro panelCategoriaOutro" />
+					</p:selectOneButton>
+				</p:column>
+				<p:column style="width:15%">
+					<p:commandButton id="btOutroCategoria" value="Outro"
+						disabled="#{publicacaoMB.categoriaDifere}"
+						update="btOutroCategoria selectCategoriaOutro panelCategoriaOutro"
+						immediate="true" actionListener="#{publicacaoMB.gerarCampoOutros}" />
+				</p:column>
+				<p:column style="width:20%">
+					<h:panelGroup id="panelCategoriaOutro">
+						<p:selectOneMenu id="selectCategoriaOutro"
+							value="#{animalMB.animal.categoria}" effect="fade"
+							converter="#{categoriaConverter}"
+							rendered="#{publicacaoMB.categoriaDifere}">
+							<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+								itemLabel="#{cat.nome}" itemValue="#{cat}" />
+						</p:selectOneMenu>
+						<p:message for="selectCategoriaOutro" display="both" />
+					</h:panelGroup>
+				</p:column>
+				<p:column>
+					<p:message id="categoriaMsg" for="selectCategoria" display="icon" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<p:panelGrid style="width:100%">
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Raça: *" />
+				</p:column>
+				<p:column style="width:75%" colspan="3">
+					<p:selectOneMenu id="selectRaca" effet="fade"
+						value="#{animalMB.animal.raca}" converter="#{racaConverter}">
+						<f:selectItems value="#{racaMB.racas}" var="raca"
+							itemLabel="#{raca.nome}" itemValue="#{raca}" />
+					</p:selectOneMenu>
+					<p:message for="selectRaca" display="both" />
+				</p:column>
+				<p:column>
+					<p:message id="raçaMsg" for="selectRaca" display="icon" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<p:panelGrid style="width:100%" id="panelResto">
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Porte:" />
+				</p:column>
+				<p:column>
+					<p:selectOneRadio id="porteSelect"
+						value="#{animalMB.animal.porteAnimal}">
+						<f:selectItems value="#{porteProvider.portes}" var="porte"
+							itemLabel="#{porte.label}" itemValue="#{porte}" />
+					</p:selectOneRadio>
+					<p:message for="porteSelect" display="both" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Cor Principal: " />
+				</p:column>
+				<p:column>
+					<p:autoComplete id="corPrincipalTf"
+						value="#{animalMB.animal.corPrincipal}"
+						completeMethod="#{publicacaoMB.completeCores}" />
+					<p:message for="corPrincipalTf" display="icon" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Cor Secundária: " />
+				</p:column>
+				<p:column>
+					<p:autoComplete id="corSecundariaTf"
+						value="#{animalMB.animal.corPrincipal}"
+						completeMethod="#{publicacaoMB.completeCores}" />
+					<p:message for="corSecundariaTf" display="icon" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputLabel value="Data: " />
+				</p:column>
+				<p:column>
+					<p:calendar id="dataPE" pattern="dd/MM/yyyy"
+						value="#{animalMB.animal.dataPE}" showOn="button" />
+					<p:message for="dataPE" display="both" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="width:20%">
+					<h:outputText value="Descrição: " />
+				</p:column>
+				<p:column>
+					<p:inputTextarea id="descricaoAnimal"
+						converter="ConverterEmptyToNull" label="descri"
+						value="#{animalMB.animal.descri}" rows="8" cols="50"
+						autoResize="false" counter="counter" maxlength="300"
+						counterTemplate="{0} characters remaining." />
+					<br />
+					<h:outputText id="counter" styleClass="fonteObs" />
+					<p:messages for="descricaoAnimal" display="both" />
+					<h:outputText
+						value="Aqui você poderá falar mais sobre o animal, trazendo melhores dados para reconhecimento."
+						styleClass="fonteInfoDestaq" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+</ui:composition>

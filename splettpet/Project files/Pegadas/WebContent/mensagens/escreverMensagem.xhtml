@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+
+	</h:head>
+	<ui:define name="body">
+		<h:form>
+			<p:panelGrid columns="1" style="width:40%; margin: 0 auto"
+				styleClass="panelGridFundo">
+
+				<h:outputText value="Para:" />
+				<p:autoComplete value="#{mensagemMB.loginDestinatario}"
+					completeMethod="#{mensagemMB.completeUsuario}"
+					itemLabel="#{u.nome}#{u.sobrenome}" var="u"
+					itemValue="#{u.username}"
+					multiple="false">
+				</p:autoComplete>
+				<p:separator />
+
+				<h:outputText value="Assunto: " />
+				<p:inputText value="#{mensagemMB.mensagem.assunto}"
+					style="width:100%" />
+				<p:separator />
+
+				<center>
+					<p:fileUpload id="fileUpload"
+						fileUploadListener="#{arquivoMB.uploadMsg}" mode="advanced"
+						dragDropSupport="false" sizeLimit="20971520" auto="true"
+						fileLimit="5" showButtons="false" update="anxs"
+						invalidFileMessage="O arquivo selecionado não é válido!"
+						invalidSizeMessage="O tamanho do arquivo não é aceito!"
+						allowTypes="/(\.|\/)(jpe?g|png)$/" label="Adicionar Anexos"
+						multiple="true"
+						style="width:100%; display: none !important;text-align:center;" />
+				</center>
+				<p:dataTable id="anxs" value="#{arquivoMB.files}" var="anx"
+					paginator="true" rows="1" emptyMessage="Nenhum anexo adicionado."
+					paginatorPosition="botton" styleClass="hide-column-names"
+					style="text-align:center;">
+					<p:column>
+						<p:graphicImage value="/image?nome=#{anx.nome}" width="100"
+							height="100"></p:graphicImage>
+					</p:column>
+				</p:dataTable>
+				<p:separator />
+				<p:inputTextarea value="#{mensagemMB.mensagem.corpo}"
+					style="width:100%" rows="8" />
+
+				<h:panelGroup>
+					<center>
+						<p:spacer width="20" />
+						<p:commandButton id="enviarBt" value="Enviar"
+							action="#{mensagemMB.salvar}" />
+						<p:button value="Cancelar" outcome="usuario">
+							<f:param name="view" value="#{mensagemMB.usrDest.username}" />
+						</p:button>
+
+					</center>
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

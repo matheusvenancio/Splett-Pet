@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--Doctype is not required - can be HTML or XHTML-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
+<head>
+<title>Minimum Required Code - Epoch Prime/Epoch Prime AJAX</title>
+<link rel="stylesheet" type="text/css" href="epochprime_styles.css" />
+<script type="text/javascript" src="epochprime_classes.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+/*You can also place this code in a separate file and link to it like epoch_classes.js*/
+	var bas_cal,dp_cal,ms_cal;      
+window.onload = function () {
+	/*the extra backslashes ( \ ) are for W3C standards compliance.  
+	They are not necessary if the below code is linked externally (i.e. like epochprime_classes.js).
+	All XML config strings should exist on one line only - no line breaks!*/
+	var bas_xml = '<configs><initcfg><name>bas_cal<\/name><mode>flat<\/mode><multiselect>no<\/multiselect><\/initcfg><\/configs>';
+	var dp_xml = '<configs><initcfg><name>bas_cal<\/name><mode>popup<\/mode><multiselect>no<\/multiselect><\/initcfg><\/configs>';
+	bas_cal = new EpochPrime(document.getElementById('basic_container'),bas_xml); //basic, 1 dat
+	dp_cal  = new EpochPrime(document.getElementById('popup_container'),dp_xml); //popup calendar
+	ms_cal  = new EpochPrime(document.getElementById('multi_container')); //multiselect calendar - XML config not necessary - multiselect is enabled by default (see the calConfig() function in epochprime_classes.js for defaults).
+	aj_cal  = new EpochPrime(document.getElementById('ajax_container')); //the AJAX demo calendar
+};
+/*]]>*/
+</script>
+<!--The styles below have nothing to do with the calendar-->
+<style type="text/css">
+/*<![CDATA[*/
+div.imgbox {
+ float:right;
+}
+div.imgbox p {
+ color: grey;
+ font-style:italic;
+ margin:0;
+ text-align:center;
+}
+/*]]>*/
+</style>
+</head>
+<body>
+<h1>Minimum Required Code</h1>
+<p>This page shows the <em>minimum</em> amount of code required to use Epoch Prime in each mode.  Right-click anywhere in the page and select "View Source" to see.</p>
+<!--[if IE]><p><strong>Internet Explorer Users on Windows XP with Service Pack 2:</strong> If you don't see the calendar when you load the page, make sure to click "Allow Blocked Content"&mdash;you'll only see it if you're viewing this file on your computer's file system.</p>
+<p><img src="images/sp2_warning.gif" alt="Windows XP SP2 Warning"/></p><![endif]-->
+<a href="gettingstarted.html">Back to the Getting Started Page</a>
+
+<h2>Basic</h2>
+<div id="basic_container"></div>
+
+<h2>Multiselect</h2>
+<div id="multi_container"></div>
+
+<h2>Popup</h2>
+<form id="placeholder" method="get" action="#">
+  <input id="popup_container" type="text"/>
+</form>
+<br/><br/><br/><br/><br/>
+<h2>XML/AJAX Usage</h2>
+<div class="imgbox"><img src="images/configurator2.gif" height="134" width="408" alt="Configurator" style="border: solid black 1px;"/><p>Epoch Prime Configurator</p></div>
+<p>Below is a fully-featured XML configuration string for Epoch Prime.  You may remove any of the nodes below &ndash; any values not specified will 
+ default to the values in the <var>calConfig()</var> function in <strong>epochprime_classes.js</strong>.</p>
+<p>Please see our <a href="http://www.meanfreepath.com/support/epochprime/usingxml.html">HowTo on Using XML</a> on the MeanFreePath site.  Registered
+ users also have access to the <a href="https://secure.meanfreepath.com/cust/epr_configurator.html">Epoch Prime XML Configurator</a>.  It creates the
+ XML configuration for you&mdash;no XML or JavaScript experience required!</p>
+<h3>Sample XML</h3>
+<textarea rows="25" cols="100" class="xmlcontainer" id="xmlcontainer">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;importdata&gt;
+ &lt;configs&gt;
+  &lt;statecfg&gt;
+   &lt;displayyearinitial&gt;2006&lt;/displayyearinitial&gt;
+   &lt;displaymonthinitial&gt;7&lt;/displaymonthinitial&gt;
+   &lt;displayyear&gt;2006&lt;/displayyear&gt;
+   &lt;displaymonth&gt;7&lt;/displaymonth&gt;
+   &lt;mindate&gt;2006-06-21&lt;/mindate&gt;
+   &lt;maxdate&gt;2006-08-16&lt;/maxdate&gt;
+   &lt;dateformat&gt;Y-m-d&lt;/dateformat&gt;
+  &lt;/statecfg&gt;
+  &lt;initcfg&gt;
+   &lt;name&gt;cal1&lt;/name&gt;
+   &lt;mode&gt;flat&lt;/mode&gt;
+   &lt;multiselect&gt;1&lt;/multiselect&gt;
+   &lt;startday&gt;0&lt;/startday&gt;
+   &lt;showweeks&gt;1&lt;/showweeks&gt;
+   &lt;selcurmonthonly&gt;1&lt;/selcurmonthonly&gt;
+  &lt;/initcfg&gt;
+  &lt;lang&gt;
+   &lt;days&gt;
+    &lt;sun sh="Sun" ln="Sunday"/&gt;
+    &lt;mon sh="Mon" ln="Monday"/&gt;
+    &lt;tue sh="Tue" ln="Tuesday"/&gt;
+    &lt;wed sh="Wed" ln="Wednesday"/&gt;
+    &lt;thu sh="Thu" ln="Thursday"/&gt;
+    &lt;fri sh="Fri" ln="Friday"/&gt;
+    &lt;sat sh="Sat" ln="Saturday"/&gt;
+   &lt;/days&gt;
+   &lt;months&gt;
+    &lt;jan sh="Jan" ln="January"/&gt;
+    &lt;feb sh="Feb" ln="February"/&gt;
+    &lt;mar sh="Mar" ln="March"/&gt;
+    &lt;apr sh="Apr" ln="April"/&gt;
+    &lt;may sh="May" ln="May"/&gt;
+    &lt;jun sh="Jun" ln="June"/&gt;
+    &lt;jul sh="Jul" ln="July"/&gt;
+    &lt;aug sh="Aug" ln="August"/&gt;
+    &lt;sep sh="Sep" ln="September"/&gt;
+    &lt;oct sh="Oct" ln="October"/&gt;
+    &lt;nov sh="Nov" ln="November"/&gt;
+    &lt;dec sh="Dec" ln="December"/&gt;
+   &lt;/months&gt;
+   &lt;langtexts&gt;
+    &lt;monthup_title&gt;Go to the next month&lt;/monthup_title&gt;
+    &lt;monthdn_title&gt;Go to the previous month&lt;/monthdn_title&gt;
+    &lt;clearbtn_caption&gt;Clear&lt;/clearbtn_caption&gt;
+    &lt;clearbtn_title&gt;Clears any dates selected on the calendar&lt;/clearbtn_title&gt;
+    &lt;maxrange_caption&gt;This is the maximum range&lt;/maxrange_caption&gt;
+    &lt;closebtn_caption&gt;Close&lt;/closebtn_caption&gt;
+    &lt;closebtn_title&gt;Close the calendar&lt;/closebtn_title&gt;
+   &lt;/langtexts&gt;
+  &lt;/lang&gt;
+ &lt;/configs&gt;
+ &lt;datesadd&gt;
+  &lt;date type="normal" title="Unavailable date 1" value="2006-07-24" selected="disabled"&gt;&lt;/date&gt;
+  &lt;date type="normal" title="Unavailable date 2" value="2006-07-25" selected="disabled"&gt;&lt;/date&gt;
+  &lt;date type="normal" title="Unavailable date 3" value="2006-07-26" selected="disabled"&gt;&lt;/date&gt;
+  &lt;date type="normal" title="Unavailable date 4" value="2006-07-27" selected="disabled"&gt;&lt;/date&gt;
+  &lt;date type="holiday" value="2006-07-04" selected="no" title="Independence Day"&gt;&lt;/date&gt;
+  &lt;date type="normal" value="2006-07-13"&gt;&lt;/date&gt;
+  &lt;date type="normal" value="2006-07-21"&gt;&lt;/date&gt;
+  &lt;date type="normal" value="2006-07-29"&gt;&lt;/date&gt;
+ &lt;/datesadd&gt;
+ &lt;datesrem&gt;
+  &lt;date type="normal" value="2006-07-18"&gt;&lt;/date&gt;
+  &lt;date type="normal" value="2006-07-22"&gt;&lt;/date&gt;
+  &lt;date type="normal" value="2006-07-29"&gt;&lt;/date&gt;
+ &lt;/datesrem&gt;
+&lt;/importdata&gt;
+</textarea><br/>
+<button onclick="aj_cal.importXML(document.getElementById('xmlcontainer').value);">Click to apply XML</button>
+<h3>The Results</h3>
+<div id="ajax_container"></div>
+<h2>Other Resources</h2>
+<p>See our <a href="http://www.meanfreepath.com/support/epochprime/index.html">online documentation</a> for more help and examples.</p>
+<p>You can also ask a question on our <a href="http://www.meanfreepath.com/forums/index.php">support forums</a>.</p>
+
+</body>
+</html>

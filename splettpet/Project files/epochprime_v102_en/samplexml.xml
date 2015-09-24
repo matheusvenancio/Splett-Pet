@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<importdata>
+ <configs>
+  <statecfg>
+   <displayyearinitial>2006</displayyearinitial> <!--the year to default to when clicking "clear"-->
+   <displaymonthinitial>7</displaymonthinitial> <!--the month to default to when clicking "clear"-->
+   <displayyear>2006</displayyear> <!--the initial year to display-->
+   <displaymonth>7</displaymonth> <!--the initial month to display-->
+   <mindate>2006-06-21</mindate> <!--the earliest date a user can click-->
+   <maxdate>2006-08-16</maxdate> <!--the latest date a user can click-->
+   <dateformat>Y-m-d</dateformat>
+  </statecfg>
+  <initcfg>
+   <name>cal1</name>
+   <mode>flat</mode>
+   <multiselect>1</multiselect>
+   <startday>0</startday>
+   <showweeks>1</showweeks>
+   <selcurmonthonly>1</selcurmonthonly>
+  </initcfg>
+  <lang>
+   <days>
+    <sun sh="Sun" ln="Sunday"/>
+    <mon sh="Mon" ln="Monday"/>
+    <tue sh="Tue" ln="Tuesday"/>
+    <wed sh="Wed" ln="Wednesday"/>
+    <thu sh="Thu" ln="Thursday"/>
+    <fri sh="Fri" ln="Friday"/>
+    <sat sh="Sat" ln="Saturday"/>
+   </days>
+   <months>
+    <jan sh="Jan" ln="January"/>
+    <feb sh="Feb" ln="February"/>
+    <mar sh="Mar" ln="March"/>
+    <apr sh="Apr" ln="April"/>
+    <may sh="May" ln="May"/>
+    <jun sh="Jun" ln="June"/>
+    <jul sh="Jul" ln="July"/>
+    <aug sh="Aug" ln="August"/>
+    <sep sh="Sep" ln="September"/>
+    <oct sh="Oct" ln="October"/>
+    <nov sh="Nov" ln="November"/>
+    <dec sh="Dec" ln="December"/>
+   </months>
+   <langtexts>
+    <monthup_title>Go to the next month</monthup_title>
+    <monthdn_title>Go to the previous month</monthdn_title>
+    <clearbtn_caption>Clear</clearbtn_caption>
+    <clearbtn_title>Clears any dates selected on the calendar</clearbtn_title>
+    <maxrange_caption>This is the maximum range</maxrange_caption>
+    <closebtn_caption>Close</closebtn_caption>
+    <closebtn_title>Close the calendar</closebtn_title>
+   </langtexts>
+  </lang>
+ </configs>
+ <datesadd>
+  <date type="normal" title="Unavailable date 1" value="2006-07-24" selected="disabled"></date>
+  <date type="normal" title="Unavailable date 2" value="2006-07-25" selected="disabled"></date>
+  <date type="normal" title="Unavailable date 3" value="2006-07-26" selected="disabled"></date>
+  <date type="normal" title="Unavailable date 4" value="2006-07-27" selected="disabled"></date>
+  <date type="holiday" value="2006-07-04" selected="no" title="Independence Day"></date>
+  <date type="normal" value="2006-07-13"></date>
+  <date type="normal" value="2006-07-21"></date>
+  <date type="normal" value="2006-07-29"></date>
+ </datesadd>
+ <datesrem>
+  <date type="normal" value="2006-07-18"></date>
+  <date type="normal" value="2006-07-22"></date>
+  <date type="normal" value="2006-07-29"></date>
+ </datesrem>
+</importdata>

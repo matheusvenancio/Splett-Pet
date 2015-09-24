@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{organizacaoMB.loadGerenciarOrg}" />
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<h:form id="tabelaAnimalForm" style="width:800px" styleClass="alignCenter">
+			<p:growl id="growl" showDetail="true" />
+			<p:dataTable id="animaisList" styleClass="semBorda"
+			paginator="true" paginatorPosition="bottom"
+			value="#{organizacaoMB.organizacao.animais}" var="anl">
+				<f:facet name="header">Animais da organizacao #{organizacaoMB.organizacao.nome}</f:facet>
+
+				<p:column style="width:2%">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column style="width:15%">
+					<f:facet name="header">
+						<h:outputText value="Nome: " style="font-size:13px !important"/>
+					</f:facet>
+					<h:outputText value="#{anl.nome}" styleClass="f6"/>
+				</p:column>
+
+				<p:column style="width:15%">
+					<f:facet name="header">
+						<h:outputText value="Raça: " style="font-size:13px !important"/>
+					</f:facet>
+					<h:outputText value="#{anl.raca.nome}" styleClass="f6">
+					</h:outputText>
+				</p:column>
+
+				<p:column style="width:10%">
+					<f:facet name="header">
+						<h:outputText value="Sexo " style="font-size:13px !important"/>
+					</f:facet>
+					<h:outputText value="#{anl.sexo.label}" styleClass="f6" />
+				</p:column>
+				<p:column style="width:10%">
+					<f:facet name="header">
+						<h:outputText value="Idade (anos): " style="font-size:13px !important"/>
+					</f:facet>
+					<h:outputText value="#{anl.idade}" styleClass="f6" />
+				</p:column>
+
+				<p:rowExpansion>
+					<p:panelGrid id="dadosUsrGrid">
+						<f:facet name="header">
+							<p:row>
+								<p:column colspan="8">
+								</p:column>
+							</p:row>
+						</f:facet>
+
+						<p:row>
+							<p:column style="width:10%">
+								<h:outputText value="Data de Cadastro " styleClass="f5"/>
+							</p:column>
+							<p:column style="width:15%"
+								styleClass="alignCenter">
+								<h:outputText styleClass="f6"
+									value="#{anl.dataCadastro}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+
+							<p:column style="width:10%">
+								<h:outputText value="Descrição: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold;  width:140px"
+								styleClass="alignCenter">
+								<h:outputText styleClass="f6" value="#{anl.descri}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="width:10%">
+								<h:outputText value="Cor Principal: " styleClass="f5" />
+							</p:column>
+							<p:column style="width:15%"
+								styleClass="alignCenter">
+								<h:outputText styleClass="f6"
+									value="#{animalMB.animal.corPrincial}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="width:10%">
+								<h:outputText value="Cor Secundária: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold;  width:15%"
+								styleClass="alignCenter">
+								<h:outputText styleClass="f6"
+									value="#{animalMB.animal.corsecundaria}" />
+							</p:column>
+						</p:row>
+
+
+					</p:panelGrid>
+				</p:rowExpansion>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Opções: " style="font-size:13px !important"/>
+					</f:facet>
+					<p:commandButton id="removerBt" action="#{animalMB.remover}"
+						value="Remover" style="font-size:13px !important">
+						<f:setPropertyActionListener target="#{animalMB.animal}"
+							value="#{anl}" />
+					</p:commandButton>
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

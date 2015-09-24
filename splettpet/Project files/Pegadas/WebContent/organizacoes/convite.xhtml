@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<f:metadata>
+			<f:viewParam name="to" value="#{organizacaoMB.codUsrConvite}" />
+			<f:viewParam name="from" value="#{organizacaoMB.idOrgConvite}" />
+			<f:event type="preRenderView" listener="#{organizacaoMB.loadConvite}" />
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<h:form id="cadastroNegadoForm">
+			<p:panelGrid columns="1"
+				style="text-align:center;width:80%;align:center;margin:0 auto;"
+				rendered="#{!organizacaoMB.usrAutorizado}">
+				<h:outputText value="Ola,  #{organizacaoMB.usuario.nome}" />
+				<h:outputText	
+				value="Voce recentemente recebeu o convite para juntar-se a Organizacao #{organizacaoMB.organizacao.nome}" />
+				<h:panelGroup>
+					<p:commandButton action="#{organizacaoMB.aceitarConvite}"
+						value="Aceitar" style="font-size:13px !important" styleClass="fSmallCaps"
+						icon="ui-icon-arrowthick-1-w" />
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

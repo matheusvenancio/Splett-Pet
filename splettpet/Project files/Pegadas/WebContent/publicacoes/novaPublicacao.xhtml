@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="usrNaoCanfirmado"
+			rendered="#{! usuarioMB.usrLogado.preferencias.contaConfirmada}">
+			<p:panelGrid styleClass="alignCenter" columns="1"
+			rendered="#{sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN, ROLE_VOLUNT')}">
+				<h:panelGrid styleClass="semBorda">
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="Sua conta ainda não foi confirmada, portanto não poderá realizar nenhuma divulgação de animais."
+								styleClass="fonteErro" style="font-size:13px !important" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Por favor confirme sua conta."
+								styleClass="fonteDestaq" style="font-size:14px !important" />
+						</p:column>
+					</p:row>
+				</h:panelGrid>
+			</p:panelGrid>
+		</h:form>
+		
+		<h:form id="usrNaoLogado"
+			rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN, ROLE_VOLUNT')}">
+			<p:panelGrid styleClass="alignCenter" columns="1">
+				<h:panelGrid styleClass="semBorda">
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="Você não está logado"
+								styleClass="fonteErro" style="font-size:13px !important" />
+						</p:column>
+					</p:row>
+				</h:panelGrid>
+			</p:panelGrid>
+		</h:form>
+
+		<h:form id="novaPubliForm" styleClass="novaPlbBackG"
+			style="background-color:#FDF5E6"
+			rendered="#{usuarioMB.usrLogado.preferencias.contaConfirmada}">
+			<p:panelGrid styleClass="novaPlbBackG" style="width:100%">
+				<p:row>
+					<p:column style="width:70%; background-color:#FDF5E6 !important"
+						styleClass="novaPlbBackG">
+						<p:panelGrid style="width:100%; background-color: #FDF5E6"
+							styleClass="novaPlbBackG">
+							<p:row>
+								<p:column colspan="4" styleClass="novaPlbBackG"
+									style="background-color: #FDF5E6">
+									<p:messages id="messages" showDetail="true" autoUpdate="true"
+										showSummary="false" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column styleClass="novaPlbBackG"
+									style="background-color: #FDF5E6">
+								</p:column>
+								<p:column colspan="4" styleClass="novaPlbBackG"
+									style="background-color: #FDF5E6;">
+									<p:selectOneButton id="tipoPubliChooseBt"
+										value="#{publicacaoMB.publicacao.tipoPublicacao}"
+										required="true" requiredMessage="Campo 'Tipo' È obrigatÛrio"
+										styleClass="novaPlbBackG">
+										<f:selectItems value="#{tiposPubliProvider.tipos}" var="tipo"
+											itemLabel="#{tipo.label}" itemValue="#{tipo}" />
+										<p:ajax event="change" update="panelDataPE, panelDataPE2"></p:ajax>
+										<p:ajax event="change" update="panelMatch"
+											listener="#{publicacaoMB.match}" />
+									</p:selectOneButton>
+
+								</p:column>
+							</p:row>
+
+
+							<p:row styleClass="novaPlbBackG">
+								<p:column styleClass="novaPlbBackG"
+									style="background-color: #FDF5E6">
+									<h:outputText value="Titulo: *" styleClass="f5" />
+								</p:column>
+								<p:column styleClass="novaPlbBackG"
+									style="background-color: #FDF5E6">
+									<p:inputText id="tituloPubliTf"
+										value="#{publicacaoMB.publicacao.titulo}" required="true"
+										requiredMessage="Campo 'TÌtulo' È obrigatÛrio" maxlength="55"
+										style="width:90%" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Nome: " styleClass="f5" />
+
+								</p:column>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<p:inputText id="nomeTf" value="#{publicacaoMB.animal.nome}"
+										required="false" requiredMessage="Campo 'Nome' È obrigatÛrio" />
+
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+								</p:column>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<h:panelGrid columns="2">
+										<h:panelGroup>
+											<p:selectOneRadio id="selectFA" styleClass="f6"
+												value="#{publicacaoMB.animal.divisaoIdade}" required="true"
+												requiredMessage="" style="font-size:13px !important">
+												<f:selectItems value="#{divisaoIdadeProvider.diviIdade}"
+													var="di" itemLabel="#{di.label}" itemValue="#{di}"
+													styleClass="f6" />
+
+												<p:ajax listener="#{publicacaoMB.gerarCampoOutros}"
+													update="idadeTf" />
+												<p:ajax event="change" update="panelMatch"
+													listener="#{publicacaoMB.match}" />
+											</p:selectOneRadio>
+										</h:panelGroup>
+
+										<h:panelGroup>
+											<p:spacer width="20px" />
+											<h:outputText value="Idade: " styleClass="f5" />
+											<h:outputText value="(se conhecida) " styleClass="fonteObs" />
+											<p:inputMask id="idadeTf"
+												value="#{publicacaoMB.animal.idade}" mask="9?9"
+												maxlength="2" validatorMessage="Apenas n˙meros" size="2" />
+										</h:panelGroup>
+									</h:panelGrid>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Sexo: *" styleClass="f5" />
+								</p:column>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<p:selectOneRadio id="sexoSelect" styleClass="f6"
+										value="#{publicacaoMB.animal.sexo}"
+										style="font-size:13px !important">
+										<f:selectItems value="#{sexoProvider.sexos}" var="sexo"
+											itemLabel="#{sexo.label}" itemValue="#{sexo}" />
+										<p:ajax event="change" update="panelMatch"
+											listener="#{publicacaoMB.match}" />
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Castrado: *" styleClass="f5" />
+								</p:column>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<p:selectOneRadio id="castradoSelect" styleClass="f6"
+										value="#{publicacaoMB.animal.castrado}"
+										style="font-size:13px !important">
+										<f:selectItem	itemLabel="Sim" itemValue="true" />
+										<f:selectItem itemValue="false" itemLabel="Não"/>
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Vermifugado: *" styleClass="f5" />
+								</p:column>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<p:selectOneRadio id="vermifugadoSelect" styleClass="f6"
+										value="#{publicacaoMB.animal.vermifugado}"
+										style="font-size:13px !important">
+										<f:selectItem	itemLabel="Sim" itemValue="true" />
+										<f:selectItem itemValue="false" itemLabel="Não"/>
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Categoria: *" styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<h:panelGrid columns="2" cellpadding="0">
+										<p:selectOneButton id="selectCategoria"
+											value="#{publicacaoMB.animal.categoria}"
+											converter="#{categoriaConverter}" required="true"
+											requiredMessage="O campo 'Categoria' È obrigatÛrio">
+											<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+												itemLabel="#{cat.nome}" itemValue="#{cat}" />
+											<p:ajax event="change"
+												listener="#{racaMB.findRacasByCategoria}"
+												update="panelCategoriaOutro selectRaca" />
+											<p:ajax event="change" update="panelMatch"
+												listener="#{publicacaoMB.match}" />
+										</p:selectOneButton>
+
+										
+									</h:panelGrid>
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<h:panelGroup id="panelCategoriaOutro">
+										<p:selectOneMenu id="selectCategoriaOutro"
+											value="#{publicacaoMB.animal.categoria}" effect="fade"
+											converter="#{categoriaConverter}"
+											rendered="#{publicacaoMB.categoriaDifere}">
+											<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+												itemLabel="#{cat.nome}" itemValue="#{cat}" />
+										</p:selectOneMenu>
+									</h:panelGroup>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Raca: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:selectOneMenu id="selectRaca" effet="fade"
+										value="#{publicacaoMB.animal.raca}"
+										converter="#{racaConverter}">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{racaMB.racas}" var="raca"
+											itemLabel="#{raca.nome}" itemValue="#{raca}" />
+										<p:ajax event="change" update="panelMatch"
+											listener="#{publicacaoMB.match}" />
+									</p:selectOneMenu>
+									<p:message for="selectRaca" display="both" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:message id="racaMsg" for="selectRaca" display="icon" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Porte:" styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:selectOneRadio id="porteSelect"
+										style="font-size:13px !important"
+										value="#{publicacaoMB.animal.porteAnimal}">
+										<f:selectItems value="#{porteProvider.portes}" var="porte"
+											itemLabel="#{porte.label}" itemValue="#{porte}" />
+									</p:selectOneRadio>
+									<p:message for="porteSelect" display="both" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Cor Principal: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:autoComplete id="corPrincipalTf"
+										value="#{publicacaoMB.animal.corPrincipal}"
+										completeMethod="#{publicacaoMB.completeCores}">
+										<p:ajax event="blur" update="panelMatch"
+											listener="#{publicacaoMB.match}" />
+									</p:autoComplete>
+									<p:message for="corPrincipalTf" display="icon" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Cor Secund·ria: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:autoComplete id="corSecundariaTf"
+										value="#{publicacaoMB.animal.corSecundaria}"
+										completeMethod="#{publicacaoMB.completeCores}">
+										<p:ajax event="blur" update="panelMatch"
+											listener="#{publicacaoMB.match}" />
+									</p:autoComplete>
+									<p:message for="corSecundariaTf" display="icon" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="DescriÁ„o: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:inputTextarea id="descricaoAnimal"
+										converter="ConverterEmptyToNull"
+										value="#{publicacaoMB.animal.descri}" rows="8" cols="50"
+										counter="counter" maxlength="400"
+										counterTemplate="{0} characters remaining." />
+									<br />
+									<h:outputText id="counter" styleClass="fonteObs" />
+									<p:messages for="descricaoAnimal" display="both" />
+									<h:outputText
+										value="Aqui vocÍ poder· falar mais sobre o animal, trazendo melhores dados para reconhecimento."
+										styleClass="fonteInfoDestaq" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<p:panel id="panelDataPE" style="background-color: #FDF5E6">
+										<h:outputText value="Data Perdido: " styleClass="f5"
+											rendered="#{publicacaoMB.perdido}" />
+										<h:outputText value="Data Encontrado: " styleClass="f5"
+											rendered="#{publicacaoMB.encontrado}" />
+									</p:panel>
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:panel id="panelDataPE2" style="background-color: #FDF5E6">
+										<h:panelGrid rendered="#{! publicacaoMB.adocao}"
+											style="background-color: #FDF5E6">
+											<p:calendar id="calendarDataPe" pattern="dd/MM/yyyy"
+												style="background-color: #FDF5E6"
+												value="#{publicacaoMB.animal.dataPE}" showOn="button" />
+										</h:panelGrid>
+									</p:panel>
+								</p:column>
+
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Estado:" styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:selectOneMenu id="estadoSelect" value="#{enderecoMB.estado}"
+										effect="fade" converter="#{estadoConverter}"
+										style="font-size:8px; font-family:sans-serif">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{enderecoMB.estados}" var="est"
+											itemLabel="#{est.nome}" itemValue="#{est}" />
+										<p:ajax event="change"
+											listener="#{enderecoMB.findCidadesByEstado}"
+											update="cidadeSelect" />
+										<p:ajax event="change" listener="#{publicacaoMB.match}"
+											update="panelMatch" />
+										<p:ajax event="change"
+											listener="#{gMapMB.pegarEstado(enderecoMB.estado)}"
+											update="panelGMap" />
+
+									</p:selectOneMenu>
+									<p:spacer width="20" />
+									<h:outputText value="sugerir ponto: " styleClass="f5" />
+									<p:selectBooleanCheckbox value="#{publicacaoMB.GMap}">
+										<p:ajax update="panelGMap" />
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2" style="background-color: #FDF5E6">
+									<h:panelGroup id="panelGMap">
+										<p:message id="msgGMap" showDetail="true" for="gmap" />
+										<p:gmap id="gmap" center="#{gMapMB.lat}, #{gMapMB.lng}"
+											zoom="13" type="HYBRID" style="width:600px;height:400px"
+											model="#{gMapMB.emptyModel}" widgetVar="map"
+											rendered="#{publicacaoMB.GMap and enderecoMB.estado != null}"
+											onPointClick="handlePointClick(event);">
+
+										</p:gmap>
+									</h:panelGroup>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Cidade:" styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:selectOneMenu id="cidadeSelect" value="#{enderecoMB.cidade}"
+										effect="fade" converter="#{cidadeConverter}"
+										style="font-size:8px; font-family:sans-serif">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{enderecoMB.cidades}" var="cid"
+											itemLabel="#{cid.nome}" itemValue="#{cid}" />
+										<p:ajax event="change" listener="#{publicacaoMB.match}"
+											update="panelMatch" />
+											<p:ajax event="change"
+											listener="#{gMapMB.pegarCidadeEstado(enderecoMB.cidade)}"
+											update="panelGMap" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Logradouro: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:inputText id="logradouroTf"
+										value="#{publicacaoMB.endereco.logradouro}">
+										<p:ajax event="blur"
+											listener="#{gMapMB.atribuirRua(publicacaoMB.endereco.logradouro)}" />
+									</p:inputText>
+									<p:message for="logradouroTf" display="both" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<h:outputText value="Bairro: " styleClass="f5" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+									<p:inputText id="bairroTf"
+										value="#{publicacaoMB.endereco.bairro}">
+										<p:ajax event="change"
+											listener="#{gMapMB.pegarBairroRua(publicacaoMB.endereco)}"
+											update="gmap" />
+									</p:inputText>
+									<p:message for="bairroTf" display="both" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+
+							</p:row>
+
+							<p:row>
+								<p:column colspan="3" style="background-color: #FDF5E6">
+									<p:message for="fileUpload" showDetail="true" />
+									<p:fileUpload id="fileUpload"
+										fileUploadListener="#{arquivoMB.uploadPbl}" mode="advanced"
+										dragDropSupport="false" auto="true" fileLimit="5"
+										showButtons="true" update="imgs"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|mp4|mov|rmvb)$/" 
+										label="Adicionar imagens" multiple="true"
+										style="width:40%;" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="3" style="background-color: #FDF5E6">
+									<center>
+										<p:dataTable id="imgs" value="#{arquivoMB.arquivos}" var="arq"
+											paginator="false" rows="6" style="font-size:13px !important"
+											emptyMessage="Nenhuma imagem adicionada."
+											styleClass="hide-column-names"
+											selection="#{arquivoMB.arqSelecionado}">
+											<p:column selectionMode="single" style="width:2%" />
+											<p:column>
+												<p:graphicImage value="/image?nome=#{arq.nome}" height="100" />
+											</p:column>
+
+											<p:column>
+												<h:outputText value="#{arq.nomeReal}" />
+											</p:column>
+
+											<p:column>
+												<p:commandButton action="#{arquivoMB.removerImgPreview}"
+													update="imgs" icon="ui-icon-trash" title="Remover"
+													process="@this">
+													<f:setPropertyActionListener target="#{arquivoMB.arqView}"
+														value="#{arq}" />
+												</p:commandButton>
+												<p:spacer width="20px" />
+												<p:commandButton onclick="visualizarArq.show()"
+													update="imgs :visualizarArquivoForm :visualizarArquivoForm:panelDialogArq"
+													icon="ui-icon-search" title="Visualizar" process="@this"
+													disabled="true">
+													<f:setPropertyActionListener target="#{arquivoMB.arqView}"
+														value="#{arq}" />
+												</p:commandButton>
+											</p:column>
+
+										</p:dataTable>
+									</center>
+								</p:column>
+
+							</p:row>
+
+							<p:row>
+								<p:column style="background-color: #FDF5E6">
+									<p:fileUpload fileUploadListener="#{videoMB.uploadVideoPbl}"
+										mode="advanced" update="videos" auto="true" immediate="true"
+										style="font-size:13px !important" label="Upload de video"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|mp4|mov|rmvb)$/" />
+								</p:column>
+								<p:column style="background-color: #FDF5E6">
+								<h:panelGroup>
+									<h:outputText value="formatos aceitos: " styleClass="f5"/>
+									<h:outputText value="mov, rmvb e mp4" styleClass="f7"/>
+									</h:panelGroup>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="3" style="background-color: #FDF5E6">
+									<center>
+										<p:dataTable id="videos" value="#{videoMB.listaVideos}"
+											var="vd" paginator="false" rows="6"
+											style="font-size:13px !important;background-color: #FDF5E6"
+											emptyMessage="Nenhum video adicionado"
+											styleClass="hide-column-names">
+											<p:column>
+												<h:outputText value="#{vd.nome}" height="100"
+													styleClass="f6" />
+											</p:column>
+										</p:dataTable>
+									</center>
+								</p:column>
+
+							</p:row>
+						</p:panelGrid>
+					</p:column>
+
+					<p:column
+						style="vertical-align: top !important; background-color: #FAF0E6"
+						styleClass="novaPlbBackG">
+						<p:panel id="panelMatch" header="Sugestıes" toggleable="false"
+							closable="true" styleClass="novaPlbBackG">
+							<p:dataTable value="#{publicacaoMB.publicacoesMatch}" var="plb"
+								id="matchPlbs" rows="5"
+								rendered="#{publicacaoMB.publicacao.tipoPublicacao == 'ENCONTRADO' or publicacaoMB.publicacao.tipoPublicacao == 'PERDIDO'}"
+								lazy="true" style="font-size:13px !important"
+								emptyMessage="Nenhum animal encontrado com caracterÌsticas similares"
+								styleClass="hide-column-names">
+
+								<p:column>
+									<p:graphicImage value="/image?nome=#{plb.imgMain.nome}"
+										height="50" id="imgAnl">
+										<p:tooltip for="imgAnl">
+											<p:panel header="#{plb.titulo}">
+												<h:panelGrid>
+													<h:panelGroup>
+														<h:outputText value="nome: " styleClass="f5" />
+														<h:outputText value="#{plb.animais.get(0).nome}"
+															styleClass="f6" />
+													</h:panelGroup>
+													<h:panelGroup>
+														<h:outputText value="data encontrado: " styleClass="f5" />
+														<h:outputText value="#{plb.animais.get(0).dataPE}"
+															styleClass="f6">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</h:panelGroup>
+
+													<h:panelGroup>
+														<h:outputText value="proximidades de: " styleClass="f5" />
+														<h:outputText
+															value="#{plb.endereco.cidade.nome}, #{plb.endereco.bairro}"
+															styleClass="f6">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</h:panelGroup>
+												</h:panelGrid>
+											</p:panel>
+										</p:tooltip>
+									</p:graphicImage>
+								</p:column>
+								<p:column>
+									<p:button value="Vizualizar" icon="ui-icon-search"
+										outcome="publicacao"
+										style="font-size:10px !important; margin-right: 0px !important; margin-left:10px">
+										<f:param name="id" value="#{plb.idPublicacao}" />
+									</p:button>
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+
+			<h:panelGrid id="gridBotoes" columns="2">
+				<p:commandButton id="salvarAnimal" value="Salvar"
+					action="#{publicacaoMB.salvarPublicacao(gMapMB.gmap)}" />
+
+				<p:commandButton id="cancelarAnimalBt" value="Cancelar"
+					immediate="true" action="#{publicacaoMB.cancelar}" />
+			</h:panelGrid>
+		</h:form>
+
+		<p:dialog>
+			<p:dialog id="visualizarVideo" widgetVar="visualizarVd"
+				showHeader="false" modal="true" appendToBody="true"
+				resizable="false" draggable="false" position="center" width="500"
+				height="600">
+				<h:form id="visualizarVideoForm">
+					<h:panelGrid id="panelDialogVd" columns="1" style="margin:0 auto;"
+						styleClass="panelGrid">
+						<br />
+						<center>
+							<h:outputText id="vdViewDialog" value="url:#{videoMB.video.url}" />
+							<p:commandButton actionListener="#{videoMB.removerVideoPreview}"
+								update=":novaPubliForm:videos" icon="ui-icon-trash"
+								title="Visualizar" process="@this" onclick="visualizarVd.hide()" />
+						</center>
+					</h:panelGrid>
+					<center>
+						<p:commandButton onclick="visualizarVd.hide()" value="Fechar"
+							update=":novaPubliForm:videos" icon="ui-icon-close"
+							title="Fechar" />
+					</center>
+				</h:form>
+			</p:dialog>
+		</p:dialog>
+		<p:dialog id="visualizarArquivo" widgetVar="visualizarArq"
+			showHeader="false" modal="true" appendToBody="true" resizable="false"
+			draggable="false" position="center" width="500" height="600">
+			<h:form id="visualizarArquivoForm">
+				<h:panelGrid id="panelDialogArq" columns="1" style="margin:0 auto;"
+					styleClass="panelGrid">
+					<h:outputText value="#{arquivoMB.arqView.nomeReal}"
+						style="font-size: 16px !important; font-family: sans-serif" />
+					<br />
+					<center>
+						<p:graphicImage id="imgViewDialog"
+							value="/image?nome=#{arquivoMB.arqView.nome}" />
+						<p:commandButton actionListener="#{arquivoMB.removerImgPreview}"
+							update=":novaPubliForm:imgs" icon="ui-icon-trash"
+							title="Visualizar" process="@this" onclick="visualizarArq.hide()" />
+					</center>
+				</h:panelGrid>
+				<center>
+					<p:commandButton onclick="visualizarArq.hide()" value="Fechar"
+						update=":novaPubliForm:imgs" icon="ui-icon-close" title="Fechar" />
+				</center>
+			</h:form>
+		</p:dialog>
+
+
+		<h:form id="ajusteImagemForm">
+			<p:dialog id="ajustarImgsDialog" widgetVar="ajustarImgs"
+				header="Ajustar Imagem" width="600" height="300">
+				<h:panelGrid id="painel" columns="2">
+					<p:imageCropper id="imgCropper" value="#{arquivoMB.imgCropped}"
+						image="/resources/upload/imgs/#{arquivoMB.imgPreviewName}"
+						initialCoords="0,0,300,125" />
+					<p:graphicImage id="imgCroppedPreview"
+						value="/resources/upload/imgs/#{arquivoMB.imgNomeNew}" />
+				</h:panelGrid>
+				<p:commandButton value="Visualizar" action="#{arquivoMB.crop}"
+					update="imgCroppedPreview" />
+			</p:dialog>
+		</h:form>
+
+		<p:dialog widgetVar="gMapDialog" showEffect="fade">
+			<h:form prependId="false">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="title" value="Nome: " />
+					<p:inputText id="title" value="#{gMapMB.gmap.title}" />
+
+					<f:facet name="footer">
+						<p:commandButton value="Add" actionListener="#{gMapMB.addMarker}"
+							oncomplete="markerAddComplete()" />
+						<p:commandButton value="Cancel" onclick="return cancel()" />
+					</f:facet>
+				</h:panelGrid>
+
+				<h:inputHidden id="lat" value="#{gMapMB.gmap.lat}" />
+				<h:inputHidden id="lng" value="#{gMapMB.gmap.lng}" />
+			</h:form>
+		</p:dialog>
+
+
+		<!-- script gmap -->
+
+		<script type="text/javascript">
+    var currentMarker = null;  
+  	var num = 0;
+    function handlePointClick(event) {  
+        
+        if(currentMarker === null) {  
+            document.getElementById('lat').value = event.latLng.lat();  
+            document.getElementById('lng').value = event.latLng.lng();  
+  			
+            currentMarker = new google.maps.Marker({  
+                position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())  
+            });  
+            if(num == 0){
+            map.addOverlay(currentMarker);  
+           
+            gMapDialog.show();
+            num += 1;
+            }
+        }     
+    }  
+  
+    function markerAddComplete() {  
+        var title = document.getElementById('title');  
+        currentMarker.setTitle(title.value);  
+        title.value = "";  
+ 
+        currentMarker = null;  
+        gMapDialog.hide();  
+    }  
+  
+    function cancel() {  
+        gMapDialog.hide();  
+        currentMarker.setMap(null);  
+        currentMarker = null;  
+  
+        return false;  
+    }  
+	</script>
+
+		<script type="text/javascript">  
+    function start() {  
+        this.progressInterval = setInterval(function(){  
+            pb.setValue(pb.getValue() + 10);  
+        }, 200);  
+    }  
+  
+    function cancel() {  
+        clearInterval(this.progressInterval);  
+        pb.setValue(0);  
+    }  
+</script>
+	</ui:define>
+</ui:composition>

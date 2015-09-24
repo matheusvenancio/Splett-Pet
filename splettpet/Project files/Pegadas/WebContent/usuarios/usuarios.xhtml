@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<ui:define name="body">
+
+		<h:form id="tabelaUsuarioForm">
+			<p:growl id="growl" showDetail="true" />
+			
+
+			<p:dataTable id="usuariosList" value="#{usuarioMB.usuarios}"
+				styleClass="semBorda" emptyMessage="Sem resultados"
+				widgetVar="usuariosTb"
+				filteredValue="#{usuarioMB.usuariosFiltrados}" var="usr">
+
+<f:facet name="header">
+				<p:outputPanel>
+					<p:selectBooleanCheckbox style="font-size:13px !important"
+						itemLabel="Pesquisar apenas usuarios banidos"
+						value="#{usuarioMB.buscarUsrBan}">
+					</p:selectBooleanCheckbox>
+					<p:commandButton style="font-size:12px !important"
+						actionListener="#{usuarioMB.buscarUsuariosBanidos}" ajax="true"
+						update=":tabelaUsuarioForm:usuariosList" value="Buscar"></p:commandButton>
+				</p:outputPanel>
+			</f:facet>
+
+				<p:column style="width:2%">
+					<p:rowToggler />
+				</p:column>
+				<p:column style="width:20%" headerText="Nome" sortBy="#{usr.nome}"
+					filterBy="#{usr.nome}">
+					<f:facet name="header">
+						<h:outputText value="Nome" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+					<h:outputText value="#{usr.nome} #{usr.sobrenome}" styleClass="f6" />
+				</p:column>
+				<p:column style="width:20%" headerText="Login"
+					sortBy="#{usr.username}" filterBy="#{usr.username}"
+					update="tbUsuarios">
+					<f:facet name="header">
+						<h:outputText value="Login" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+					<h:outputText value="#{usr.username}" styleClass="f6" />
+				</p:column>
+
+				<p:column style="width:20%">
+					<f:facet name="header">
+						<h:outputText value="E-mail" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+					<h:outputText value="#{usr.email}" styleClass="f6" />
+				</p:column>
+
+				<p:column style="width:20%" filterBy="#{usr.endereco.estado.nome}">
+					<f:facet name="header">
+						<h:outputText value="Estado" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+
+					<h:outputText value="#{usr.endereco.estado.nome}" styleClass="f6"
+						style="font-size:13px!important" />
+				</p:column>
+
+				<p:column style="width:20%">
+					<f:facet name="header">
+						<h:outputText value="Data de Cadastro" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+					<h:outputText value="#{usr.dataCadastro}" styleClass="f6">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+					</h:outputText>
+				</p:column>
+				<p:column style="width:13%">
+					<f:facet name="header">
+						<h:outputText value="Ações" styleClass="headerGeral"
+							style="font-size:13px!important" />
+					</f:facet>
+					<p:commandButton id="banirBt" onclick="confirmaDlg.show()"
+						rendered="#{! usr.banido}" value="Banir"
+						style="font-size:13px!important"
+						update=":tabelaUsuarioForm:usuariosList" ajax="true">
+						<f:setPropertyActionListener target="#{usuarioMB.usuario}"
+							value="#{usr}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:rowExpansion>
+					<p:panelGrid id="dadosUsrGrid" styleClass="semBorda">
+						<f:facet name="header">
+							<p:row>
+								<p:column colspan="8">
+								</p:column>
+							</p:row>
+						</f:facet>
+
+						<p:row>
+							<p:column style="width:10%">
+								<h:outputText value="Nome: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold;width:35%">
+								<h:outputText styleClass="f6" value="#{usr.nome}" />
+							</p:column>
+							<p:column style="width:15%">
+								<h:outputText value="Logradouro: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold;width:40%">
+								<h:outputText styleClass="f6" value="#{usr.endereco.logradouro}" />
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+							<p:column style="font-weight: bold">
+								<h:outputText value="Sobrenome: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.sobrenome}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="Número: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.endereco.numero}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="Login: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.username}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="Complemento: " styleClass="f5" />
+							</p:column>
+							<p:column>
+								<h:outputText styleClass="f6"
+									value="#{usr.endereco.complemento}" />
+							</p:column>
+							<p:column colspan="2">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="E-mail: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.email}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="CEP: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.endereco.cep}" />
+							</p:column>
+							<p:column colspan="2">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="width:10%">
+								<h:outputText value="Tel. Res.: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold; width:15%">
+								<h:outputText styleClass="f6" value="#{usr.telefoneRes}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="Bairro: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.endereco.bairro}" />
+							</p:column>
+							<p:column colspan="2">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="Tel. Cel.: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6" value="#{usr.telefoneCel}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="Cidade: " styleClass="f5" />
+							</p:column>
+							<p:column style="font-weight: bold">
+								<h:outputText styleClass="f6"
+									value="#{usr.endereco.cidade.nome}" />
+							</p:column>
+							<p:column colspan="3">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:100px">
+								<h:outputText value="Sobre: " styleClass="f5" />
+							</p:column>
+
+							<p:column colspan="7">
+								<h:outputText styleClass="f6" value="#{usr.bio}" escape="false" />
+							</p:column>
+						</p:row>
+
+						<f:facet name="rodape">
+							<p:row>
+								<p:column colspan="8" />
+							</p:row>
+						</f:facet>
+					</p:panelGrid>
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+
+
+		<h:form>
+			<p:confirmDialog id="confirmationDialog" global="true"
+				style="z-index:0 !important"
+				message="Deseja realmente banir este usuario?" header="Aviso"
+				widgetVar="confirmaDlg">
+				<p:commandButton value="Sim"
+					update=":tabelaUsuarioForm:usuariosList"
+					actionListener="#{usuarioMB.banirUsuario}"
+					oncomplete="confirmaDlg.hide()" />
+				<p:commandButton value="Não" actionListener="#{usuarioMB.cancelar}"
+					oncomplete="confirmaDlg.hide()" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

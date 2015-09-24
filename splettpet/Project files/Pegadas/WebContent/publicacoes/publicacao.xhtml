@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml"
+	xmlns:fb="https://www.facebook.com/2008/fbml">
+
+	<h:head>
+		<f:metadata>
+			<f:viewParam name="id" value="#{publicacaoMB.idPubliView}" />
+			<f:event type="preRenderView"
+				listener="#{publicacaoMB.findPubliById}" />
+			<f:event type="preRenderView"
+				listener="#{gMapMB.bustarGMapPorEndereco(publicacaoMB.publicacao.endereco.idEndereco)}" />
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appid=139428799581057";
+          fjs.parentNode.insertBefore(js, fjs);
+}        (document, 'script', 'facebook-jssdk'));</script>
+
+		<h:form>
+			<p:panelGrid style="width:80%; margin:0 auto"
+				styleClass="panelGridCellspacing">
+				<p:row>
+					<p:column colspan="4">
+						<center>
+							<p:messages id="messages" showDetail="true" closable="true" />
+						</center>
+					</p:column>
+				</p:row>
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText
+								value="#{publicacaoMB.animal.categoria.nome} #{publicacaoMB.publicacao.titulo}"
+								rendered="#{! publicacaoMB.edicaoAtiva}" />
+
+							<h:form>
+								<a
+									href="http://127.0.0.1:8080/Pegadas/publicacoes/publicacao.ifpr?id=#{publicacaoMB.publicacao.idPublicacao}"
+									onclick="
+   									 window.open(
+    								  'https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8080/Pegadas/publicacoes/publicacao.ifpr?id=#{publicacaoMB.publicacao.idPublicacao}', 
+   									   'facebook-share-dialog', 
+   									   'width=626,height=436'); 
+   									 return false;">
+									<h:graphicImage value="/img/compartilhar_fb-.gif"></h:graphicImage>
+								</a>
+							</h:form>
+						</p:column>
+					</p:row>
+				</f:facet>
+				<p:row>
+					<p:column rowspan="4" style="width:20px;height:30px;">
+						<p:galleria value="#{publicacaoMB.publicacao.arquivos}" var="arq"
+							panelWidth="200" panelHeight="300" showCaption="true">
+							<p:graphicImage value="/image?nome=#{arq.nome}" width="80%" />
+						</p:galleria>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<p:panel header="Sobre o animal" style="width:100%"
+							toggleable="false" closable="false" toggleSpeed="500"
+							closeSpeed="500" widgetVar="panel">
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+										<p:column style="width:15%">
+											<h:outputText value="Nome: " styleClass="fontePubliAnimal" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{publicacaoMB.animal.nome}"
+												styleClass="f7" rendered="#{! publicacaoMB.edicaoAtiva}" />
+										</p:column>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+
+										<p:column>
+											<h:outputText value="Idade: " styleClass="fontePubliAnimal" />
+										</p:column>
+										<p:column>
+											<h:outputText styleClass="f7"
+												value="#{publicacaoMB.animal.divisaoIdade.label}"
+												rendered="#{!publicacaoMB.edicaoAtiva}" />
+											<h:outputText value=", não conhecida." styleClass="f7"
+												rendered="#{publicacaoMB.animal.idade == 0 and !publicacaoMB.edicaoAtiva}" />
+											<h:outputText value=", #{publicacaoMB.animal.idade} anos."
+												styleClass="f7"
+												rendered="#{publicacaoMB.animal.idade > 0 and !publicacaoMB.edicaoAtiva}" />
+
+										</p:column>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+
+										<p:column>
+											<h:outputText value="Sexo: " styleClass="fontePubliAnimal" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{publicacaoMB.animal.sexo.label}"
+												styleClass="f7" rendered="#{!publicacaoMB.edicaoAtiva}" />
+
+										</p:column>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+
+										<p:column>
+											<h:outputText value="Raca: " styleClass="fontePubliAnimal" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{publicacaoMB.animal.raca.nome}"
+												styleClass="f7" />
+											<h:outputText value="Sem raça definida (SRD)"
+												rendered="#{publicacaoMB.animal.raca.nome} == null and !publicacaoMB.edicaoAtiva}" />
+
+										</p:column>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+							<p:row>
+								<h:panelGrid columns="2">
+									<h:panelGroup>
+										<h:outputText value="Porte: " styleClass="fontePubliAnimal" />
+										<h:outputText value="#{publicacaoMB.animal.porteAnimal.label}"
+											styleClass="f7"
+											rendered="#{publicacaoMB.animal.porteAnimal != null and !publicacaoMB.edicaoAtiva}" />
+
+									</h:panelGroup>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<h:panelGroup>
+										<h:outputText value="Castrado: " styleClass="fontePubliAnimal" />
+										<h:outputText value="Sim" styleClass="f7"
+											rendered="#{publicacaoMB.publicacao.animais.get(0).castrado}" />
+										<h:outputText value="Não" styleClass="f7"
+											rendered="#{! publicacaoMB.publicacao.animais.get(0).castrado}" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+
+										<p:column>
+											<h:outputText value="Cor: " styleClass="fontePubliAnimal" />
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="Tons de #{publicacaoMB.publicacao.animais.get(0).corPrincipal} e #{publicacaoMB.publicacao.animais.get(0).corSecundaria}"
+												rendered="#{!publicacaoMB.edicaoAtiva}" styleClass="f7" />
+											<h:panelGroup>
+												<h:outputText value="Tons de "
+													rendered="#{publicacaoMB.edicaoAtiva}" />
+
+												<h:outputText value=" e " styleClass="f7"
+													rendered="#{publicacaoMB.edicaoAtiva}" />
+
+											</h:panelGroup>
+										</p:column>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+
+
+							<p:row>
+								<p:fieldset legend="Descricao" toggleable="true"
+									toggleSpeed="500">
+									<h:panelGrid>
+										<h:panelGroup>
+											<p:column colspan="4">
+												<h:outputText
+													value="#{publicacaoMB.publicacao.animais.get(0).descri}"
+													styleClass="f7" />
+											</p:column>
+										</h:panelGroup>
+									</h:panelGrid>
+								</p:fieldset>
+							</p:row>
+
+						</p:panel>
+					</p:column>
+				</p:row>
+
+
+			</p:panelGrid>
+			<p:panelGrid style="width:80%; margin:0 auto"
+				styleClass="panelGridCellspacing">
+				<p:row>
+					<p:column>
+						<p:panel header="Dados para Contato" style="width:94%"
+							toggleable="true" closable="false" toggleSpeed="500"
+							closeSpeed="500" widgetVar="panel">
+							<p:row>
+								<h:panelGrid columns="2">
+									<h:panelGroup>
+										<h:outputText value="Estado: " styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.endereco.estado.nome}"
+											styleClass="f7" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="Cidade: " styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.endereco.cidade.nome}"
+											styleClass="f7" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+
+							<p:row>
+								<h:panelGrid columns="2">
+									<h:panelGroup>
+										<h:outputText value="Bairro: " styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.endereco.bairro}"
+											styleClass="f7" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="Logradouro: "
+											styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.endereco.logradouro}"
+											styleClass="f7" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:row>
+							<p:row>
+								<h:panelGrid>
+									<h:panelGroup>
+										<h:outputText value="telefone para contatoo: "
+											styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.usuario.telefoneRes}"
+											styleClass="f7" />
+
+										<h:outputText value=" ou " styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.usuario.telefoneCel}"
+											styleClass="f7" />
+									</h:panelGroup>
+									<p:commandButton type="button" icon="ui-icon-pin-s"
+										value="Visualizar Mapa" style="font-size:12px !important"
+										onclick="gMapDlg.show()" />
+								</h:panelGrid>
+							</p:row>
+
+						</p:panel>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:fieldset legend="Videos anexados" toggleable="true" collapsed="true">
+							<p:dataTable styleClass="alignCenter"
+								value="#{videoMB.listarVideosPubli(publicacaoMB.publicacao.animais.get(0).id)}"
+								var="vd">
+								<p:column>
+									<h:outputText
+										value="&lt;embed width='500' height='375' autoplay='false' type='#{videoMB.embedFormatVideo(vd)}'
+							src='/Pegadas/video?url=#{vd.url}' loop='false' scale='tofit' controller='true' pluginspage='http://www.adobe.com/go/getflashplayer'/&gt;"
+										escape="false" />
+								</p:column>
+							</p:dataTable>
+						</p:fieldset>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:fieldset legend="Sobre o Autor" toggleable="true"
+							collapsed="true" toggleSpeed="500" style="width:91%">
+							<h:panelGrid>
+								<h:panelGroup>
+									<p:column colspan="4">
+										<h:outputText value="nome: " styleClass="fontePubliAnimal" />
+										<h:outputText value="#{publicacaoMB.publicacao.usuario.nome}"
+											styleClass="f7" />
+									</p:column>
+								</h:panelGroup>
+								<p:row>
+									<p:column>
+										<h:outputText value="Data de cadastro: "
+											styleClass="fontePubliAnimal" />
+										<h:outputText
+											value="#{publicacaoMB.publicacao.usuario.dataCadastro}"
+											styleClass="f7">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+								</p:row>
+
+							</h:panelGrid>
+						</p:fieldset>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+
+		<p:dialog widgetVar="gMapDlg"
+			header="Mapa - #{publicacaoMB.publicacao.endereco.estado.nome}, #{publicacaoMB.publicacao.endereco.cidade.nome}">
+			<p:gmap center="#{gMapMB.gmap.lat}, #{gMapMB.gmap.lng}" zoom="15"
+				type="HYBRID" style="width:400px;height:260px" />
+		</p:dialog>
+
+		<h:form style="width:100%; font-size:20px">
+			<p:panelGrid style="width:80%; margin:0 auto"
+				styleClass="panelGridCellspacing">
+				<p:row>
+					<p:column>
+						<fb:comments colorscheme="light" width="810"
+							href="http://localhost:8080/Pegadas/publicacoes/publicacao.ifpr?id=#{publicacaoMB.publicacao.idPublicacao}"></fb:comments>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

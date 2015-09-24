@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
+	<converter>
+		<converter-id>ConverterEmptyToNull</converter-id>
+		<converter-class>sistema.ConverterEmptyToNull</converter-class>
+	</converter>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>usuarios</from-outcome>
+			<to-view-id>/usuarios/usuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>gerOrganizacoes</from-outcome>
+			<to-view-id>/gerenciar/organizacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>gerOrganizacao</from-outcome>
+			<to-view-id>/organizacoes/gerenciar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>gerOrg</from-outcome>
+			<to-view-id>/organizacoes/gerenciar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>visualizarOrg</from-outcome>
+			<to-view-id>/organizacoes/visualizarOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>usuario</from-outcome>
+			<to-view-id>/usuarios/usuario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>confUsr</from-outcome>
+			<to-view-id>/usuarios/configuracoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>organizacao</from-outcome>
+			<to-view-id>/organizacoes/organizacao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>cadastroUsuario</from-outcome>
+			<to-view-id>/usuarios/cadastro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>erro</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>loginError</from-outcome>
+			<to-view-id>/loginError.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>animais</from-outcome>
+			<to-view-id>/animais/animais.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>animaisOrg</from-outcome>
+			<to-view-id>/animais/animaisOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>cadastroAnimal</from-outcome>
+			<to-view-id>/animais/novoAnimal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>animalOrg</from-outcome>
+			<to-view-id>/animais/animalOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>categorias</from-outcome>
+			<to-view-id>/animais/categoria/categorias.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaCategoria</from-outcome>
+			<to-view-id>/animais/categoria/novaCategoria.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>gerenciarCategorias</from-outcome>
+			<to-view-id>/animais/categoria/gerenciarCategorias.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>racas</from-outcome>
+			<to-view-id>/animais/raca/racas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaRaca</from-outcome>
+			<to-view-id>/animais/raca/novaRaca.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaPublicacao</from-outcome>
+			<to-view-id>/publicacoes/novaPublicacao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>publicacao</from-outcome>
+			<to-view-id>/publicacoes/publicacao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>editarPlb</from-outcome>
+			<to-view-id>/publicacoes/editarPlb.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>pesquisarPubli</from-outcome>
+			<to-view-id>/publicacoes/pesquisar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>publicacoes</from-outcome>
+			<to-view-id>/publicacoes/publicacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>doacoes</from-outcome>
+			<to-view-id>/doacao/doacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaDoacaoOrg</from-outcome>
+			<to-view-id>/doacao/novaDoacaoOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>doacoesOrg</from-outcome>
+			<to-view-id>/doacao/doacoesOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaDoacao</from-outcome>
+			<to-view-id>/doacao/novaDoacao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>necessidades</from-outcome>
+			<to-view-id>/necessidades/necessidades.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>necessidadesOrg</from-outcome>
+			<to-view-id>/necessidades/necessidadesOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaNecessidade</from-outcome>
+			<to-view-id>/necessidades/novaNecessidade.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaOrganizacao</from-outcome>
+			<to-view-id>/organizacoes/cadastro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>organizacoes</from-outcome>
+			<to-view-id>/organizacoes/organizacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>eventos</from-outcome>
+			<to-view-id>/eventos/eventos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>eventosOrg</from-outcome>
+			<to-view-id>/eventos/eventosOrg.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novoEvento</from-outcome>
+			<to-view-id>/eventos/novoEvento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listaAnimais</from-outcome>
+			<to-view-id>/animais/listaAnimais.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listaNecessidades</from-outcome>
+			<to-view-id>/necessidades/listaNecessidades.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listaEventos</from-outcome>
+			<to-view-id>/evento/listaEventos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>AcessoNegado</from-outcome>
+			<to-view-id>/negado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>SessaoExpirada</from-outcome>
+			<to-view-id>/sessaoExpirada.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>editarUsuario</from-outcome>
+			<to-view-id>/usuarios/editarUsuario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>loginAuthenticate</from-outcome>
+			<to-view-id>/loginAuthenticate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>loginFacebook</from-outcome>
+			<to-view-id>/loginFb.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novaMensagem</from-outcome>
+			<to-view-id>/mensagens/novaMensagem.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>mensages</from-outcome>
+			<to-view-id>/mensagens/mensagens.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>escreverMensagem</from-outcome>
+			<to-view-id>/mensagens/escreverMensagem.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>confirmaDadosCadastroFace</from-outcome>
+			<to-view-id>/fb/facebookCadastro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>confirmaEventoFacebook</from-outcome>
+			<to-view-id>/evento/confirmaEventoFacebook.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>evento</from-outcome>
+			<to-view-id>/eventos/evento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>finalFeliz</from-outcome>
+			<to-view-id>/finalFeliz/finalFeliz.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>novoFinalFeliz</from-outcome>
+			<to-view-id>/finalFeliz/novoFinalFeliz.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>finaisFelizes</from-outcome>
+			<to-view-id>/finalFeliz/finaisFelizes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>realizarLogin</from-outcome>
+			<to-view-id>/realizarLogin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+</faces-config>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/layout/template.xhtml">
+
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	</h:head>
+
+	<ui:define name="body">
+
+		<h:form id="novoAnimalOrgForm"
+			style="background-color:#FDF5E6 !important">
+			<p:panelGrid styleClass="panelGrid"
+				style="width:100%; background-color:#FDF5E6">
+				<p:row style="background-color:#FDF5E6">
+				<p:column>
+					<p:panelGrid style="width:100%; background-color:#FDF5E6">
+						<p:row style="background-color:#FDF5E6">
+							<p:column colspan="4" style="background-color:#FDF5E6">
+								<p:messages id="messages" showDetail="true" autoUpdate="true"
+									showSummary="false" />
+							</p:column>
+						</p:row>
+						<p:row style="background-color:#FDF5E6">
+							<p:column style="background-color:#FDF5E6 !important">
+							</p:column>
+						</p:row>
+						<p:row style="background-color:#FDF5E6">
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Nome: *" styleClass="f5" />
+							</p:column>
+							<p:column colspan="2" style="background-color:#FDF5E6 !important">
+								<p:inputText id="nomeTf" value="#{animalMB.animal.nome}"
+									required="true" requiredMessage="Campo 'Nome' é obrigatório" />
+							</p:column>
+						</p:row>
+						<p:row style="background-color:#FDF5E6">
+							<p:column style="background-color:#FDF5E6 !important">
+							</p:column>
+							<p:column colspan="2" style="background-color:#FDF5E6 !important">
+								<h:panelGrid columns="2" style="background-color:#FDF5E6">
+									<h:panelGroup>
+										<p:selectOneRadio id="selectFA" styleClass="f6"
+											value="#{animalMB.animal.divisaoIdade}" required="true"
+											requiredMessage="" style="font-size:13px !important">
+											<f:selectItems value="#{divisaoIdadeProvider.diviIdade}"
+												var="di" itemLabel="#{di.label}" itemValue="#{di}"
+												styleClass="f6" />
+											<p:ajax listener="#{animalMB.gerarCampoOutros}"
+												update="idadeTf" />
+										</p:selectOneRadio>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<p:spacer width="20px" />
+										<h:outputText value="Idade: " styleClass="f5" />
+										<h:outputText value="(se conhecida) " styleClass="fonteObs" />
+										<p:inputMask id="idadeTf" value="#{animalMB.animal.idade}"
+											mask="9?9" maxlength="2" validatorMessage="Apenas números"
+											size="2"
+											disabled="#{! not empty animalMB.animal.divisaoIdade}" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Sexo: *" styleClass="f5" />
+							</p:column>
+							<p:column colspan="2" style="background-color:#FDF5E6 !important">
+								<p:selectOneRadio id="sexoSelect" styleClass="f6"
+									style="font-size:13px !important"
+									value="#{animalMB.animal.sexo}" required="true"
+									requiredMessage="O campo 'Sexo' é obrigatório">
+									<f:selectItems value="#{sexoProvider.sexos}" var="sexo"
+										itemLabel="#{sexo.label}" itemValue="#{sexo}" />
+
+								</p:selectOneRadio>
+
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Categoria: *" styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:panelGrid columns="2" cellpadding="0">
+									<p:selectOneButton id="selectCategoria"
+										value="#{animalMB.animal.categoria}"
+										converter="#{categoriaConverter}" required="true"
+										requiredMessage="O campo 'Categoria' é obrigatório">
+										<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+											itemLabel="#{cat.nome}" itemValue="#{cat}" />
+										<p:ajax event="change"
+											listener="#{racaMB.findRacasByCategoria}"
+											update="panelCategoriaOutro selectRaca" />
+
+									</p:selectOneButton>
+
+								
+								</h:panelGrid>
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:panelGroup id="panelCategoriaOutro">
+									<p:selectOneMenu id="selectCategoriaOutro"
+										value="#{animalMB.animal.categoria}" effect="fade"
+										converter="#{categoriaConverter}"
+										rendered="#{animalMB.categoriaDifere}">
+										<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+											itemLabel="#{cat.nome}" itemValue="#{cat}" />
+									</p:selectOneMenu>
+								</h:panelGroup>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Raça: *" styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:selectOneMenu id="selectRaca" effet="fade"
+									value="#{animalMB.animal.raca}" converter="#{racaConverter}">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+									<f:selectItems value="#{racaMB.racas}" var="raca"
+										itemLabel="#{raca.nome}" itemValue="#{raca}" />
+
+								</p:selectOneMenu>
+								<p:message for="selectRaca" display="both" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:message id="racaMsg" for="selectRaca" display="icon" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Porte:" styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:selectOneRadio id="porteSelect"
+									value="#{animalMB.animal.porteAnimal}">
+									<f:selectItems value="#{porteProvider.portes}" var="porte"
+										itemLabel="#{porte.label}" itemValue="#{porte}" />
+								</p:selectOneRadio>
+								<p:message for="porteSelect" display="both" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Cor Principal: " styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:autoComplete id="corPrincipalTf"
+									value="#{animalMB.animal.corPrincipal}"
+									completeMethod="#{animalMB.completeCores}">
+
+								</p:autoComplete>
+								<p:message for="corPrincipalTf" display="icon" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Cor Secundária: " styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:autoComplete id="corSecundariaTf"
+									value="#{animalMB.animal.corSecundaria}"
+									completeMethod="#{animalMB.completeCores}">
+
+								</p:autoComplete>
+								<p:message for="corSecundariaTf" display="icon" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="background-color:#FDF5E6 !important">
+								<h:outputText value="Descrição: " styleClass="f5" />
+							</p:column>
+							<p:column style="background-color:#FDF5E6 !important">
+								<p:inputTextarea id="descricaoAnimal"
+									converter="ConverterEmptyToNull"
+									value="#{animalMB.animal.descri}" rows="8" cols="50"
+									counter="counter" maxlength="400"
+									counterTemplate="{0} characters remaining." />
+								<br />
+								<h:outputText id="counter" styleClass="fonteObs" />
+								<p:messages for="descricaoAnimal" display="both" />
+								<h:outputText
+									value="Aqui você poderá falar mais sobre o animal, trazendo melhores dados para reconhecimento."
+									styleClass="fonteInfoDestaq" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="3" style="background-color:#FDF5E6 !important">
+								<p:message for="fileUpload" showDetail="true" />
+								<p:fileUpload id="fileUpload"
+									fileUploadListener="#{arquivoMB.uploadPbl}" mode="advanced"
+									dragDropSupport="false" sizeLimit="20971520" auto="true"
+									fileLimit="5" showButtons="true" update="imgs"
+									allowTypes="/(\.|\/)(jpe?g|png)$/" label="Adicionar imagens"
+									multiple="true" style="width:40%" />
+							</p:column>
+						</p:row>
+						<p:row style="background-color:#FDF5E6">
+							<p:column colspan="3" style="background-color:#FDF5E6 !important">
+								<center>
+									<p:dataTable id="imgs" value="#{arquivoMB.arquivos}" var="arq"
+										paginator="false" rows="6"
+										emptyMessage="Nenhuma imagem adicionada."
+										styleClass="hide-column-names"
+										selection="#{arquivoMB.arqSelecionado}">
+										<p:column selectionMode="single" style="width:2%" />
+										<p:column>
+											<p:graphicImage value="/image?nome=#{arq.nome}" height="100" />
+										</p:column>
+
+										<p:column>
+											<h:outputText value="#{arq.nomeReal}" />
+										</p:column>
+
+										<p:column>
+											<p:commandButton action="#{arquivoMB.removerImgPreview}"
+												update="imgs" icon="ui-icon-trash" title="Remover"
+												process="@this">
+												<f:setPropertyActionListener target="#{arquivoMB.arqView}"
+													value="#{arq}" />
+											</p:commandButton>
+											<p:spacer width="20px" />
+											<p:commandButton onclick="visualizarArq.show()"
+												update="imgs :visualizarArquivoForm :visualizarArquivoForm:panelDialogArq"
+												icon="ui-icon-search" title="Visualizar" process="@this"
+												disabled="true">
+												<f:setPropertyActionListener target="#{arquivoMB.arqView}"
+													value="#{arq}" />
+											</p:commandButton>
+										</p:column>
+
+									</p:dataTable>
+								</center>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+
+			<h:panelGrid id="gridBotoes" columns="2">
+				<p:commandButton id="salvarAnimal" value="Salvar"
+					action="#{animalMB.salvar}" />
+
+				<p:commandButton id="cancelarAnimalBt" value="Cancelar"
+					immediate="true" action="#{animalMB.salvar}" />
+			</h:panelGrid>
+		</h:form>
+
+		<p:dialog id="visualizarArquivo" widgetVar="visualizarArq"
+			showHeader="false" modal="true" appendToBody="true" resizable="false"
+			draggable="false" position="center" width="500" height="600">
+			<h:form id="visualizarArquivoForm">
+				<h:panelGrid id="panelDialogArq" columns="1" style="margin:0 auto;"
+					styleClass="panelGrid">
+					<h:outputText value="#{arquivoMB.arqView.nomeReal}"
+						style="font-size: 16px !important; font-family: sans-serif" />
+					<br />
+					<center>
+						<p:graphicImage id="imgViewDialog"
+							value="/image?nome=#{arquivoMB.arqView.nome}" />
+						<p:commandButton actionListener="#{arquivoMB.removerImgPreview}"
+							icon="ui-icon-trash" title="Visualizar" process="@this"
+							onclick="visualizarArq.hide()" />
+					</center>
+				</h:panelGrid>
+				<center>
+					<p:commandButton onclick="visualizarArq.hide()" value="Fechar"
+						icon="ui-icon-close" title="Fechar" />
+				</center>
+			</h:form>
+		</p:dialog>
+
+
+		<h:form id="ajusteImagemForm">
+			<p:dialog id="ajustarImgsDialog" widgetVar="ajustarImgs"
+				header="Ajustar Imagem" width="600" height="300">
+				<h:panelGrid id="painel" columns="2">
+					<p:imageCropper id="imgCropper" value="#{arquivoMB.imgCropped}"
+						image="/resources/upload/imgs/#{arquivoMB.imgPreviewName}"
+						initialCoords="0,0,300,125" />
+					<p:graphicImage id="imgCroppedPreview"
+						value="/resources/upload/imgs/#{arquivoMB.imgNomeNew}" />
+				</h:panelGrid>
+				<p:commandButton value="Visualizar" action="#{arquivoMB.crop}"
+					update="imgCroppedPreview" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

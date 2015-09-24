@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	</h:head>
+	<ui:define name="body">
+		<h:form id="pesquisaAvancadaForm">
+			<p:panelGrid columns="1"
+				style="width:100%;margin-left: auto !important;
+	margin-right: auto !important;"
+				styleClass="semBorda">
+				<p:row>
+					<p:column style="width:50%">
+						<h:panelGrid columns="1" styleClass="alignCenter">
+							<h:panelGrid columns="2">
+								<h:outputText value="Situação: " styleClass="f5" />
+								<p:selectOneButton id="tipoPubliChooseBt"
+									value="#{pesquisaPubliMB.tipoPubli}"
+									style="font-size:12px !important;margin-right: 4px !important;">
+									<f:selectItems value="#{tiposPubliProvider.tipos}" var="tipo"
+										itemLabel="#{tipo.label}" itemValue="#{tipo}" />
+								</p:selectOneButton>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<h:outputText value="Nome: " styleClass="f5" />
+								<p:inputText value="#{pesquisaPubliMB.tf}" />
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="2">
+							<h:outputText value="Categoria: " styleClass="f5"/>
+								<p:selectOneMenu id="selectCategoria"
+									value="#{pesquisaPubliMB.categoria}"
+									converter="#{categoriaConverter}" style="font-size:15px">
+									<f:selectItems value="#{categoriaMB.categorias}" var="cat"
+										itemLabel="#{cat.nome}" itemValue="#{cat}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<h:outputText value="Sexo: " styleClass="f5" />
+								<h:panelGroup>
+									<p:selectOneRadio id="sexoSelect"
+										style="font-size:13px !important"
+										value="#{pesquisaPubliMB.sexo}">
+										<f:selectItems value="#{sexoProvider.sexos}" var="sexo"
+											itemLabel="#{sexo.label}" itemValue="#{sexo}" styleClass="f6" />
+									</p:selectOneRadio>
+								</h:panelGroup>
+							</h:panelGrid>
+
+							
+							<h:panelGrid columns="2">
+								<h:outputText value="Cor Principal: " styleClass="f5" />
+								<p:autoComplete id="corPrincipalTf"
+									value="#{pesquisaPubliMB.corPrincipal}"
+									completeMethod="#{publicacaoMB.completeCores}" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Cor Secundária: " styleClass="f5" />
+								<p:autoComplete id="corSecundariaTf"
+									value="#{pesquisaPubliMB.corSecundaria}"
+									completeMethod="#{publicacaoMB.completeCores}" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Divisão Idade: " styleClass="f5" />
+								<p:selectOneRadio id="selectFA"
+									value="#{pesquisaPubliMB.diviIdade}">
+									<f:selectItems value="#{divisaoIdadeProvider.diviIdade}"
+										var="di" itemLabel="#{di.label}" itemValue="#{di}" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Estado: " styleClass="f5" />
+								<p:selectOneMenu id="selectEstado" styleClass="f6"
+									value="#{pesquisaPubliMB.estado}" effect="fade"
+									converter="#{estadoConverter}" style="font-size:15px">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+									<f:selectItems value="#{enderecoMB.estados}" var="est"
+										itemLabel="#{est.nome}" itemValue="#{est}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:column>
+				</p:row>
+				<h:panelGrid columns="1" styleClass="alignCenter">
+					<p:commandButton actionListener="#{pesquisaPubliMB.pesquisar}"
+						value="Pesquisar" update="publicacoes"
+						style="font-size:13px !important" />
+				</h:panelGrid>
+
+			</p:panelGrid>
+
+
+			<p:dataTable id="publicacoes" value="#{pesquisaPubliMB.resultados}"
+				var="plb" paginator="true" rows="5"
+				paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+				paginatorPosition="bottom" styleClass="hide-column-names"
+				emptyMessage="Nenhuma publica‹o encontrada com os critŽrios selecionados."
+				style="margin:0 auto;">
+				<p:column>
+					<p:accordionPanel>
+						<p:tab title="#{plb.tipoPublicacao.label} - #{plb.titulo}">
+							<p:panelGrid
+								style="width:90%; margin-top: 10px !important; border-collapse:separate; height: 200px"
+								styleClass="panelGridCellspacing2">
+								<p:row>
+									<p:column rowspan="4" style="width:170px">
+										<center>
+											<p:graphicImage value="/image?nome=#{plb.imgMain.nome}"
+												height="170" style="margin-left: 0px;" />
+										</center>
+									</p:column>
+									<p:column style="width:25%;">
+										<h:panelGrid columns="2" style="height:140px">
+											<h:outputText value="Sexo: " styleClass="f5" />
+											<h:outputText value="#{plb.animais.get(0).sexo.label}"
+												styleClass="f6" />
+
+											<h:outputText value="Porte: " styleClass="f5" />
+											<h:panelGroup>
+												<h:outputText
+													value="#{plb.animais.get(0).porteAnimal.label}"
+													styleClass="f6" />
+												<h:outputText value="N‹o especificado" styleClass="f6"
+													rendered="#{plb.animais.get(0).porteAnimal == null}" />
+											</h:panelGroup>
+
+											<h:outputText value="Castrado: " styleClass="f5" />
+											<h:panelGroup>
+												<h:outputText value="Sim "
+													rendered="#{plb.animais.get(0).castrado}" styleClass="f6" />
+												<h:outputText value="N‹o "
+													rendered="#{! plb.animais.get(0).castrado}" styleClass="f6" />
+											</h:panelGroup>
+
+											<h:outputText value="Vermifugado: " styleClass="f5" />
+											<h:panelGroup>
+												<h:outputText value="Sim"
+													rendered="#{plb.animais.get(0).castrado}" styleClass="f6" />
+												<h:outputText value="N‹o"
+													rendered="#{! plb.animais.get(0).castrado}" styleClass="f6" />
+											</h:panelGroup>
+
+											<h:outputText value="Cor: " styleClass="f5" />
+											<h:panelGroup>
+												<h:outputText value="Tons de #{plb.animais.get(0).corPrincipal} e #{plb.animais.get(0).corSecundaria}"
+													styleClass="f6"/>
+												</h:panelGroup>
+										</h:panelGrid>
+									</p:column>
+									<p:column
+										style="vertical-align:text-top; margin-top:0px !important;">
+										<h:panelGrid columns="1" style="margin-left:100px">
+											<h:panelGroup>
+												<h:outputText value="#{plb.animais.get(0).categoria.nome}"
+													styleClass="f3" style="font-weight: bold;" />
+												<h:outputText value=" - #{plb.animais.get(0).nome}"
+													styleClass="f3" />
+											</h:panelGroup>
+											<h:outputText value="#{plb.animais.get(0).descri}"
+												styleClass="f7" style="margin-top:10px !important;" />
+											<br />
+										</h:panelGrid>
+										<h:panelGrid style="margin-left:100px; height:100px">
+											<p:button value="Ir para a publica‹o" outcome="publicacao"
+												style="font-size:10px !important; margin-right: 0px !important;">
+												<f:param name="id" value="#{plb.idPublicacao}" />
+											</p:button>
+										</h:panelGrid>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2">
+										<h:outputText value="Criado por " styleClass="f7" />
+										<p:button value="#{plb.usuario.nome}" outcome="usuario"
+											style="font-size: 10px !important;">
+											<f:param name="view" value="#{plb.usuario.username}" />
+										</p:button>
+										<h:outputText value=" em " styleClass="f7" />
+										<h:outputText value="#{plb.dataCadastro}" styleClass="f7">
+											<f:convertDateTime pattern="dd/MM/yyyy" styleClass="f7" />
+										</h:outputText>
+									</p:column>
+
+								</p:row>
+							</p:panelGrid>
+						</p:tab>
+					</p:accordionPanel>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

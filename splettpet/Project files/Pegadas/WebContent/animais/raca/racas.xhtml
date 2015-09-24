@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	</h:head>
+	<ui:define name="body">
+		<h:form id="racasForm">
+			<p:panelGrid columns="1" style="width:100%" styleClass="semBorda">
+				<p:dataGrid var="cat" value="#{categoriaMB.categorias}"
+					styleClass="semBorda" paginator="true" paginatorPosition="bottom"
+					rows="3" columns="3">
+					<p:column>
+						<p:panel header="#{cat.nome}">
+							<p:dataTable styleClass="semBorda" var="raca"
+								value="#{racaMB.listarRacasByCategoria(cat.id)}">
+								<p:column>
+									<h:outputText value="nome raca: #{raca.nome}" />
+
+								</p:column>
+								<p:column>
+									<p:commandButton id="removerRaca" icon="ui-icon-trash"
+										action="#{racaMB.remover}">
+										<f:setPropertyActionListener target="#{racaMB.raca}"
+											value="#{raca}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+
+							<p:commandButton id="addRacaByCatBt" icon="ui-icon-plus"
+								onclick="addRacaByCatDlg.show()"
+								actionListener="#{categoriaMB.findCatById(cat.id)}">
+							</p:commandButton>
+
+
+						</p:panel>
+
+					</p:column>
+				</p:dataGrid>
+			</p:panelGrid>
+		</h:form>
+
+		<p:dialog id="dlgAddRaca" widgetVar="addRacaByCatDlg">
+			<form>
+				<h:panelGrid id="addRacaPanel" columns="2">
+
+					<h:outputText value="Nome: " />
+					<p:inputText value="#{racaMB.raca.nome}" required="true" />
+
+				</h:panelGrid>
+
+				<p:commandButton id="salvarBt" value="Salvar"
+					action="#{racaMB.salvarRacaByCat(categoriaMB.categoria.id)}"
+					onclick="addEndDialog.hide()" />
+			</form>
+
+		</p:dialog>
+	</ui:define>
+</ui:composition>

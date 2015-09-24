@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:oauth="http://www.springframework.org/schema/security/oauth"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http auto-config="false" entry-point-ref="authenticationEntryPoint">
+		
+		<!-- so o admin -->
+		<intercept-url pattern="/usuarios/usuarios**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/gerenciar/organizacoes**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/animais/categoria/categorias**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/animais/raca/racas**" access="ROLE_ADMIN" />
+		
+		<!-- admin, mod, voluntario -->
+		<intercept-url pattern="/eventos/novoEvento**" access="ROLE_ADMIN, ROLE_MOD, ROLE_VOLUNT" />
+		<intercept-url pattern="/animais/novoAnimal**" access="ROLE_ADMIN, ROLE_MOD, ROLE_VOLUNT" />
+		<intercept-url pattern="/eventos/eventos" access="ROLE_ADMIN, ROLE_MOD, ROLE_VOLUNT" />
+		<intercept-url pattern="/organizacoes/gerenciar**" access="ROLE_ADMIN, ROLE_MOD, ROLE_VOLUNT" />
+		<intercept-url pattern="/animais/animais.ifpr" access="ROLE_ADMIN, ROLE_MOD, ROLE_VOLUNT" />
+		<intercept-url pattern="/necessidades/necessidades.ifpr" access="ROLE_ADMIN, ROLE_MOD" />
+		
+		<!-- todos os usuarios -->	
+		<intercept-url pattern="/doacao/doacoes**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/doacao/novaDoacao**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/animais/animaisOrg.ifpr" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/eventos/eventosOrg.ifpr" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/necessidades/necessidadesOrg.ifpr" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/publicacoes/publicacoes**"	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/usuarios/confirmaDadosCadastroFace**" access="IS_AUTHENTICATED_FULLY" />
+		<!--  -->
+		
+		<custom-filter before="FORM_LOGIN_FILTER" ref="facebookAuthenticationFilter" />
+
+		<logout invalidate-session="true" logout-success-url="/index.ifpr" />
+
+		<form-login login-page="/login.xhtml" default-target-url="/index.ifpr"
+			authentication-failure-url="/login.ifpr?erro=true" />
+
+	</http>
+
+
+	<beans:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/ifpr" />
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="username" value="root" />
+		<beans:property name="password" value="root" />
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+
+		<authentication-provider ref="authenticationProviderFacebook">
+		</authentication-provider>
+
+
+		<authentication-provider>
+			<password-encoder hash="md5" />
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT username, password, 'true' as enable FROM tbUsuarios WHERE username=? AND isBanido = false"
+				authorities-by-username-query="SELECT username, authority FROM tbUsuarios WHERE username=?" />
+		</authentication-provider>
+
+
+	</authentication-manager>
+
+
+
+
+
+	<!-- Spring com facebook -->
+
+	<beans:bean id="authenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+		p:authenticationManager-ref="customAuthenticationManager"
+		p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
+		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler"
+		p:postOnly="false" />
+
+	<beans:bean id="customAuthenticationManager" class="usuario.filtros.CustomAuthenticationManager" />
+	<beans:bean id="customAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+		p:defaultFailureUrl="/Pegadas/login.xhtml?erro=true" />
+
+	<beans:bean id="customAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+		p:defaultTargetUrl="/Pegadas/index.ifpr" />
+
+	<beans:bean id="authenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
+		p:loginFormUrl="/Pegadas/login.xhtml" />
+
+	<!-- -->
+
+
+	<beans:bean id="authenticationProviderFacebook"
+		class="org.springframework.security.facebook.FacebookAuthenticationProvider">
+		<beans:property name="roles" value="ROLE_USER, ROLE_MOD, ROLE_ADMIN" />
+	</beans:bean>
+
+	<beans:bean id="authenticaionEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/Pegadas/login.xhtml" />
+	</beans:bean>
+
+	<beans:bean id="facebookAuthenticationFilter" name="facebookAuthenticationFilter"
+		class="org.springframework.security.facebook.FacebookAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+				<beans:property name="defaultTargetUrl" value="/Pegadas/index.ifpr" />
+				<beans:property name="alwaysUseDefaultTargetUrl"
+					value="true" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<beans:property name="defaultFailureUrl" value="/Pegadas/index.ifpr" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="facebookHelper"
+		class="org.springframework.security.facebook.FacebookHelper">
+		<beans:property name="apiKey" value="139428799581057" />
+		<beans:property name="secret" value="8e7187de42b226da875fb70f7c991e12" />
+	</beans:bean>
+
+
+
+	<!-- outro teste para o facebook -->
+
+
+
+	<!-- termina o spring com facebook -->
+
+</beans:beans>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{necessidadeMB.listarPrincipaisNecessidades}" />
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+
+		<h:form id="tabelaNecessidades">
+			<p:growl id="growl" showDetail="true" />
+
+
+			<p:dataTable id="necessidadesList" styleClass="semBorda"
+				value="#{necessidadeMB.necessidades}" var="nesc" rows="15" paginator="true">
+
+				<p:ajax event="rowToggle" update=":tabelaNecessidades:growl" />
+
+
+
+				<f:facet name="header">Ultimas necessidades anunciadas</f:facet>
+
+
+				<p:column style="width:2%">
+					<p:rowToggler />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{nesc.descricao}" styleClass="f6" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{nesc.dataCadastro}" styleClass="f6">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:rowExpansion>
+					<h:panelGrid id="display" columns="2" cellpadding="4"
+						style="width:700px;" styleClass=" ui-widget-content grid">
+
+						<p:column>
+							<p:galleria var="anl" value="#{nesc.animais}" panelHeight="200" showFilmstrip="false" effect="puff" effectSpeed="800"
+								panelWidth="200">
+								<p:graphicImage value="/image?nome=#{anl.imgMain.nome}" width="200" height="200" style="padding-top:10px; padding-left:10px"></p:graphicImage>
+							</p:galleria>
+						</p:column>
+						<p:column>
+						<h:panelGrid columns="1">
+							<h:outputText value="Descricao: " styleClass="f5"/>
+							<h:outputText value="#{nesc.descricao}" styleClass="f6"/>
+							<p:spacer height="10px"/>
+							<h:outputText value="Anunciada por: " styleClass="f5"/>
+							<h:outputText value="#{nesc.organizacao.nome}" styleClass="f6"/>
+							</h:panelGrid>
+						</p:column>
+						
+					</h:panelGrid>
+				</p:rowExpansion>
+			</p:dataTable>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	template="/layout/template.xhtml">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Cache-control" content="no-cache" />
+		<meta http-equiv="Cache-control" content="no-store" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<link
+			href="${facesContext.externalContext.requestContextPath}/resources/css/layout.css"
+			rel="stylesheet" type="text/css" />
+		<link
+			href="${facesContext.externalContext.requestContextPath}/resources/css/reset.css"
+			rel="stylesheet" type="text/css" />
+	</h:head>
+<ui:define name="body">
+	<h:panelGrid styleClass="alignCenter" style="padding-top:40px">
+	<h:form rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD,ROLE_VOLUNT, ROLE_ADMIN')}">
+		<h:outputText value="Realizar Login" styleClass="fDestaque"/>
+	</h:form>
+	
+	<h:form rendered="#{sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN, ROLE_VOLUNT')}">
+		<p:panel>
+		<h:outputText value="Ops! você já está logado!" styleClass="fonteErro" style="font-size:13px !important"/>
+		</p:panel>
+	</h:form>
+	
+	<center>
+		<h:outputText value="Usuário ou senha incorretos!"
+			rendered="#{param.erro}" />
+	
+	<form action="j_spring_security_check" method="post">
+		<h:panelGrid id="paineLogin" columns="3"
+			rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD,ROLE_VOLUNT, ROLE_ADMIN')}">
+
+			<h:outputText value="Login: " styleClass="f5"/>
+			<h:inputText id="j_username" value="#{usuarioMB.usuario.username}"
+				required="true" name="j_username" />
+			<p:message for="j_username" display="icon" />
+
+			<h:outputText value="Senha: " styleClass="f5"/>
+			<h:inputSecret id="j_password" value="#{usuarioMB.usuario.password}"
+				required="true" name="j_password" />
+			<p:message for="j_password" display="icon" />
+		</h:panelGrid>
+
+		<h:commandButton id="entrarBt" value="Entrar" 
+			rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_VOLUNT, ROLE_ADMIN')}"
+			action="#{usuarioMB.login}" actionListener="#{usuarioMB.login}" ajax="true" styleClass="botao">
+			</h:commandButton>
+	</form>
+	
+	<h:form id="formLinks" rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN')}">
+		<h:panelGrid id="panelLinks" columns="1">
+			<h:commandLink id="paginaCadastroLink"
+				action="#{usuarioMB.paginaCadastrarUsuario}"
+				value="Não é cadastrado? " />
+
+			<h:commandLink id="paginaEsquecerSenha"
+				action="#{usuarioMB.paginaCadastrarUsuario}"
+				value="Esqueceu sua Senha? " />
+		</h:panelGrid>
+	</h:form>
+	</center>
+	</h:panelGrid>
+</ui:define>
+</ui:composition>

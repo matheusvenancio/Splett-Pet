@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	>
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	
+	</h:head>
+	<ui:define name="body">
+	<h:form>
+		<center>
+		<h:outputText value="Usuário ou senha incorretos!"
+			rendered="#{param.erro}" />
+	</center>
+	<p:panelGrid columns="1"
+				style="width:80%; margin: auto; border-radius:10px; padding-top:20px"
+				styleClass="panelGridCellspacing">
+	
+		<ui:include src="login.xhtml"></ui:include>
+		
+		</p:panelGrid>
+		</h:form>
+		</ui:define>
+</ui:composition>

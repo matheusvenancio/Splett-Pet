@@ -18,58 +18,63 @@
 			<ui:include src="../layout/menu.xhtml" />
 
 			<p:panel style="margin-top:21px;">
+
 				<div style="width: 35%; height: 100%">
-					<p:panelGrid id="dadosPessoais" columns="2" layout="tabular"
-						style="width:90%; border-style:solid; border-width:1px;">
+
+					<p:panel style="margin-top:10px;">
 						<f:facet name="header">
 							<h:outputText value="Dados Pessoais" />
 						</f:facet>
+						<p:panelGrid id="dadosPessoais" columns="2" layout="tabular">
+							<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
+							<h:outputText
+								value="#{sessionMB.usuarioVisualizado.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
+							</h:outputText>
 
-						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
-						<h:outputText
-							value="#{sessionMB.usuarioVisualizado.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
-						</h:outputText>
+							<h:outputLabel styleClass="coisa" value="E-mail:" />
+							<h:outputText value="#{sessionMB.usuarioVisualizado.email}" />
 
-						<h:outputLabel styleClass="coisa" value="E-mail:" />
-						<h:outputText value="#{sessionMB.usuarioVisualizado.email}" />
+							<h:outputLabel styleClass="coisa" value="Gênero:" />
+							<h:outputText value="#{sessionMB.usuarioVisualizado.genero}" />
 
-						<h:outputLabel styleClass="coisa" value="Gênero:" />
-						<h:outputText value="Masculino" />
+							<h:outputLabel styleClass="coisa" value="Endereço:" />
+							<h:outputText value="#{sessionMB.usuarioVisualizado.endereco}" />
 
-						<h:outputLabel styleClass="coisa" value="Animal Favorito:" />
-						<h:outputText value="Cachorro" />
+							<h:outputLabel styleClass="coisa" value="Telefone celular:" />
+							<h:outputText
+								value="#{sessionMB.usuarioVisualizado.telefoneCelular}" />
 
-					</p:panelGrid>
+							<h:outputLabel styleClass="coisa" value="Telefone Fixo:" />
+							<h:outputText
+								value="#{sessionMB.usuarioVisualizado.telefoneFixo}" />
 
-					<p:panelGrid id="disponibilidade" columns="2" layout="tabular"
-						style="margin-top:20px; width:90%; border-style:solid; border-width:1px;">
+						</p:panelGrid>
+					</p:panel>
+
+					<p:panel style="margin-top:10px;">
 						<f:facet name="header">
 							<h:outputText value="Disponibilidade" />
 						</f:facet>
-						<h:outputText styleClass="coisa" value="Agosto:" />
-						<h:outputText value="28, 29, 30, 31" />
+						<p:panelGrid id="disponibilidade" columns="2" layout="tabular">
+							<h:outputText styleClass="coisa" value="Agosto:" />
+							<h:outputText value="28, 29, 30, 31" />
 
-						<h:outputText styleClass="coisa" value="Setembro:" />
-						<h:outputText value="Sem Disponibilidade" />
+							<h:outputText styleClass="coisa" value="Setembro:" />
+							<h:outputText value="Sem Disponibilidade" />
 
-						<h:outputText styleClass="coisa" value="Outubro:" />
-						<h:outputText value="05, 06, 07, 08, 15, 16, 17, 18" />
+							<h:outputText styleClass="coisa" value="Outubro:" />
+							<h:outputText value="05, 06, 07, 08, 15, 16, 17, 18" />
 
-						<h:outputText styleClass="coisa" value="Novembro:" />
-						<h:outputText value="Sem Disponibilidade" />
+							<h:outputText styleClass="coisa" value="Novembro:" />
+							<h:outputText value="Sem Disponibilidade" />
 
-					</p:panelGrid>
+						</p:panelGrid>
+					</p:panel>
 
 				</div>
-
-				<p:spacer height="150px;" />
-
 			</p:panel>
 		</div>
-
-		<!--PanielGrid, para as janelinhas de informção, div separa as coisas table para posts, menubar com itens com as funcionalidades do sistemas a parte administrativas ficam em cima-->
-
 
 	</ui:define>
 </ui:composition>

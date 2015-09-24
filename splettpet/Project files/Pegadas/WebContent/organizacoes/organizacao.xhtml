@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<h:head>
+		<f:metadata>
+			<f:viewParam name="id" value="#{organizacaoMB.idOrgView}" />
+			<f:event type="preRenderView"
+				listener="#{organizacaoMB.loadOrganizacao}" />
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<h:form>
+			<center>
+				<p:panelGrid id="panelAdmin"
+					style="width:60%; text-align:right;margin:0 auto;"
+					styleClass="panelGridFundo"
+					rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<p:row>
+						<p:column>
+							<p:messages id="messagesAdmin" showDetail="false" closable="true" />
+							<h:panelGroup rendered="#{!organizacaoMB.organizacao.confirmado}">
+								<p:commandButton id="aprovarBt" value="aprovar"
+									update="panelAdmin messagesAdmin" icon="ui-icon-check"
+									style="font-size:16px !important; display: table-cell; vertical-align: bottom !important;"
+									styleClass="fSmallCaps"
+									actionListener="#{organizacaoMB.aprovar}" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{organizacaoMB.organizacao.confirmado}">
+								<p:commandButton id="desaprovarBt" value="cancelar aprovação"
+									update="panelAdmin messagesAdmin" icon="ui-icon-close"
+									style="font-size:16px !important; display: table-cell; vertical-align: bottom !important;"
+									styleClass="fSmallCaps"
+									actionListener="#{organizacaoMB.aprovar}" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="panelMod"
+					style="width:60%; text-align:right;margin:0 auto;"
+					styleClass="panelGridFundo"
+					rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<p:row>
+						<p:column>
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid columns="1"
+					style="width:60%; text-align:center;margin:0 auto;"
+					styleClass="panelGridFundo">
+
+					<h:outputText value="#{organizacaoMB.organizacao.nome}"
+						styleClass="f5" />
+					<h:outputText
+						value="#{organizacaoMB.organizacao.enderecos.get(0).estado.nome} , #{organizacaoMB.organizacao.enderecos.get(0).cidade.nome}"
+						styleClass="f6" />
+
+					<h:panelGroup>
+						<center>
+							<p:graphicImage width="550" height="500"
+								value="/image?nome=#{organizacaoMB.organizacao.imgMain.nome}" />
+						</center>
+					</h:panelGroup>
+					<p:separator />
+
+					<h:outputText value="Proposta: " styleClass="f5" />
+					<h:outputText value="#{organizacaoMB.organizacao.proposta}"
+						styleClass="f6" />
+					<p:separator />
+
+					<h:outputText value="Descrição: " styleClass="f5" />
+					<h:outputText value="#{organizacaoMB.organizacao.descricao}"
+						styleClass="f6" />
+					<p:separator />
+					
+					<h:outputText value="Enderecos: " styleClass="f5" />
+					<p:scrollPanel mode="native">
+								<p:dataGrid id="enderecosTb"
+									value="#{organizacaoMB.organizacao.enderecos}" var="end"
+									columns="1">
+
+									<p:column>
+
+										<h:panelGrid columns="1">
+
+											<h:panelGroup>
+												<h:outputText value="#{end.estado.nome} - " styleClass="f5" />
+
+												<h:outputText value="#{end.cidade.nome}" styleClass="f6" />
+
+												<h:outputText value=" bairro " styleClass="f5" />
+												<h:outputText value="#{end.bairro}" styleClass="f6" />
+
+												<h:outputText value=" rua " styleClass="f5" />
+												<h:outputText value="#{end.logradouro}" styleClass="f6" />
+											</h:panelGroup>
+										</h:panelGrid>
+
+									</p:column>
+
+								</p:dataGrid>
+							</p:scrollPanel>
+							<p:separator/>
+
+					<h:panelGroup>
+						<p:panelGrid style="width:30%" styleClass="panelGrid">
+							<p:row>
+								<p:column>
+									<h:outputText value="Participantes:" styleClass="f5" />
+								</p:column>
+								<p:column>
+
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:dataList value="#{organizacaoMB.participantesView}"
+										var="usr" itemType="circle">
+
+										<p:button value="#{usr.nome}" outcome="usuario"
+											style="font-size: 10px !important;">
+											<f:param name="view" value="#{usr.username}" />
+										</p:button>
+									</p:dataList>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:panelGroup>
+					<p:separator />
+
+					<p:dataList value="#{organizacaoMB.enderecosView}" var="end"
+						itemType="circle">
+						<h:outputText
+							value="#{end.bairro}, #{end.logradouro} #{end.numero} ##{end.complemento} (#{end.cep})" />
+					</p:dataList>
+					<p:separator />
+
+					<h:outputText value="Atividades recentes: " styleClass="f5" />
+					<p:dataTable id="atividadesDataTable"
+						value="#{organizacaoMB.atividadesView}" var="pbl" paginator="true"
+						rows="5" emptyMessage="Nenhuma atividade recente."
+						styleClass="hide-column-names">
+						<p:column>
+							<h:outputText value="#{pbl.titulo}" />
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>

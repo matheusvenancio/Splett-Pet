@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	template="/layout/template.xhtml">
+	<h:head>
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{usuarioMB.findUsrLogado}" />
+			<f:event type="preRenderView" listener="#{arquivoMB.findUsrLogado}" />
+			<f:event type="preRenderView"
+				listener="#{conectarContaController.conectarConta}" />
+
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<p:tabView id="usrConfTabView" dynamic="true"
+			style="width:100%; font-size:20px"
+			activeIndex="#{conectarContaController.activeTab}">
+
+
+			<p:tab id="infContaTab" title="Informações de Conta">
+				<h:form id="infContaTabForm">
+					<h:panelGrid columns="1"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<h:panelGroup>
+							<h:outputText value="Login:" styleClass="f5" />
+							<p:spacer width="20px" />
+							<h:outputText value="#{usuarioMB.usuario.username}"
+								styleClass="f6" />
+							<p:separator />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:outputText value="Nome:" styleClass="f5" />
+							<p:spacer width="20px" />
+							<h:outputText
+								value="#{usuarioMB.usuario.nome} #{usuarioMB.usuario.sobrenome}"
+								styleClass="f6" />
+							<p:separator />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:outputText value="E-mail:" styleClass="f5" />
+							<p:spacer width="20px" />
+							<h:outputText id="email" value="#{usuarioMB.usuario.email}"
+								styleClass="f6" />
+							<p:spacer width="10px" />
+							<p:commandLink value=" - alterar" onclick="alterarEmail.show()" />
+							<p:separator />
+						</h:panelGroup>
+
+
+						<p:message display="both" for="estadoSelect" />
+						<h:panelGroup>
+							<h:outputText value="Estado:" styleClass="f5" />
+							<p:spacer width="20px" />
+							<h:outputText value="#{usuarioMB.usuario.endereco.estado.nome}"
+								styleClass="f6"
+								rendered="#{usuarioMB.usuario.endereco.estado.nome != null}" />
+							<p:selectOneMenu id="estadoSelect" value="#{enderecoMB.estado}"
+								effect="fade" converter="#{estadoConverter}"
+								rendered="#{usuarioMB.usuario.endereco.estado.nome == null}"
+								style="font-size:8px; font-family:sans-serif" filter="true"
+								filterMatchMode="startsWith">
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{enderecoMB.estados}" var="est"
+									itemLabel="#{est.nome}" itemValue="#{est}" />
+								<f:ajax event="change"
+									listener="#{enderecoMB.findCidadesByEstado}"
+									render="cidadeSelect" />
+							</p:selectOneMenu>
+							<p:separator />
+						</h:panelGroup>
+
+						<p:message display="both" for="cidadeSelect" />
+						<h:panelGroup>
+							<h:outputText value="Cidade:" styleClass="f5" />
+							<p:spacer width="20px" />
+							<h:outputText value="#{usuarioMB.usuario.endereco.cidade.nome}"
+								styleClass="f6"
+								rendered="#{usuarioMB.usuario.endereco.cidade.nome != null}" />
+							<p:selectOneMenu id="cidadeSelect" value="#{enderecoMB.cidade}"
+								effect="fade" converter="#{cidadeConverter}" filter="true"
+								filterMatchMode="startsWith"
+								rendered="#{usuarioMB.usuario.endereco.cidade.nome == null}"
+								style="font-size:8px; font-family:sans-serif">
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{enderecoMB.cidades}" var="cid"
+									itemLabel="#{cid.nome}" itemValue="#{cid}" />
+							</p:selectOneMenu>
+							<p:separator />
+						</h:panelGroup>
+						<p:message display="both" for="bairroTf" />
+
+						<h:outputText value="Bairro: " styleClass="f5" />
+						<p:inputText id="bairroTf"
+							value="#{usuarioMB.usuario.endereco.bairro}" style="width:100%"
+							styleClass="f6" />
+						<p:separator />
+
+						<p:message display="both" for="logradouroTf" />
+						<h:outputText id="logradouroTf" value="Logradouro: "
+							styleClass="f5" />
+						<p:inputText value="#{usuarioMB.usuario.endereco.logradouro}"
+							styleClass="f6" style="width:100%" />
+						<p:separator />
+
+						<p:message display="both" for="numeroTf" />
+						<h:panelGroup>
+							<h:outputText value="Complemento: " styleClass="f5" />
+							<p:inputText id="complementoTf"
+								value="#{usuarioMB.usuario.endereco.complemento}" size="10" />
+							<p:spacer width="20px" />
+							<h:outputText value="Número: " styleClass="f5" />
+							<p:inputMask id="numeroTf" converter="ConverterEmptyToNull"
+								value="#{usuarioMB.usuario.endereco.numero}" mask="9?9999"
+								maxlength="5" placeHolder=" " size="4"
+								validatorMessage="Algo está errado aqui! " />
+						</h:panelGroup>
+						<p:separator />
+
+						<p:message display="both" for="cpfMsk" id="msgcpferro" />
+						<h:outputText id="cpfTf" value="CPF: " styleClass="f5" />
+						<p:inputMask id="cpfMsk" converter="ConverterEmptyToNull"
+							label="cpfM" value="#{usuarioMB.usuario.cpf}"
+							validator="#{usuarioMB.validaCpf}" required="true"
+							validatorMessage="Valor n‹o Ž reconhecido" mask="999.999.999-99"
+							maxlength="11" placeHolder=" ">
+							<p:ajax event="blur" update="msgcpferro" />
+						</p:inputMask>
+						<p:separator />
+
+						<p:message display="both" for="telResTf" />
+						<h:outputText value="Telefone Residencial: " styleClass="f5" />
+						<p:inputMask id="telResTf" converter="ConverterEmptyToNull"
+							label="telefoneRes" value="#{usuarioMB.usuario.telefoneRes}"
+							mask="(99) 9999-9999" maxlength="13" placeHolder=" " />
+
+						<p:message display="both" for="telCelTf" />
+						<h:outputText value="Telefone Celular: " styleClass="f5" />
+						<p:inputMask id="telCelTf" converter="ConverterEmptyToNull"
+							label="telefoneCel" value="#{usuarioMB.usuario.telefoneCel}"
+							mask="(99) 9999-9999" maxlength="13" placeHolder=" " />
+						<p:messages for="telCelTf" display="both" />
+						<p:separator />
+
+						<p:message display="both" for="descricaoTa" />
+						<h:outputText value="Descrição: " styleClass="f5" />
+						<p:inputTextarea id="descricaoTa" converter="ConverterEmptyToNull"
+							required="false" value="#{usuarioMB.usuario.bio}" rows="8"
+							cols="50" autoResize="true" counter="counter" maxlength="500"
+							counterTemplate="{0} characters remaining." style="width:100%" />
+						<h:outputText id="counter" />
+						<p:separator />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1" cellpadding="15"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<p:commandButton value="Salvar" action="#{usuarioMB.salvar}"
+							update="@form" />
+					</h:panelGrid>
+				</h:form>
+			</p:tab>
+
+			<p:tab id="alterarSenhaTab" title="Alterar Senha">
+				<h:form id="alterarSenhaTabForm">
+					<h:panelGrid columns="1"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<p:messages autoUpdate="true" />
+
+						<h:outputText value="Senha Antiga: " styleClass="f5" />
+						<p:password id="senhaOldTf" value="#{usuarioMB.senhaOld}"
+							required="true" requiredMessage="Digite sua Senha Antiga!"
+							validatorMessage="Algo está errado no campo Nova Senha!" />
+						<p:separator />
+						<h:outputText value="Nova Senha: " styleClass="f5" />
+						<p:password id="senhaNewTf" value="#{usuarioMB.senhaNew}"
+							match="senhaNewTf2" required="true" feedback="true"
+							requiredMessage="Digite sua Nova Senha!"
+							validatorMessage="Algo está errado no campo Nova Senha!">
+							<f:validateLength minimum="6" maximum="15" />
+						</p:password>
+						<p:separator />
+						<h:outputText value="Confirmar Senha: " styleClass="f5" />
+						<p:password id="senhaNewTf2" value="#{usuarioMB.senhaNew}"
+							required="true" requiredMessage="Confirme sua Senha!"
+							validatorMessage="Algo está errado!">
+							<f:validateLength minimum="6" maximum="15" />
+						</p:password>
+						<p:separator />
+						<p:commandButton value="Salvar"
+							action="#{usuarioMB.salvarNewSenha}" update="@form" />
+					</h:panelGrid>
+				</h:form>
+			</p:tab>
+
+			<p:tab id="imgPerfilTab" title="Escolher imagem de Perfil">
+				<h:form>
+					<p:panelGrid
+						style="margin-left: auto; margin-right: auto; width:400px; text-align: center !important;"
+						columns="1" styleClass="panelGrid">
+						<p:row>
+							<p:column>
+								<p:messages id="messagesTab3" showDetail="true" closable="true" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="Imagem de perfil atual:" styleClass="f5"
+									style="font-color: #e78f08" />
+								<p:separator />
+								<p:message for="fileUpload" showDetail="true" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<center>
+									<h:graphicImage id="imgAvatar"
+										value="/image?nome=#{usuarioMB.usuario.avatar.nome}"
+										height="300" width="250" />
+									<h:panelGrid columns="2"
+										style="text-align: center !important; margin-right: auto;">
+										<p:fileUpload id="fileUpload" auto="true"
+											fileUploadListener="#{arquivoMB.uploadAvatar}"
+											mode="advanced" dragDropSupport="false" sizeLimit="20971520"
+											fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/"
+											label="Escolher"
+											invalidFileMessage="O arquivo selecionado não é válido!"
+											invalidSizeMessage="O tamanho do arquivo não é aceito!"
+											showButtons="false" multiple="false" style="font-size:8px"
+											update="imgAvatar messagesTab3" />
+										<p:commandButton actionListener="#{arquivoMB.removerAvatar}"
+											value="Remover avatar" update="imgAvatar"
+											style="font-size:15px" icon="ui-icon-close" />
+									</h:panelGrid>
+								</center>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</h:form>
+			</p:tab>
+			<p:tab id="privacidadeTab" title="Privacidade e Preferências ">
+				<h:form id="privacidadeTabForm">
+					<p:panelGrid columns="2"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<f:facet name="header">
+							<h:outputText value="Privacidade" />
+						</f:facet>
+						<h:outputText value="Exibir e-mail em seu perfil: "
+							styleClass="f5" />
+						<p:selectBooleanCheckbox
+							value="#{usuarioMB.usuario.preferencias.exibirEmail}" />
+
+						<h:outputText value="Exibir endereço em seu perfil: "
+							styleClass="f5" />
+						<p:selectBooleanCheckbox
+							value="#{usuarioMB.usuario.preferencias.exibirEndereco}" />
+
+						<h:outputText value="Exibir telefone em seu perfil: "
+							styleClass="f5" />
+						<p:selectBooleanCheckbox
+							value="#{usuarioMB.usuario.preferencias.exibirTelefone}" />
+					</p:panelGrid>
+					<br />
+					<p:panelGrid columns="2"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<f:facet name="header">
+							<h:outputText value="Preferências" />
+						</f:facet>
+						<h:outputText
+							value="Receber e-mail para atividades relacionadas a sua publicação: "
+							styleClass="f5" />
+						<p:selectBooleanCheckbox
+							value="#{usuarioMB.usuario.preferencias.emailsAtividades}" />
+					</p:panelGrid>
+					<center>
+						<p:commandButton value="Salvar" action="#{usuarioMB.salvar}"
+							immediate="false" />
+					</center>
+				</h:form>
+			</p:tab>
+
+			<p:tab id="fecharContatb" title="Fechar Conta">
+				<h:form id="fecharContaForm">
+					<h:panelGrid columns="1"
+						style="margin-left: auto; margin-right: auto; width:40%">
+						<p:messages autoUpdate="true" />
+
+						<h:outputText value="Deseja fechar sua conta agora? "
+							styleClass="f5" />
+
+						<p:separator />
+
+						<p:commandButton value="Fechar" style="font-size:13px !important"
+							onclick="confirmaDlg.show()" />
+
+					</h:panelGrid>
+				</h:form>
+			</p:tab>
+
+			<p:tab id="facebookTab" title="Preferências do Facebook"
+				rendered="#{! usuarioMB.usuario.facebook}">
+
+				<h:form id="facebookTabForm">
+					<p:dataGrid id="usuariosList"
+						value="#{conectarContaController.usuario}" var="usr">
+						<p:spacer width="20px" />
+						<h:panelGrid columns="1"
+							style="margin-left: auto; margin-right: auto; width:40%">
+							<h:panelGroup style="width:90%; margin-right: 60%">
+
+								<p:commandLink id="connectarContaFace"
+									action="#{conectarContaController.autenticarSpringComFacebook}">
+									<p:graphicImage value="/img/bt_conn_fb.png" width="60%" />
+								</p:commandLink>
+							</h:panelGroup>
+							<p:separator />
+							<h:panelGrid>
+								<p:panel
+									rendered="#{conectarContaController.mostrarPanelConnFace}">
+									<h:outputText
+										value="Para que seja possivel a conexao com o Facebook, algum dados devem possuir obrigatoriamente os valores: "
+										rendered="#{ ! conectarContaController.dadosCompativeis}"
+										styleClass="fonteObs" />
+									<p:separator />
+
+									<h:panelGroup id="dadosFacebook">
+										<h:outputText value="Nome:" styleClass="f5" />
+										<p:spacer width="20px" />
+										<h:inputText value="#{usr.nome}" style="color:gray"
+											styleClass="f6" />
+										<p:separator />
+
+										<h:outputText value="Sobrenome: " styleClass="f5" />
+										<p:spacer width="20px" />
+										<h:inputText value="#{usr.sobrenome}" style="color:gray"
+											styleClass="f6" />
+										<p:separator />
+										
+										<h:message for="emailFb" id="emailMsg" />
+										<h:outputText value="Email:" styleClass="f5" />
+										<p:spacer width="20px" />
+										<h:inputText id="emailFb" value="#{usr.email}" style="color:gray; font-size:13px !important"
+											styleClass="f6"
+											validatorMessage="email ja em uso" >
+											<p:ajax event="blur" update="emailMsg" />
+											</h:inputText>
+										<p:separator />
+									</h:panelGroup>
+								</p:panel>
+							</h:panelGrid>
+						</h:panelGrid>
+
+
+						<h:panelGrid columns="2" cellpadding="15"
+							style="margin-left: auto; margin-right: auto; width:40%">
+							<p:panel
+								rendered="#{conectarContaController.mostrarPanelConnFace}">
+								<p:commandButton id="conformarAlteracaoDadosFace" ajax="true"
+									value="Confirmar"
+									action="#{conectarContaController.updateUsuarioFace}"
+									actionListener="#{conectarContaController.updateUsuarioFace}">
+									<f:setPropertyActionListener
+										target="#{conectarContaController.usuario}" value="#{usr}" />
+								</p:commandButton>
+
+								<p:commandButton id="cancelarAlteracaoDadosFace"
+									value="Cancelar" action="index"></p:commandButton>
+							</p:panel>
+						</h:panelGrid>
+					</p:dataGrid>
+				</h:form>
+			</p:tab>
+		</p:tabView>
+
+		<p:dialog id="alterarEmailDialog" widgetVar="alterarEmail"
+			modal="true" appendToBody="true" width="400" height="150"
+			resizable="false" draggable="false">
+			<h:form id="alterarEmailForm">
+				<p:panelGrid columns="1" style="align:center; width:100%"
+					cellpadding="10">
+					<h:panelGroup>
+						<h:outputText value="Novo e-mail: *" />
+						<p:message for="emailTf" id="emailValidaMsg" />
+					</h:panelGroup>
+					<p:inputText id="emailTf" required="true"
+						value="#{usuarioMB.usuario.email}"
+						validator="#{usuarioMB.validarEmail}"
+						requiredMessage="Este campo é obrigatório." style="width:100%"
+						filter="true" filterMatchMode="startsWith">
+						<f:ajax event="blur" render="emailMsg" />
+						<f:validateLength minimum="6" maximum="35" />
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
+					<p:message for="emailTf" id="emailMsg" />
+				</p:panelGrid>
+
+				<h:panelGrid columns="1" style="align:center; width:100%"
+					cellpadding="10">
+					<p:commandButton value="Pronto!" oncomplete="alterarEmail.hide()"
+						actionListener="#{usuarioMB.updateEmail}" ajax="true"
+						update=":usrConfTabView:infContaTabForm:email" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<h:form>
+			<p:confirmDialog id="confirmationDialog" global="true"
+				style="z-index:0 !important; font-size:13px !important"
+				message="Tem certeza?" width="300" header="Aviso"
+				widgetVar="confirmaDlg">
+				<h:panelGrid>
+					<p:panel>
+						<h:outputText
+							value="Todos os seus dados, assim como suas publica›es ser‹o apagados do sistema permanentemente"
+							style="font-size:12px !important" styleClass="fonteErro" />
+					</p:panel>
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="alignCenter">
+					<p:commandButton value="Sim" style="font-size:13px !important"
+						action="#{usuarioMB.fecharConta}" />
+					<p:commandButton value="N‹o" style="font-size:13px !important"
+						oncomplete="confirmaDlg.hide()" />
+				</h:panelGrid>
+			</p:confirmDialog>
+		</h:form>
+
+		<h:form id="ajusteImagemForm">
+			<p:dialog id="ajustarImgDialog" widgetVar="ajustarImg"
+				header="Ajustar Imagem" width="600" height="300">
+				<h:panelGrid id="painel" columns="2">
+					<p:imageCropper id="imgCropper" value="#{arquivoMB.imgCropped}"
+						image="/resources/upload/avatar/#{arquivoMB.imgPreviewName}"
+						initialCoords="0,0,300,125" />
+					<p:graphicImage id="imgCroppedPreview"
+						value="/resources/upload/avatar/#{arquivoMB.imgNomeNew}" />
+				</h:panelGrid>
+				<p:commandButton value="Visualizar" action="#{arquivoMB.crop}"
+					update="imgCroppedPreview" />
+			</p:dialog>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

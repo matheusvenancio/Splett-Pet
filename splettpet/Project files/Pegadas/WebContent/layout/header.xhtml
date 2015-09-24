@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<p:panelGrid style="width:100%" styleClass="layoutHeader">
+		<p:row>
+			<p:column colspan="2">
+				<center>
+					<p:commandLink id="home" action="index">
+						<h:graphicImage value="/img/pegadasLogo.png"
+							style="margin-left: auto; margin-right: auto" />
+					</p:commandLink>
+				</center>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column style="width:70%">
+				<h:form>
+					<p:menubar>
+						<p:menuitem value="Pagina Inicial" action="index" />
+
+						<p:menuitem value="Divulgar um Animal"
+							action="#{publicacaoMB.paginaCadastroPublicacao}" />
+
+						<p:submenu label="Atendimento a Organizacao">
+							<p:menuitem value="Faca uma Doacao" action="doacoesOrg" />
+							<p:menuitem value="Doacoes recentes" action="doacoes" />
+							<p:menuitem value="Principais necessidades"
+								action="listaNecessidades" />
+						</p:submenu>
+
+						<p:submenu label="Gerenciar"
+							rendered="#{request.isUserInRole('ROLE_ADMIN') || request.isUserInRole('ROLE_MOD')}">
+							<p:menuitem value="Usuarios" action="usuarios"
+								rendered="#{request.isUserInRole('ROLE_ADMIN')}" />
+							<p:menuitem value="Organizações" action="gerOrganizacoes"
+								rendered="#{request.isUserInRole('ROLE_ADMIN')}" />
+							<p:menuitem value="Animais" action="animais"></p:menuitem>
+							<p:submenu label="Outros"
+								rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+								<p:menuitem value="Categorias" action="categorias"></p:menuitem>
+								<p:menuitem value="Racas" action="racas"></p:menuitem>
+							</p:submenu>
+							<p:menuitem value="Necessidades" action="necessidades" />
+							<p:menuitem value="Eventos" action="eventos" />
+
+
+						</p:submenu>
+
+						<p:submenu label="Participar" styleClass="fonteMenu">
+							<p:menuitem value="Organizacoes" action="organizacoes" />
+							<p:menuitem value="Cadastrar Organizacao"
+								action="novaOrganizacao"
+								rendered="#{! usuarioMB.usuario.donoOrganizacao}" />
+							<p:menuitem value="Sua Organiza‹o" action="gerOrganizacao"
+								rendered="#{request.isUserInRole('ROLE_ADMIN') || request.isUserInRole('ROLE_MOD') || request.isUserInRole('ROLE_VOLUNT')}" />
+							<p:menuitem value="Minhas Publicacoes" action="publicacoes"
+								rendered="#{request.isUserInRole('ROLE_ADMIN') || request.isUserInRole('ROLE_MOD') || request.isUserInRole('ROLE_USER') || request.isUserInRole('ROLE_VOLUNT')}" />
+						</p:submenu>
+
+						<p:menuitem value="Mensagens" action="mensages" styleClass="menu" />
+
+						<p:menuitem value="Finais Felizes"
+							action="#{finalFelizMB.paginaFinaisFelizes}" styleClass="menu" />
+					</p:menubar>
+				</h:form>
+			</p:column>
+			<p:column>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+						<h:panelGrid columns="2" id="panelLogado"
+							rendered="#{sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN, ROLE_VOLUNT')}">
+							<h:panelGroup>
+								<h:outputText value="Bem vindo, #{usuarioMB.usrLogado.nome}."
+									style="color: #e78f08; font-size: 10px" />
+								<br />
+								<h:form>
+									<h:commandLink value="Configurações de Conta"
+										action="#{usuarioMB.paginaConfUsr}" />
+								</h:form>
+							</h:panelGroup>
+							<h:form id="sairForm">
+								<h:panelGroup>
+									<h:outputText value="[" style="font-size:11px" />
+									<h:commandLink value="#{mensagemMB.numeroNovasMsgs}"
+										style="font-size:11px" action="#{mensagemMB.paginaMensagens}" />
+									<h:outputText value="]" style="font-size:11px" />
+									<h:outputText value=" mensagens novas."
+										style="color:#e78f08; font-size: 10px" />
+
+
+									<p:commandButton id="sair" value="Sair"
+										action="#{atividadeUsuarioMB.sair}"
+										style="font-size:10px !important; font-family: sans-serif !important; margin-left: 0px !important;"></p:commandButton>
+
+								</h:panelGroup>
+							</h:form>
+						</h:panelGrid>
+						<h:panelGrid columns="3" id="panelDeslogado"
+							rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_ADMIN, ROLE_VOLUNT')}">
+
+							<p:button id="exibirLoginBt" value="Login" type="button"
+								outcome="login"
+								style="font-size:12px !important; font-family: sans-serif !important; margin-left: 0px !important;" />
+							<p:commandLink
+								action="#{autenticacaoController.autenticarSpringComFacebook}"
+								rendered="#{! sec:ifAnyGranted('ROLE_USER, ROLE_MOD, ROLE_VOLUNT, ROLE_ADMIN')}">
+								<p:graphicImage value="/img/logar_com_fb.gif" />
+							</p:commandLink>
+							<a href="${connection.profileUrl}">${connection.displayName}</a>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</ui:composition>

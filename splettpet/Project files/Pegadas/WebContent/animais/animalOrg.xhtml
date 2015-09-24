@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml"
+	xmlns:fb="https://www.facebook.com/2008/fbml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+		<f:metadata>
+			<f:viewParam name="id" value="#{animalMB.animal.id}" />
+			<f:event listener="#{animalMB.buscarAnimalPorId(animalMB.animal.id)}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appid=139428799581057";
+          fjs.parentNode.insertBefore(js, fjs);
+}        (document, 'script', 'facebook-jssdk'));</script>
+
+		<h:form id="animalOrgForm" style="width:800px" styleClass="alignCenter">
+
+			<p:panel
+				header="#{animalMB.animal.nome} - #{animalMB.animal.categoria.nome}"
+				style="width:70%" styleClass="alignCenter">
+				<h:form>
+					<a
+						href="http://127.0.0.1:8080/Pegadas/animais/animalOrg.ifpr?id?id=#{animalMB.animal.id}"
+						onclick="
+   									 window.open(
+    								  'https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8080/Pegadas/animais/animalOrg.ifpr?id=#{animalMB.animal.id}', 
+   									   'facebook-share-dialog', 
+   									   'width=626,height=436'); 
+   									 return false;">
+						<h:graphicImage value="/img/compartilhar_fb-.gif"></h:graphicImage>
+					</a>
+				</h:form>
+				<p:panelGrid styleClass="semBorda"
+					style="padding-left:20px; margin-right: auto; width:500px">
+
+					<p:row>
+						<p:column rowspan="8" style="width:40px;height:30px;">
+							<p:graphicImage
+								value="/image?nome=#{animalMB.animal.imgMain.nome}"
+								width="200px" height="250px" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Cor: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText
+									value="#{animalMB.animal.corPrincipal} e #{animalMB.animal.corSecundaria}"
+									styleClass="f6" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Idade: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText value="#{animalMB.animal.divisaoIdade.label}"
+									styleClass="f6" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Castrado: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText value="Sim" styleClass="f6"
+									rendered="#{publicacaoMB.publicacao.animais.get(0).castrado}" />
+								<h:outputText value="Nao" styleClass="f6"
+									rendered="#{! publicacaoMB.publicacao.animais.get(0).castrado}" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Vermifugado: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText value="Sim" styleClass="f6"
+									rendered="#{publicacaoMB.publicacao.animais.get(0).vermifugado}" />
+								<h:outputText value="Nao" styleClass="f6"
+									rendered="#{! publicacaoMB.publicacao.animais.get(0).vermifugado}" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Porte: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText value="#{animalMB.animal.porteAnimal.label}"
+									styleClass="f6" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Sexo: " styleClass="f5"
+									style="padding-left:20px" />
+								<h:outputText value="#{animalMB.animal.sexo.label}"
+									styleClass="f6" />
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:panelGroup>
+								<h:outputText value="Cadastrado em: " styleClass="f5"
+									style="vertical-align:100px; padding-left:20px" />
+								<h:outputText value="#{animalMB.animal.dataCadastro}"
+									styleClass="f6" style="vertical-align:100px">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:separator />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid styleClass="semBorda"
+					style="margin-left: 0%; margin-right: auto;" columns="2">
+					<p:fieldset legend="Descricao" toggleable="false" toggleSpeed="500">
+						<h:outputText value="#{animalMB.animal.descri}" styleClass="f6" />
+					</p:fieldset>
+					<p:galleria value="#{animalMB.animal.imagens}" var="arq" effectSpeed="500"
+						panelWidth="250" panelHeight="200" showCaption="true">
+						<p:graphicImage value="/image?nome=#{arq.nome}" width="80%" />
+					</p:galleria>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

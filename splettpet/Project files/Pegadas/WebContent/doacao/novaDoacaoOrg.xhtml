@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/layout/template.xhtml">
+	<h:head>
+		<link href="/css/style.css" rel="stylesheet" type="text/css" />
+		<f:metadata>
+			<f:viewParam name="id" value="#{organizacaoMB.idOrgView}" />
+			<f:event listener="#{organizacaoMB.findOrgById}" type="preRenderView"></f:event>
+			<f:event listener="#{doacaoMB.verificaCpfExiste}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{organizacaoMB.verificaBB(organizacaoMB.idOrgView)}"
+				type="preRenderView"></f:event>
+				<f:event listener="#{organizacaoMB.verificaBradesco(organizacaoMB.idOrgView)}"
+				type="preRenderView"></f:event>
+				<f:event listener="#{organizacaoMB.verificaItau(organizacaoMB.idOrgView)}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+	<ui:define name="body">
+		<h:form rendered="#{! doacaoMB.mostrarFormDoacao}">
+			<p:messages />
+			<p:panel styleClass="alignCenter"
+				style="margin-left:30px; width: 300px">
+				<h:panelGrid columns="1">
+					<h:outputText
+						value="#{doacaoMB.usuario.nome} #{doacaoMB.usuario.sobrenome}"
+						styleClass="f6" />
+					<p:spacer height="10px"></p:spacer>
+					<p:message display="both" for="cpfMsk" id="msgcpferro" />
+					<h:outputText id="cpfTf" value="CPF: " styleClass="f5" />
+					<p:inputMask id="cpfMsk" converter="ConverterEmptyToNull"
+						label="cpfM" value="#{usuarioMB.usuario.cpf}"
+						validator="#{usuarioMB.validaCpf}" required="true"
+						validatorMessage="Valor não é reconhecido" mask="999.999.999-99"
+						maxlength="11" placeHolder=" ">
+						<p:ajax event="blur" update="msgcpferro" />
+					</p:inputMask>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="OK" actionListener="#{usuarioMB.salvar}"
+						action="doacoesOrg" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<h:form id="doacaoForm" style="width:800px" styleClass="alignCenter"
+			rendered="#{doacaoMB.mostrarFormDoacao}">
+
+			<p:panel
+				header="Faca uma Doacao para #{organizacaoMB.organizacao.nome}">
+				<h:panelGrid columns="2">
+					<p:column width="400" id="bancoPagPanel">
+						<h:panelGrid columns="1" width="400">
+							<h:panelGrid>
+								<h:outputText value="Escolha um banco: " styleClass="f5" />
+							
+									<p:selectOneRadio id="bancoOrg" required="true"
+										requiredMessage="Este campo e obrigatorio" styleClass="f6"
+										value="#{doacaoMB.doacao.bancoDoacao}">
+										<f:selectItem itemValue="BANCOBRASIL" itemDisabled="#{! organizacaoMB.BB}"
+											itemLabel="Banco do Brasil">
+										</f:selectItem>
+
+										<f:selectItem itemValue="BRADESCO" itemLabel="Banco Bradesco"
+											itemDisabled="#{! organizacaoMB.bradesco}">
+											</f:selectItem>
+											
+											<f:selectItem itemValue="ITAU" itemLabel="Banco Itaú"
+											itemDisabled="#{! organizacaoMB.itau}">
+											</f:selectItem>
+									</p:selectOneRadio>
+
+							</h:panelGrid>
+							<p:spacer height="20px"></p:spacer>
+							<h:outputText value="Quantia em dinheiro: " styleClass="f5" />
+							<p:inputText id="quantiaEmDinheiroTf"
+								value="#{doacaoMB.doacao.quantiaEmDinheiro}" />
+							<p:message for="quantiaEmDinheiroTf" display="both" />
+
+						</h:panelGrid>
+					</p:column>
+					<p:column>
+						<p:graphicImage
+							value="/image?nome=#{organizacaoMB.organizacao.imgMain.nome}"
+							width="300" height="200" />
+
+					</p:column>
+				</h:panelGrid>
+			</p:panel>
+			<h:panelGrid id="gridBotoes" columns="2">
+				<p:panel style="width:780px !important">
+					<p:commandButton id="salvarDoacao" value="Doar"
+						actionListener="#{doacaoMB.doarParaOrg(organizacaoMB.organizacao.id)}"
+						onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false"
+						style="font-size:13px !important" oncomplete="virificaCpfExiste()">
+						<p:fileDownload value="#{boletoMB.file}" />
+					</p:commandButton>
+					<p:commandButton id="cancelarDoacaoBt" value="Cancelar"
+						immediate="true" action="#{doacaoMB.cancelar}"
+						style="font-size:13px !important" />
+				</p:panel>
+			</h:panelGrid>
+		</h:form>
+
+		<h:form>
+			<p:dialog id="boletoDlg" widgetVar="blDlg">
+				<p:panel>
+					<p:commandButton value="Baixar Boleto"
+						action="#{boletoMB.baixarBoleto}"></p:commandButton>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+
+		<h:form>
+			<p:dialog id="cpfDlg" widgetVar="informaCpf">
+				<p:panel>
+					<p:commandButton value="Baixar Boleto"
+						action="#{boletoMB.baixarBoleto}"></p:commandButton>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

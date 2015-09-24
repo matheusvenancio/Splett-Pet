@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<h:head>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+	</h:head>
+	<h:form>
+		<p:panelGrid style="width:100%">
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Bem vindo, #{usuarioMB.usuario.nome}"
+						styleClass="fonteLaranja" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:commandLink value="Configurações de Perfil"
+						action="#{usuarioMB.paginaConfUsr}" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+
+	<ui:insert name="login">
+		<ui:include src="/login.xhtml" />
+	</ui:insert>
+
+	<br />
+	<h:form id="linksForm"
+		action="#{request.contextPath}/j_spring_security_check" method="post">
+		<h:commandButton id="conecContaFace"
+			value="Conectar conta com facebook"
+			actionLister="#{usuarioMB.setarFacebookTrue}" />
+		<br />
+
+		<h:commandButton id="edtPerfil" value="Editar Perfil"
+			action="#{usuarioMB.paginaEditarUsuario}">
+			<f:setPropertyActionListener target="#{usuarioMB.usuario}"
+				value="#{usr}"></f:setPropertyActionListener>
+		</h:commandButton>
+
+		<p:commandButton id="enviarEmailTesteBt" value="E-mail"
+			actionListener="#{emailMB.enviar}" />
+	</h:form>
+</ui:composition>
