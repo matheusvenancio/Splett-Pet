@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import splett.amizade.Amizade;
 import splett.usuario.TipoUsuario;
 import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
@@ -42,6 +43,13 @@ public class SessionMB {
 	    return false;
 	}
 	return true;
+    }
+
+    public void addFriend() {
+	Amizade amizade = new Amizade();
+
+	amizade.setUsuarioOrigem(usuarioLogado);
+	amizade.setUsuarioDestino(usuarioVisualizado);
     }
 
     public boolean isSelfProfile() {

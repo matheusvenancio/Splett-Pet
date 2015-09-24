@@ -16,6 +16,10 @@ import splett.usuario.Usuario;
 @Table(name = "tbAmizade")
 public class Amizade {
 
+    public Amizade() {
+	status = Status.ESPERA;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -39,20 +43,20 @@ public class Amizade {
 	this.id = id;
     }
 
-    public Usuario getUsuario1() {
+    public Usuario getUsuarioOrigem() {
 	return usuarioOrigem;
     }
 
-    public void setUsuario1(Usuario usuario1) {
-	this.usuarioOrigem = usuario1;
+    public void setUsuarioOrigem(Usuario usuarioOrigem) {
+	this.usuarioOrigem = usuarioOrigem;
     }
 
-    public Usuario getUsuario2() {
+    public Usuario getUsuarioDestino() {
 	return usuarioDestino;
     }
 
-    public void setUsuario2(Usuario usuario2) {
-	this.usuarioDestino = usuario2;
+    public void setUsuarioDestino(Usuario usuarioDestino) {
+	this.usuarioDestino = usuarioDestino;
     }
 
     public Status getStatus() {
