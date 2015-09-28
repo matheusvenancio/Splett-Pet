@@ -1,27 +1,26 @@
-package splett.foto.mb;
+package splett.video.mb;
 
 import java.util.Comparator;
 
 import org.primefaces.model.SortOrder;
 
-import splett.foto.Foto;
-import splett.usuario.Usuario;
+import splett.video.Video;
 
-public class LazyFotoSorter implements Comparator<Foto> {
+public class LazyVideoSorter implements Comparator<Video> {
 	private String sortField;
 
 	private SortOrder sortOrder;
 
-	public LazyFotoSorter(String sortField, SortOrder sortOrder) {
+	public LazyVideoSorter(String sortField, SortOrder sortOrder) {
 		this.sortField = sortField;
 		this.sortOrder = sortOrder;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public int compare(Foto u1, Foto u2) {
+	public int compare(Video u1, Video u2) {
 		try {
-			Object value1 = Usuario.class.getField(this.sortField).get(u1);
-			Object value2 = Usuario.class.getField(this.sortField).get(u2);
+			Object value1 = Video.class.getField(this.sortField).get(u1);
+			Object value2 = Video.class.getField(this.sortField).get(u2);
 
 			int value = ((Comparable) value1).compareTo(value2);
 

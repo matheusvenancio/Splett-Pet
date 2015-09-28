@@ -83,6 +83,13 @@ public class FotoMB {
 			fotoDao.salvar(foto);
 		}
 	}
+	
+	public void salvar() {
+		if (foto.getId() != null)
+			fotoDao.update(foto);
+		else
+			fotoDao.salvar(foto);
+	}
 
 	public void remover() {
 		File file = new File(foto.getCaminho());

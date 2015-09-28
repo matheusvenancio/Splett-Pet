@@ -13,57 +13,57 @@ import splett.usuario.Usuario;
 @Table(name = "tbVideo")
 public class Video {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    private boolean isPublico;
+	private boolean isPublico;
 
-    private String descricao;
+	private String descricao;
 
-    private String caminho;
-    
-    @OneToOne
-    private Usuario usuario;
+	private String caminho;
 
-    public int getId() {
-	return id;
-    }
+	@OneToOne
+	private Usuario usuario;
 
-    public void setId(int id) {
-	this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public boolean isPublico() {
-	return isPublico;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setPublico(boolean isPublico) {
-	this.isPublico = isPublico;
-    }
+	public boolean isPublico() {
+		return isPublico;
+	}
 
-    public String getDescricao() {
-	return descricao;
-    }
+	public void setPublico(boolean isPublico) {
+		this.isPublico = isPublico;
+	}
 
-    public void setDescricao(String descricao) {
-	this.descricao = descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public String getCaminho() {
-	return caminho;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setCaminho(String caminho) {
-	this.caminho = caminho;
-    }
+	public String getCaminho() {
+		return caminho;
+	}
 
-    public Usuario getUsuario() {
-	return usuario;
-    }
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
+	}
 
-    public void setUsuario(Usuario usuario) {
-	this.usuario = usuario;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

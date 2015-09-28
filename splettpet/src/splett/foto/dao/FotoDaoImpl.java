@@ -1,7 +1,11 @@
 package splett.foto.dao;
 
+import java.util.List;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import splett.dao.GenericDao;
 import splett.foto.Foto;
@@ -14,6 +18,17 @@ public class FotoDaoImpl extends GenericDao<Foto> implements FotoDao {
 
 	public FotoDaoImpl() {
 		super(Foto.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Foto> listFoto(int id) {
+		EntityManager em = emf.createEntityManager();
+		Query q = em
+				.createQuery("select f from Foto f where f.usuario.id = :id");
+		q.setParameter("id", id);
+		q.setMaxResults(50);
+		return q.getResultList();
 	}
 	
 }
