@@ -1,5 +1,6 @@
 package splett.foto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,57 +14,68 @@ import splett.usuario.Usuario;
 @Table(name = "tbFoto")
 public class Foto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column( nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+	private boolean isPublico;
 
-    private boolean isPublico;
+	private String descricao;
 
-    private String descricao;
+	private String caminho;
 
-    private String caminho;
-    
-    @OneToOne
-    private Usuario usuario;
+	private String contentType;
 
-    public int getId() {
-	return id;
-    }
+	@OneToOne
+	private Usuario usuario;
 
-    public void setId(int id) {
-	this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public boolean isPublico() {
-	return isPublico;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPublico(boolean isPublico) {
-	this.isPublico = isPublico;
-    }
+	public boolean isPublico() {
+		return isPublico;
+	}
 
-    public String getDescricao() {
-	return descricao;
-    }
+	public void setPublico(boolean isPublico) {
+		this.isPublico = isPublico;
+	}
 
-    public void setDescricao(String descricao) {
-	this.descricao = descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public String getCaminho() {
-	return caminho;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setCaminho(String caminho) {
-	this.caminho = caminho;
-    }
+	public String getContentType() {
+		return contentType;
+	}
 
-    public Usuario getUsuario() {
-	return usuario;
-    }
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
 
-    public void setUsuario(Usuario usuario) {
-	this.usuario = usuario;
-    }
+	public String getCaminho() {
+		return caminho;
+	}
+
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }
