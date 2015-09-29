@@ -7,24 +7,30 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem styleClass="menuBarItem" id="postagensMn"
-				value="Postagens" action="home" />
+				value="Postagens" action="postagens" />
 
 			<p:menuitem styleClass="menuBarItem" id="fotosMn" value="Fotos"
-				action="home" />
-				
+				action="fotos" />
+
 			<p:menuitem styleClass="menuBarItem" id="videosMn" value="Videos"
-				action="home" />
+				action="videos" />
 
 			<p:menuitem styleClass="menuBarItem" id="animaisMn" value="Animais"
 				action="animais" />
 
 			<p:menuitem styleClass="menuBarItem" id="amigosMn" value="Amigos"
-				action="home" rendered="#{sessionMB.isManagementAllowed()}" />
+				action="amigos" rendered="#{sessionMB.isManagementAllowed()}" />
+
+			<p:menuitem styleClass="menuBarItem" id="avaliacoesMn"
+				value="Avaliações" action="avaliacoes"
+				rendered="#{sessionMB.isManagementAllowed()}" />
 
 			<f:facet name="options">
 				<p:commandButton icon="plus16" value="Adicionar amigo"
-					rendered="#{sessionMB.isFriendshipRequestAllowed()}"
-					actionListener="#{sessionMB.addFriend()}" />
+					actionListener="#{amizadeMB.addFriend()}" />
+
+				<!-- rendered="#{sessionMB.isFriendshipRequestAllowed()}"  -->
+
 			</f:facet>
 
 		</p:menubar>

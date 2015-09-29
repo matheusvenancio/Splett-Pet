@@ -115,6 +115,10 @@ table {
 	font-size: 15px;
 }
 
+.painelDados {
+	margin-bottom: 10px;	
+}
+
 .botaoCRUD {
 	margin: 0px;
 }

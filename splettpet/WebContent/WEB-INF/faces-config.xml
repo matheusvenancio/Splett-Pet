@@ -69,8 +69,40 @@
 
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>admraca</from-outcome>
+			<from-outcome>postagens</from-outcome>
 			<to-view-id>/user/postagem/postagens.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>fotos</from-outcome>
+			<to-view-id>/user/foto/fotos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>videos</from-outcome>
+			<to-view-id>/user/video/videos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>avaliacoes</from-outcome>
+			<to-view-id>/user/avaliacao/avaliacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>amigos</from-outcome>
+			<to-view-id>/user/amigo/amigos.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
