@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import splett.session.SessionMB;
+import splett.usuario.Usuario;
 import splett.video.Video;
 import splett.video.dao.VideoDao;
 
@@ -19,6 +21,9 @@ public class VideoMB {
 
 	@ManagedProperty(value = "#{videoLazyDataModel}")
 	private VideoLazyDataModel videoLazyDataModel;
+
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
 
 	private List<Video> videosFiltered;
 
@@ -33,10 +38,13 @@ public class VideoMB {
 	}
 
 	public void salvar() {
-		if (video.getId() != null)
+		if (video.getId() != null) {
 			videoDao.update(video);
-		else
+		} else {
+			video.setUsuario(new Usuario());
+			video.setUsuario(sessionMB.getUsuarioLogado());
 			videoDao.salvar(video);
+		}
 	}
 
 	public void remover() {
@@ -78,5 +86,14 @@ public class VideoMB {
 	public void setVideo(Video video) {
 		this.video = video;
 	}
+
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
+
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
+	
 
 }

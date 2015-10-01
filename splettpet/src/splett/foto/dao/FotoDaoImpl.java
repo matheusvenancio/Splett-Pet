@@ -30,5 +30,9 @@ public class FotoDaoImpl extends GenericDao<Foto> implements FotoDao {
 		q.setMaxResults(50);
 		return q.getResultList();
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

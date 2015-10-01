@@ -16,68 +16,68 @@ import splett.usuario.dao.UsuarioDao;
 @ManagedBean(name = "sessionMB")
 @SessionScoped
 public class SessionMB {
-    @ManagedProperty(value = "#{usuarioLogado}")
-    private Usuario usuarioLogado;
+	@ManagedProperty(value = "#{usuarioLogado}")
+	private Usuario usuarioLogado;
 
-    @ManagedProperty(value = "#{usuarioVisualizado}")
-    private Usuario usuarioVisualizado;
+	@ManagedProperty(value = "#{usuarioVisualizado}")
+	private Usuario usuarioVisualizado;
 
-    @ManagedProperty(value = "#{usuarioDao}")
-    private UsuarioDao usuarioDao;
+	@ManagedProperty(value = "#{usuarioDao}")
+	private UsuarioDao usuarioDao;
 
-    @PostConstruct
-    public void init() {
-	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
-	usuarioVisualizado = usuarioDao.findById(usuarioLogado.getId() + 2);
-    }
-
-    public Usuario getUsuarioLogado() {
-	return usuarioLogado;
-    }
-
-    public boolean isLogado() {
-	if (SecurityContextHolder.getContext()
-		.getAuthentication() instanceof AnonymousAuthenticationToken) {
-	    return false;
+	@PostConstruct
+	public void init() {
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
+		usuarioVisualizado = usuarioDao.findById(usuarioLogado.getId() + 2);
 	}
-	return true;
-    }
 
-    public void returnToSelfProfile() {
-	usuarioVisualizado = usuarioLogado;
-    }
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
 
-    public boolean isSelfProfile() {
-	return usuarioVisualizado == usuarioLogado;
-    }
+	public boolean isLogado() {
+		if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+			return false;
+		}
+		return true;
+	}
 
-    public boolean isUserAdm() {
-	return usuarioLogado.getTipo().equals(TipoUsuario.ROLE_ADMIN);
-    }
+	public void returnToSelfProfile() {
+		usuarioVisualizado = usuarioLogado;
+	}
 
-    public boolean isManagementAllowed() {
-	return isSelfProfile() || isUserAdm();
-    }
+	public boolean isSelfProfile() {
+		return usuarioVisualizado == usuarioLogado;
+	}
 
-    public UsuarioDao getUsuarioDao() {
-	return usuarioDao;
-    }
+	public boolean isUserAdm() {
+		return usuarioLogado.getTipo().equals(TipoUsuario.ROLE_ADMIN);
+	}
 
-    public void setUsuarioDao(UsuarioDao usuarioDao) {
-	this.usuarioDao = usuarioDao;
-    }
+	public boolean isManagementAllowed() {
+		return isSelfProfile() || isUserAdm();
+	}
 
-    public void setUsuarioLogado(Usuario usuarioLogado) {
-	this.usuarioLogado = usuarioLogado;
-    }
+	public UsuarioDao getUsuarioDao() {
+		return usuarioDao;
+	}
 
-    public Usuario getUsuarioVisualizado() {
-	return usuarioVisualizado;
-    }
+	public void setUsuarioDao(UsuarioDao usuarioDao) {
+		this.usuarioDao = usuarioDao;
+	}
 
-    public void setUsuarioVisualizado(Usuario usuarioVisualizado) {
-	this.usuarioVisualizado = usuarioVisualizado;
-    }
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}
+
+	public Usuario getUsuarioVisualizado() {
+		return usuarioVisualizado;
+	}
+
+	public void setUsuarioVisualizado(Usuario usuarioVisualizado) {
+		this.usuarioVisualizado = usuarioVisualizado;
+	}
 
 }

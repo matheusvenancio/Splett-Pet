@@ -6,11 +6,76 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
 
 	<ui:define name="body">
-		<form>
 
-			<p:commandButton id="addVideo" value="Adicionar Video" />
+		<p:commandButton id="addVideo" value="Adicionar Video"
+			actionListener="#{videoMB.criar}"
+			oncomplete="PF('videoDialog').show()" update=":videoDlg" />
+			
+			
+			
+			<h:form id="tableForm">
+				<p:dataTable id="videosTable" var="video" rows="10"
+					value="#{videoMB.videoLazyDataModel}" rowKey="#{video.id}"
+					paginator="true" lazy="true"
+					emptyMessage="Nenhum registro encontrado">
 
-		</form>
+					<f:facet name="header">
+						<h:outputText value="Videos" />
+					</f:facet>
+
+				
+						<h:outputText value="#{video.descricao}" />
+						<br/>
+						<p:media value="#{video.caminho}" width="420" height="315" player="flash"/>
+					
+				</p:dataTable>
+			</h:form>
+			
+			
+
+		
+		<p:dialog id="videoDlg" widgetVar="videoDialog"
+			header="Adicionar Video" height="40%" modal="true" resizable="false"
+			draggable="false">
+			<h:form>
+				<h:outputLabel id="descricaoLb" value="Descrição: " for="descricao"
+					style="float:left; margin-right:2px;" />
+				<p:inputTextarea id="descricao" autoResize="false" rows="5"
+					cols="50" counter="display" maxlength="300"
+					counterTemplate="{0} caracteres restantes"
+					value="#{videoMB.video.descricao}" />
+				<br />
+				<h:outputText id="display" />
+				<br />
+
+				<h:outputLabel id="linkLb" value="URL:" for="link" />
+				<p:inputText id="link" value="#{videoMB.video.caminho}"
+					required="true" requiredMessage="Link é obrigatório" />
+				<p:message for="link" />
+
+				<p:commandButton value="Salvar" ajax="false"
+					actionListener="#{videoMB.salvar}"
+					oncomplete="if(!args.validationFailed) PF('videoDialog').hide()"
+					icon="ok16" />
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('videoDialog').hide()" immediate="true"
+					actionListener="#{videoMB.cancelar}" />
+
+
+			</h:form>
+		</p:dialog>
+
+		<p:confirmDialog id="confirm" widgetVar="videoConfirmDialog"
+			global="true" header="Confirma exclusão do video?"
+			message="Deseja realmente excluir o vídeo?">
+			<h:form>
+				<p:commandButton value="Sim" actionListener="#{videoMB.remover}"
+					oncomplete="PF('videoConfirmDialog').hide()" icon="ok16" />
+				<p:commandButton value="Não"
+					oncomplete="PF('videoConfirmDialog').hide()" icon="cancelar16" />
+			</h:form>
+		</p:confirmDialog>
+
 	</ui:define>
 
 </ui:composition>
