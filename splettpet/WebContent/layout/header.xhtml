@@ -7,10 +7,13 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:p="http://primefaces.org/ui">
 
-
 	<p:toolbar id="fixedTb" styleClass="fixedTb">
 		<f:facet name="left">
-			<p:link outcome="perfil" value="SplettPet" styleClass="fixedTbLink" />
+			<h:form>
+				<p:commandLink action="#{sessionMB.returnToSelfProfile()}"
+					outcome="perfil" value="SplettPet" styleClass="fixedTbLink"
+					ajax="false" />
+			</h:form>
 		</f:facet>
 
 		<f:facet name="right">

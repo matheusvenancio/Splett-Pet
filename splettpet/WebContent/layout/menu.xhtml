@@ -27,10 +27,8 @@
 
 			<f:facet name="options">
 				<p:commandButton icon="plus16" value="Adicionar amigo"
-					actionListener="#{amizadeMB.addFriend()}" />
-
-				<!-- rendered="#{sessionMB.isFriendshipRequestAllowed()}"  -->
-
+					actionListener="#{amizadeMB.addFriend()}"
+					rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
 			</f:facet>
 
 		</p:menubar>

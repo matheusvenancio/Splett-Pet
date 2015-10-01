@@ -24,7 +24,7 @@
 
 			<h:outputLabel id="dtNascLb" value="Data Nascimento:" for="dtNasc" />
 			<p:calendar id="dtNasc" value="#{usuarioMB.usuario.dataNascimento}"
-				pattern="dd/MM/yyyy" navigator="true"></p:calendar>
+				pattern="dd/MM/yyyy" navigator="true" yearRange="c-70:c+10"></p:calendar>
 			<p:message for="dtNasc" />
 
 			<h:outputLabel id="generoLb" value="Gênero:" for="genero" />

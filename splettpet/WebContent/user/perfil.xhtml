@@ -35,7 +35,8 @@
 						<h:outputText value="#{sessionMB.usuarioVisualizado.email}" />
 
 						<h:outputLabel styleClass="coisa" value="Gênero:" />
-						<h:outputText value="#{sessionMB.usuarioVisualizado.genero}" />
+						<h:outputText
+							value="#{sessionMB.usuarioVisualizado.genero.toString()}" />
 
 						<h:outputLabel styleClass="coisa" value="Endereço:" />
 						<h:outputText value="#{sessionMB.usuarioVisualizado.endereco}" />
@@ -60,9 +61,8 @@
 				</p:panel>
 			</div>
 
-			<div
-				style="margin-top: 10px; margin-right: 10px; ">
-				<p:panel style="float:right; width: 60%;">
+			<div style="margin-top: 10px; margin-right: 10px;">
+				<p:panel style="float:right; width: 60%; margin-bottom:10px;">
 
 					<f:facet name="header">
 						<h:outputText value="Últimas Postagens" />
