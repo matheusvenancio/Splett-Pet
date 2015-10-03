@@ -6,38 +6,57 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
 
 	<ui:define name="body">
+		<p:growl id="msg" showDetail="true"></p:growl>
 
 		<p:commandButton id="addVideo" value="Adicionar Video"
 			actionListener="#{videoMB.criar}"
-			oncomplete="PF('videoDialog').show()" update=":videoDlg" />
-			
-			
-			
-			<h:form id="tableForm">
-				<p:dataTable id="videosTable" var="video" rows="10"
-					value="#{videoMB.videoLazyDataModel}" rowKey="#{video.id}"
-					paginator="true" lazy="true"
-					emptyMessage="Nenhum registro encontrado">
+			oncomplete="PF('videoDialog').show()" update=":videoDlg"
+			rendered="#{sessionMB.isManagementAllowed()}" />
+		<br />
 
-					<f:facet name="header">
-						<h:outputText value="Videos" />
-					</f:facet>
+		<h:form id="tableForm">
+			<p:dataTable id="videosTable" var="video" rows="10"
+				value="#{videoMB.videoLazyDataModel}" rowKey="#{video.id}"
+				paginator="true" lazy="true"
+				emptyMessage="Nenhum registro encontrado">
 
-				
-						<h:outputText value="#{video.descricao}" />
-						<br/>
-						<p:media value="#{video.caminho}" width="420" height="315" player="flash"/>
+				<f:facet name="header">
+					<h:outputText value="Videos" />
+				</f:facet>
+
+				<p:column>
+				<div align="right">
+
+						<p:commandButton id="editarVideo" value="Editar" icon="editar16"
+							oncomplete="PF('videoDialog').show()" update=":videos_form"
+							rendered="#{sessionMB.isManagementAllowed()}">
+							<f:setPropertyActionListener value="#{video}"
+								target="#{videoMB.video}" />
+						</p:commandButton>
+
+						<p:commandButton id="removerVideo" value="Remover"
+							icon="remover16" update=":confirm"
+							oncomplete="PF('videoConfirmDialog').show()"
+							rendered="#{sessionMB.isManagementAllowed()}">
+							<f:setPropertyActionListener value="#{video}"
+								target="#{videoMB.video}"
+								 />
+						</p:commandButton>
+
+					</div>
+					<h:outputText value="#{video.descricao}" />
 					
-				</p:dataTable>
-			</h:form>
-			
-			
+					<br />
+					<p:media value="#{video.caminho}" width="380" height="275"
+						player="flash" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 
-		
 		<p:dialog id="videoDlg" widgetVar="videoDialog"
 			header="Adicionar Video" height="40%" modal="true" resizable="false"
 			draggable="false">
-			<h:form>
+			<h:form id="videos_form">
 				<h:outputLabel id="descricaoLb" value="Descrição: " for="descricao"
 					style="float:left; margin-right:2px;" />
 				<p:inputTextarea id="descricao" autoResize="false" rows="5"
@@ -47,19 +66,21 @@
 				<br />
 				<h:outputText id="display" />
 				<br />
+				<h:panelGrid columns="3" styleClass="CRUDform">
 
-				<h:outputLabel id="linkLb" value="URL:" for="link" />
-				<p:inputText id="link" value="#{videoMB.video.caminho}"
-					required="true" requiredMessage="Link é obrigatório" />
-				<p:message for="link" />
+					<h:outputLabel id="linkLb" value="URL:" for="link" />
+					<p:inputText id="link" value="#{videoMB.video.caminho}"
+						required="true" requiredMessage="Link é obrigatório" />
+					<p:message for="link" />
+				</h:panelGrid>
 
-				<p:commandButton value="Salvar" ajax="false"
+				<p:commandButton id="salvarBT" value="Salvar" icon="salvar16"
+					update=":tableForm:videosTable :videos_form :msg"
 					actionListener="#{videoMB.salvar}"
-					oncomplete="if(!args.validationFailed) PF('videoDialog').hide()"
-					icon="ok16" />
+					oncomplete="if(!args.validationFailed) PF('videoDialog').hide()" />
 				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
 					oncomplete="PF('videoDialog').hide()" immediate="true"
-					actionListener="#{videoMB.cancelar}" />
+					update=":msg" actionListener="#{videoMB.cancelar}" />
 
 
 			</h:form>
@@ -70,7 +91,8 @@
 			message="Deseja realmente excluir o vídeo?">
 			<h:form>
 				<p:commandButton value="Sim" actionListener="#{videoMB.remover}"
-					oncomplete="PF('videoConfirmDialog').hide()" icon="ok16" />
+					oncomplete="PF('videoConfirmDialog').hide()" icon="ok16"
+					update=":tableForm:videosTable" />
 				<p:commandButton value="Não"
 					oncomplete="PF('videoConfirmDialog').hide()" icon="cancelar16" />
 			</h:form>

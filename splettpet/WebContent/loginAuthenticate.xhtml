@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/templateLogin.xhtml">
+
+	<ui:define name="body">
+	<h:form id="form" prependId="false">
+	
+
+
+			<f:metadata>
+				<f:event type="preRenderView"
+					listener="#{autenticacaoControle.processLoginFacebook}" />
+			</f:metadata>
+	<h:panelGroup id="pgrContaFacebook" layout="block"
+				rendered="#{autenticacaoControle.exibeCriaContaFacebook}">
+
+				<div>
+					<h:outputLabel
+						value="Crie sua conta com o Facebook" />
+				</div>
+
+				<div style="padding-top: 10px;">
+
+					<h:panelGrid id="pgrCadastro" columns="2" cellspacing="5">
+					
+
+						<h:outputText id="optSenhaUsuario" 
+							value="Senha: " />
+						<h:inputSecret id="j_password" tabindex="2" required="true"
+							value="#{autenticacaoControle.usuario.senha}"
+							requiredMessage="Senha é obrigatória!"
+							maxlength="30" />
+					</h:panelGrid>
+					
+
+					<div id="botoes" style="position: relative; margin-top: 20px;">
+						<h:commandButton id="cbtCriarConta" type="submit"
+							title="Crie sua conta" value="Criar conta"
+							action="#{autenticacaoControle.salvarUsuarioFacebook}"
+							tabindex="3" />
+						<h:commandButton id="cbtVoltar" styleClass="botaoArredondado"
+							immediate="true" action="/index.splett?faces-redirect=true"
+							value="Voltar" title="Voltar para a página de login" tabindex="5" />
+					</div>
+
+				</div>
+
+			</h:panelGroup>
+			
+	
+	</h:form>
+	</ui:define>
+</ui:composition>

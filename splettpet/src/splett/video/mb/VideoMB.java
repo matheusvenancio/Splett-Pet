@@ -38,6 +38,10 @@ public class VideoMB {
 	}
 
 	public void salvar() {
+		
+		String caminho = video.getCaminho().replace("/watch?v=", "/v/");
+		video.setCaminho(caminho);
+		
 		if (video.getId() != null) {
 			videoDao.update(video);
 		} else {

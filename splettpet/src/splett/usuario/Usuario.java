@@ -44,6 +44,8 @@ public class Usuario {
     private String telefoneFixo;
 
     private String fotoPerfil;
+    
+    private boolean isFacebook;
 
     @OneToOne
     private Endereco endereco;
@@ -132,7 +134,15 @@ public class Usuario {
 	this.dataNascimento = dataNascimento;
     }
 
-    public Integer getId() {
+    public boolean isFacebook() {
+		return isFacebook;
+	}
+
+	public void setFacebook(boolean isFacebook) {
+		this.isFacebook = isFacebook;
+	}
+
+	public Integer getId() {
 	return id;
     }
 

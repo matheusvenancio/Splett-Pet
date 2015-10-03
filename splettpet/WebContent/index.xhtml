@@ -27,19 +27,25 @@
 
 					<h:outputText value="Senha" styleClass="label" />
 					<input type="password" class="loginTF" name="j_password"
-						style="width: 100%; position: relative; font-size: 1.5em; " />
+						style="width: 100%; position: relative; font-size: 1.5em;" />
 
 					<input type="submit" value="Entrar" class="loginButton" />
 					
-					<!-- imagine um botao de login com o facebook aqui -->
-					
-					<p:commandLink style="font-size: 1.2em;" actionListener="#{usuarioMB.criar}"
+					<p:commandLink style="font-size: 1.2em;"
+						actionListener="#{usuarioMB.criar}"
 						oncomplete="PF('enviarSenhaDialog').show()"
 						update=":enviarSenhaDlg" value="Esqueci minha senha" />
 
 				</p:panelGrid>
 
 			</form>
+			
+			<h:form>
+					<p:commandButton id="cbtLogarFace" ajax="false" async="false"
+						title="Logar Face" immediate="true" value="Facebook"
+						action="#{autenticacaoControle.autenticarSpringComFacebook}"
+						tabindex="4" />
+</h:form>
 
 			<br />
 		</p:panel>
