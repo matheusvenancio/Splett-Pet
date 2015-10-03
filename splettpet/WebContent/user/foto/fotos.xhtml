@@ -10,6 +10,50 @@
 		<p:commandButton id="addFoto" value="Adicionar Foto"
 			actionListener="#{fotoMB.criar}" oncomplete="PF('fotoDialog').show()"
 			update=":fotoDlg" />
+			
+			
+			<h:form id="tableForm">
+			<p:dataTable id="fotosTable" var="foto" rows="10"
+				value="#{fotoMB.fotoLazyDataModel}" rowKey="#{foto.id}"
+				paginator="true" lazy="true"
+				emptyMessage="Nenhum registro encontrado">
+
+				<f:facet name="header">
+					<h:outputText value="Videos" />
+				</f:facet>
+
+				<p:column>
+					<div align="right">
+
+						<p:commandButton id="editarVideo" value="Editar" icon="editar16"
+							oncomplete="PF('fotoDialog').show()"
+							rendered="#{sessionMB.isManagementAllowed()}">
+							<f:setPropertyActionListener value="#{foto}"
+								target="#{fotoMB.foto}" />
+						</p:commandButton>
+
+						<p:commandButton id="removerVideo" value="Remover"
+							icon="remover16" update=":confirm"
+							oncomplete="PF('fotoConfirmDialog').show()"
+							rendered="#{sessionMB.isManagementAllowed()}">
+							<f:setPropertyActionListener value="#{foto}"
+								target="#{fotoMB.foto}" />
+						</p:commandButton>
+
+					</div>
+					<h:outputText value="#{foto.descricao}" />
+
+					<br />
+				</p:column>
+			</p:dataTable>
+			
+					<h:graphicImage value=""/>
+						<p:graphicImage library="img" name="1443897945831.jpg"
+						style="width:100%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+		</h:form>
+			
+			
+			
 
 		<p:dialog id="fotoDlg" widgetVar="fotoDialog" header="Adicionar Foto"
 			height="40%" modal="true" resizable="false" draggable="false">
@@ -28,7 +72,7 @@
 				<br />
 
 				<p:fileUpload value="#{fotoMB.fileUp}" mode="simple"
-					skinSimple="true" />
+					skinSimple="true"  />
 				<br />
 				<p:commandButton value="Salvar" ajax="false"
 					actionListener="#{fotoMB.doUpload}"

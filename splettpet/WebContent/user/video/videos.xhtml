@@ -25,7 +25,7 @@
 				</f:facet>
 
 				<p:column>
-				<div align="right">
+					<div align="right">
 
 						<p:commandButton id="editarVideo" value="Editar" icon="editar16"
 							oncomplete="PF('videoDialog').show()" update=":videos_form"
@@ -39,13 +39,12 @@
 							oncomplete="PF('videoConfirmDialog').show()"
 							rendered="#{sessionMB.isManagementAllowed()}">
 							<f:setPropertyActionListener value="#{video}"
-								target="#{videoMB.video}"
-								 />
+								target="#{videoMB.video}" />
 						</p:commandButton>
 
 					</div>
 					<h:outputText value="#{video.descricao}" />
-					
+
 					<br />
 					<p:media value="#{video.caminho}" width="380" height="275"
 						player="flash" />
@@ -72,7 +71,13 @@
 					<p:inputText id="link" value="#{videoMB.video.caminho}"
 						required="true" requiredMessage="Link é obrigatório" />
 					<p:message for="link" />
+
+					
 				</h:panelGrid>
+				
+				<h:outputText id="publicoLb" value="Publico: " for="publico"/>
+					<p:selectBooleanCheckbox id = "publico" value="#{videoMB.video.publico}"/>
+				<br/>
 
 				<p:commandButton id="salvarBT" value="Salvar" icon="salvar16"
 					update=":tableForm:videosTable :videos_form :msg"

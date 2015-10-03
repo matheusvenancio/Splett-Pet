@@ -13,19 +13,23 @@ import org.primefaces.model.SortOrder;
 
 import splett.foto.Foto;
 import splett.foto.dao.FotoDao;
+import splett.session.SessionMB;
+import splett.usuario.Usuario;
 
 @ManagedBean(name = "fotoLazyDataModel")
 @ViewScoped
 public class FotoLazyDataModel extends LazyDataModel<Foto> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 
 	@ManagedProperty(value = "#{fotoDao}")
 	private FotoDao fotoDao;
+	
+	
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
+
 
 	@Override
 	public Foto getRowData(String rowKey) {
@@ -41,6 +45,11 @@ public class FotoLazyDataModel extends LazyDataModel<Foto> {
 	public List<Foto> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		List<Foto> source = null;
+		
+		Usuario u = new Usuario();
+		u = sessionMB.getUsuarioLogado();
+
+		source = fotoDao.listFoto(u.getId());
 
 		// sort
 		if (sortField != null) {
@@ -60,5 +69,14 @@ public class FotoLazyDataModel extends LazyDataModel<Foto> {
 	public void setFotoDao(FotoDao fotoDao) {
 		this.fotoDao = fotoDao;
 	}
+
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
+
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
+	
 	
 }

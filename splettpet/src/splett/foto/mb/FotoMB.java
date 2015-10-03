@@ -38,7 +38,10 @@ public class FotoMB {
 
 	private UploadedFile fileUp;
 
-	private String destino = "C:\\Temp\\";
+	private String destino = "/image/";
+	
+	private UploadArquivo arquivo = new UploadArquivo();
+	
 
 	public FotoMB() {
 		fotoFiltered = new ArrayList<Foto>();
@@ -51,8 +54,14 @@ public class FotoMB {
 
 	public void transferirArquivo(String nomeArquivo, InputStream in) {
 		try {
-			OutputStream out = new FileOutputStream(new File(destino
-					+ nomeArquivo));
+			
+			File file = new File(arquivo.getRealPath() + destino);
+			file.mkdirs();
+			
+			File f = new File(arquivo.getRealPath() + destino
+					+ nomeArquivo);
+			f.createNewFile();
+			OutputStream out = new FileOutputStream(f);
 			int reader = 0;
 			byte[] bytes = new byte[(int) getFileUp().getSize()];
 
@@ -70,14 +79,16 @@ public class FotoMB {
 	public void doUpload() {
 		if (fileUp != null) {
 			try {
-				transferirArquivo(getFileUp().getFileName(), getFileUp()
+				transferirArquivo(new java.util.Date().getTime() + ".jpg", getFileUp()
 						.getInputstream());
 			} catch (IOException exception) {
 
 			}
 
 			foto.setContentType(fileUp.getContentType());
-			foto.setCaminho(destino + fileUp.getFileName());
+			foto.setCaminho(arquivo.getRealPath() + destino
+					+ new java.util.Date().getTime() + ".jpg");
+			foto.setNome(new java.util.Date().getTime() + ".jpg");
 			foto.setUsuario(new Usuario());
 			foto.setUsuario(sessionMB.getUsuarioLogado() );
 			fotoDao.salvar(foto);
@@ -161,4 +172,13 @@ public class FotoMB {
 		this.destino = destino;
 	}
 
+	public UploadArquivo getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadArquivo arquivo) {
+		this.arquivo = arquivo;
+	}
+
+	
 }

@@ -16,8 +16,8 @@ public class Video {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	private boolean isPublico;
+	
+	private boolean publico = false;
 
 	private String descricao;
 
@@ -35,11 +35,11 @@ public class Video {
 	}
 
 	public boolean isPublico() {
-		return isPublico;
+		return publico;
 	}
 
-	public void setPublico(boolean isPublico) {
-		this.isPublico = isPublico;
+	public void setPublico(boolean publico) {
+		this.publico = publico;
 	}
 
 	public String getDescricao() {

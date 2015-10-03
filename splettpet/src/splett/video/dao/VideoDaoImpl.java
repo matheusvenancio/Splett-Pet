@@ -25,7 +25,7 @@ public class VideoDaoImpl extends GenericDao<Video> implements VideoDao {
 	public List<Video> listVideo(int id) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select v from Video v where v.usuario.id = :id");
+				.createQuery("select v from Video v where v.usuario.id = :id order by v.id DESC");
 		q.setParameter("id", id);
 		q.setMaxResults(50);
 		return q.getResultList();

@@ -1,6 +1,5 @@
 package splett.foto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,9 +16,8 @@ public class Foto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column( nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-	private boolean isPublico;
+
+	private boolean publico = false;
 
 	private String descricao;
 
@@ -27,9 +25,10 @@ public class Foto {
 
 	private String contentType;
 
+	private String nome;
+
 	@OneToOne
 	private Usuario usuario;
-
 
 	public Integer getId() {
 		return id;
@@ -40,11 +39,19 @@ public class Foto {
 	}
 
 	public boolean isPublico() {
-		return isPublico;
+		return publico;
 	}
 
-	public void setPublico(boolean isPublico) {
-		this.isPublico = isPublico;
+	public void setPublico(boolean publico) {
+		this.publico = publico;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getDescricao() {

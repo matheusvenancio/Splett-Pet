@@ -25,7 +25,7 @@ public class FotoDaoImpl extends GenericDao<Foto> implements FotoDao {
 	public List<Foto> listFoto(int id) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select f from Foto f where f.usuario.id = :id");
+				.createQuery("select f from Foto f where f.usuario.id = :id order by f.id DESC");
 		q.setParameter("id", id);
 		q.setMaxResults(50);
 		return q.getResultList();
