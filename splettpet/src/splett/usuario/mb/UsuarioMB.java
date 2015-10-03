@@ -16,10 +16,16 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
+import splett.animal.raca.Raca;
+import splett.animal.tipo.TipoAnimal;
+import splett.animal.tipo.dao.TipoAnimalDao;
 import splett.criptografia.Criptografia;
+import splett.endereco.Logradouro;
 import splett.usuario.TipoUsuario;
 import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
+import splett.usuario.endereco.Endereco;
+import splett.usuario.endereco.dao.EnderecoDao;
 
 @ManagedBean(name = "usuarioMB")
 @ViewScoped
@@ -27,6 +33,9 @@ public class UsuarioMB {
 
 	@ManagedProperty(value = "#{usuarioDao}")
 	private UsuarioDao usuarioDao;
+
+	@ManagedProperty(value = "#{enderecoDao}")
+	private EnderecoDao enderecoDao;
 
 	@ManagedProperty(value = "#{usuarioLazyDataModel}")
 	private UsuarioLazyDataModel usuarioLazyDataModel;
@@ -45,6 +54,17 @@ public class UsuarioMB {
 
 	public void criar() {
 		usuario = new Usuario();
+		usuario.setEndereco(new Endereco());
+	}
+
+	public void procurarEndereco() {
+
+		List<Logradouro> enderecos = enderecoDao.pesquisarPorCep(usuario
+				.getEndereco().getCep());
+		Logradouro l = enderecos.get(0);
+		usuario.getEndereco().setLogradouro(l.getNome());
+		usuario.getEndereco().setBairro(l.getBairroInicial().getNome());
+
 	}
 
 	public boolean validarLogin() {
@@ -81,7 +101,7 @@ public class UsuarioMB {
 
 				Email email = new SimpleEmail();
 				definirDadosEmail(email);
-				
+
 				String senha = gerarSenha();
 				enviarEmail(email, senha);
 
@@ -107,15 +127,15 @@ public class UsuarioMB {
 		email.setMsg("Olá " + usuario.getNome()
 				+ ", \n \n Sua nova senha de acesso é:  " + senha
 				+ "\n \n Atenciosamente \n Equipe Splett");
-		
+
 		email.send();
 	}
 
 	private void definirDadosEmail(Email email) throws EmailException {
 		email.setHostName("smtp.googlemail.com");
 		email.setSmtpPort(465);
-		email.setAuthenticator(new DefaultAuthenticator(
-				"splettpetbeta", "perdiojogo"));
+		email.setAuthenticator(new DefaultAuthenticator("splettpetbeta",
+				"perdiojogo"));
 		email.setSSLOnConnect(true);
 		email.setFrom("splettpetbeta@gmail.com");
 		email.setSubject("SplettPet - Esqueci minha senha");
@@ -186,4 +206,13 @@ public class UsuarioMB {
 	public void setUsuarioDao(UsuarioDao usuarioDao) {
 		this.usuarioDao = usuarioDao;
 	}
+
+	public EnderecoDao getEnderecoDao() {
+		return enderecoDao;
+	}
+
+	public void setEnderecoDao(EnderecoDao enderecoDao) {
+		this.enderecoDao = enderecoDao;
+	}
+
 }

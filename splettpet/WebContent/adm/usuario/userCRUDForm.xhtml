@@ -55,6 +55,38 @@
 				requiredMessage="Senha é obrigatória" />
 			<p:message for="senha" />
 
+
+			<h:outputLabel id="cepLb" value="Cep:" for="cep" />
+			<p:inputText id="cep" value="#{usuarioMB.usuario.endereco.cep}"
+				size="50" required="true" requiredMessage="Cep é obrigatório">
+				<p:ajax listener="#{usuarioMB.procurarEndereco}"
+					update=":user_form:logradouro :user_form:bairro" event="blur" />
+			</p:inputText>
+			<p:message for="cep" />
+
+
+			<h:outputLabel id="logradouroLb" value="Logradouro:" for="logradouro" />
+			<p:inputText id="logradouro"
+				value="#{usuarioMB.usuario.endereco.logradouro}" size="50" />
+			<p:message for="logradouro" />
+
+			<h:outputLabel id="bairroLb" value="Bairro:" for="bairro" />
+			<p:inputText id="bairro" value="#{usuarioMB.usuario.endereco.bairro}"
+				size="50" />
+			<p:message for="bairro" />
+
+			<h:outputLabel id="complementoLb" value="Complemento:"
+				for="complemento" />
+			<p:inputText id="complemento"
+				value="#{usuarioMB.usuario.endereco.complemento}" size="50" />
+			<p:message for="complemento" />
+
+			<h:outputLabel id="numeroLb" value="Número:" for="numero" />
+			<p:inputText id="numero" value="#{usuarioMB.usuario.endereco.numero}"
+				size="50" />
+			<p:message for="numero" />
+
+
 			<h:outputLabel id="telefone1Lb" value="Telefone 1:" for="telefone1" />
 			<p:inputText id="telefone1" value="#{usuarioMB.usuario.telefoneFixo}"
 				size="50" required="true" requiredMessage="Telefone 1 é obrigatório" />
@@ -65,7 +97,7 @@
 				value="#{usuarioMB.usuario.telefoneCelular}" size="50" />
 			<p:message for="telefone2" />
 
-			<!-- Falta o endereço -->
+
 		</h:panelGrid>
 
 		<p:commandButton id="salvarBt" value="salvar" icon="salvar16"

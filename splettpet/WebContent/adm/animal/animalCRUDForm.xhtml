@@ -8,6 +8,14 @@
 	<h:form id="animal_form">
 		<h:panelGrid columns="3" styleClass="CRUDform">
 
+			<h:outputLabel id="donoLb" value="Dono:" for="dono" />
+			<p:autoComplete id="dono"
+				completeMethod="#{usuarioDao.listUsuariosByEmail}"
+				value="#{animalMB.animal.dono}" minQueryLength=""
+				converter="#{usuarioConverter}" 
+				required="true" requiredMessage="Dono é obrigatório" forceSelection="true"/>
+			<p:message for="dono" />
+
 			<h:outputLabel id="nomeLb" value="Nome:" for="nome" />
 			<p:inputText id="nome" value="#{animalMB.animal.nome}" size="50"
 				required="true" requiredMessage="Nome é obrigatório" />
@@ -21,44 +29,51 @@
 				<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
 			</p:selectOneMenu>
 			<p:message for="genero" />
-			
-			<!-- Fazer ele limitar as raças de acordo com o tipo escolhido -->
 
 			<h:outputLabel id="tipoLb" value="Tipo:" for="tipo" />
-			<p:autoComplete id="tipo" value="#{animalMB.animal.tipoAnimal}"
+			<p:autoComplete id="tipo" value="#{animalMB.animal.raca.tipoAnimal}"
 				size="15" completeMethod="#{tipoAnimalDao.pesquisarPorNome}"
 				converter="#{tipoAnimalConverter}" dropdown="true"
-				forceSelection="true" minQueryLength="3" />
+				forceSelection="true" minQueryLength="3" required="true" requiredMessage="Tipo de animal é obrigatório">
+				<p:ajax listener="#{animalMB.listarRacas}"
+					update=":animal_form:raca" event= "blur"/>
+				</p:autoComplete>
+				
 			<p:message for="tipo" />
 
+
 			<h:outputLabel id="racaLb" value="Raça:" for="raca" />
-			<p:autoComplete id="raca" value="#{animalMB.animal.raca}" size="15"
-				completeMethod="#{racaDao.pesquisarPorNome}"
-				converter="#{racaConverter}" dropdown="true" forceSelection="true"
-				minQueryLength="3" />
+			<p:selectOneMenu id="raca" value="#{animalMB.animal.raca}"
+				converter="#{racaConverter}" var="r" filter="true"
+				filterMatchMode="contains" required="true" requiredMessage="Raça é obrigatória">
+
+				<f:selectItems value="#{animalMB.racas}" var="raca"
+					itemLabel="#{raca.nome}" itemValue="#{raca}" />
+				<p:column>
+					<h:outputText value="#{r.nome}" />
+				</p:column>
+			</p:selectOneMenu>
 			<p:message for="raca" />
 
 			<h:outputLabel id="idadeLb" value="Idade:" for="idade" />
-			<p:inputText id="idade" value="#{animalMB.animal.idade}" size="10" />
+			<p:inputText id="idade" value="#{animalMB.animal.idade}" size="10"  required="true" requiredMessage="Idade é obrigatória"/>
 			<p:message for="idade" />
 
 			<h:outputLabel id="pesoLb" value="Peso:" for="peso" />
-			<p:inputText id="peso" value="#{animalMB.animal.peso}" size="10" />
+			<p:inputText id="peso" value="#{animalMB.animal.peso}" size="10" required="true" requiredMessage="Peso é obrigatório"/>
 			<p:message for="peso" />
-
 		</h:panelGrid>
 
 		<h:outputLabel id="necessidadesLb" value="Necessidades Especiais:"
 			for="necessidades" style="float:left; margin-right:2px;" />
+		<br/>
 		<p:inputTextarea id="necessidades" autoResize="false" rows="5"
-			cols="30" counter="display" maxlength="300"
+			cols="58" counter="display" maxlength="300"
 			counterTemplate="{0} caracteres restantes"
 			value="#{animalMB.animal.necessidades}" />
 		<br />
 		<h:outputText id="display" />
 		<br />
-
-		<!-- Falta programar pra achar o dono -->
 
 		<p:commandButton style="margin-top:10px;" id="salvarBt" value="salvar"
 			icon="salvar16" update=":tableForm:animaisTable :animal_form :msg"

@@ -100,6 +100,16 @@ public class UsuarioDaoImpl extends GenericDao<Usuario> implements UsuarioDao {
 		return (Usuario) q.getSingleResult();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listUsuariosByEmail(String email) {
+
+		EntityManager em = emf.createEntityManager();
+		Query q = em
+				.createQuery("select u from Usuario u where lower(u.email) like concat('%', :email, '%')");
+		q.setParameter("email", email);
+		return q.getResultList();
+	}
+	
 	
 
 }

@@ -9,6 +9,9 @@ import javax.faces.bean.ViewScoped;
 
 import splett.animal.Animal;
 import splett.animal.dao.AnimalDao;
+import splett.animal.raca.Raca;
+import splett.animal.tipo.TipoAnimal;
+import splett.animal.tipo.dao.TipoAnimalDao;
 
 @ManagedBean(name = "animalMB")
 @ViewScoped
@@ -17,6 +20,9 @@ public class AnimalMB {
 	@ManagedProperty(value = "#{animalDao}")
 	private AnimalDao animalDao;
 
+	@ManagedProperty(value = "#{tipoAnimalDao}")
+	private TipoAnimalDao tipoAnimalDao;
+
 	@ManagedProperty(value = "#{animalLazyDataModel}")
 	private AnimalLazyDataModel animalLazyDataModel;
 
@@ -24,12 +30,19 @@ public class AnimalMB {
 
 	private Animal animal;
 
+	private List<Raca> racas;
+
 	public AnimalMB() {
 		animaisFiltered = new ArrayList<Animal>();
+		
 	}
 
 	public void criar() {
+		racas = new ArrayList<Raca>();
 		animal = new Animal();
+		Raca r = new Raca();
+		r.setTipoAnimal(new TipoAnimal());
+		animal.setRaca(r);
 	}
 
 	public void salvar() {
@@ -37,6 +50,13 @@ public class AnimalMB {
 			animalDao.update(animal);
 		else
 			animalDao.salvar(animal);
+	}
+
+	public void listarRacas() {
+
+		racas = tipoAnimalDao.listRacas(this.animal.getRaca().getTipoAnimal()
+				.getId());
+
 	}
 
 	public void remover() {
@@ -77,6 +97,22 @@ public class AnimalMB {
 
 	public void setAnimalDao(AnimalDao animalDao) {
 		this.animalDao = animalDao;
+	}
+
+	public TipoAnimalDao getTipoAnimalDao() {
+		return tipoAnimalDao;
+	}
+
+	public void setTipoAnimalDao(TipoAnimalDao tipoAnimalDao) {
+		this.tipoAnimalDao = tipoAnimalDao;
+	}
+
+	public List<Raca> getRacas() {
+		return racas;
+	}
+
+	public void setRacas(List<Raca> racas) {
+		this.racas = racas;
 	}
 
 }

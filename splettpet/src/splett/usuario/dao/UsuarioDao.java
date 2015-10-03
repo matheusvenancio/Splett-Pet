@@ -18,4 +18,5 @@ public interface UsuarioDao extends Dao<Usuario> {
 			Usuario usuario) throws Exception ;
 	public Authentication authenticate(Authentication auth);
 	public Usuario recoverAuthenticatedUser();
+	public List<Usuario> listUsuariosByEmail(String email);
 }

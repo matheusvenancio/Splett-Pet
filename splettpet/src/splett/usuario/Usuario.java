@@ -3,6 +3,7 @@ package splett.usuario;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,7 +48,7 @@ public class Usuario {
     
     private boolean isFacebook;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 
     @Column(name = "authority")
@@ -226,4 +227,11 @@ public class Usuario {
     public int hashCode() {
 	return id != null ? this.getClass().hashCode() + id.hashCode() : super.hashCode();
     }
+
+	@Override
+	public String toString() {
+		return  this.email ;
+	}
+    
+    
 }
