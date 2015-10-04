@@ -44,7 +44,7 @@ public class AvaliacaoMB {
 			avaliacaoDao.update(avaliacao);
 		} else {
 			avaliacao.setAvaliador(sessionMB.getUsuarioLogado());
-			avaliacao.setAvaliador(sessionMB.getUsuarioVisualizado());
+			avaliacao.setAvaliado(sessionMB.getUsuarioLogado());
 			avaliacaoDao.salvar(avaliacao);
 		}
 	}

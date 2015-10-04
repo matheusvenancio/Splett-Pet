@@ -21,7 +21,7 @@ public class Avaliacao {
 
 	private String texto;
 
-	private int pontuacao = 0;
+	private int pontuacao = 3;
 
 	@JoinColumn(referencedColumnName = "id", name = "usuario_avaliador_id")
 	@ManyToOne(cascade = CascadeType.ALL)
