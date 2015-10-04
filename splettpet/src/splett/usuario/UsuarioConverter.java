@@ -20,7 +20,7 @@ public class UsuarioConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
 		if ( value != null && !value.isEmpty() && !value.equalsIgnoreCase("Selecione um") )
-			return usuarioDao.pesquisarPorNome(value).get(0);
+			return usuarioDao.listUsuariosByEmail(value).get(0);
 		return null;
 	}
 

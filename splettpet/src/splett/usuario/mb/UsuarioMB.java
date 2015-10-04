@@ -16,9 +16,6 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import splett.animal.raca.Raca;
-import splett.animal.tipo.TipoAnimal;
-import splett.animal.tipo.dao.TipoAnimalDao;
 import splett.criptografia.Criptografia;
 import splett.endereco.Logradouro;
 import splett.usuario.TipoUsuario;

@@ -16,6 +16,7 @@ import splett.usuario.dao.UsuarioDao;
 @ManagedBean(name = "sessionMB")
 @SessionScoped
 public class SessionMB {
+	
 	@ManagedProperty(value = "#{usuarioLogado}")
 	private Usuario usuarioLogado;
 
@@ -30,7 +31,7 @@ public class SessionMB {
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
-		usuarioVisualizado = usuarioDao.findById(usuarioLogado.getId() + 2);
+		usuarioVisualizado = usuarioDao.findById(usuarioLogado.getId() +1);
 	}
 
 	public Usuario getUsuarioLogado() {

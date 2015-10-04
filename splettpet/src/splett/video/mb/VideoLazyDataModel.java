@@ -24,25 +24,16 @@ public class VideoLazyDataModel extends LazyDataModel<Video> {
 
 	@ManagedProperty(value = "#{videoDao}")
 	private VideoDao videoDao;
-	
+
 	@ManagedProperty(value = "#{sessionMB}")
 	private SessionMB sessionMB;
-
-	@Override
-	public Video getRowData(String rowKey) {
-		return videoDao.findById(Integer.parseInt(rowKey));
-	}
-
-	@Override
-	public Object getRowKey(Video video) {
-		return video.getId();
-	}
 
 	@Override
 	public List<Video> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		List<Video> source = null;
 		Usuario u = new Usuario();
+
 		u = sessionMB.getUsuarioLogado();
 
 		source = videoDao.listVideo(u.getId());
@@ -56,6 +47,16 @@ public class VideoLazyDataModel extends LazyDataModel<Video> {
 		this.setRowCount(videoDao.getRowCount());
 
 		return source;
+	}
+
+	@Override
+	public Video getRowData(String rowKey) {
+		return videoDao.findById(Integer.parseInt(rowKey));
+	}
+
+	@Override
+	public Object getRowKey(Video video) {
+		return video.getId();
 	}
 
 	public static long getSerialversionuid() {
@@ -77,6 +78,5 @@ public class VideoLazyDataModel extends LazyDataModel<Video> {
 	public void setSessionMB(SessionMB sessionMB) {
 		this.sessionMB = sessionMB;
 	}
-	
 
 }

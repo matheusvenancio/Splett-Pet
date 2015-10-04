@@ -1,5 +1,6 @@
 package splett.avaliacao;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,48 +15,60 @@ import splett.usuario.Usuario;
 @Table(name = "tbAvaliacao")
 public class Avaliacao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    private String texto;
+	private String texto;
 
-    private int pontuacao;
+	private int pontuacao = 0;
 
-    @JoinColumn(referencedColumnName = "id", name = "usuario_avaliador_id")
-    @ManyToOne
-    private Usuario avaliador;
+	@JoinColumn(referencedColumnName = "id", name = "usuario_avaliador_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario avaliador;
 
-    public int getId() {
-	return id;
-    }
+	@JoinColumn(referencedColumnName = "id", name = "usuario_avaliado_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario avaliado;
 
-    public void setId(int id) {
-	this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getTexto() {
-	return texto;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setTexto(String texto) {
-	this.texto = texto;
-    }
+	public String getTexto() {
+		return texto;
+	}
 
-    public int getPontuacao() {
-	return pontuacao;
-    }
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
 
-    public void setPontuacao(int pontuacao) {
-	this.pontuacao = pontuacao;
-    }
+	public int getPontuacao() {
+		return pontuacao;
+	}
 
-    public Usuario getAvaliador() {
-	return avaliador;
-    }
+	public void setPontuacao(int pontuacao) {
+		this.pontuacao = pontuacao;
+	}
 
-    public void setAvaliador(Usuario avaliador) {
-	this.avaliador = avaliador;
-    }
+	public Usuario getAvaliador() {
+		return avaliador;
+	}
+
+	public void setAvaliador(Usuario avaliador) {
+		this.avaliador = avaliador;
+	}
+
+	public Usuario getAvaliado() {
+		return avaliado;
+	}
+
+	public void setAvaliado(Usuario avaliado) {
+		this.avaliado = avaliado;
+	}
 
 }
