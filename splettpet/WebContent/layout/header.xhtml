@@ -11,7 +11,7 @@
 		<f:facet name="left">
 			<h:form>
 				<p:commandLink action="#{sessionMB.returnToSelfProfile()}"
-					outcome="perfil" value="SplettPet" styleClass="fixedTbLink"
+					outcome="perfil"  value="SplettPet" styleClass="fixedTbLink"
 					ajax="false" />
 			</h:form>
 		</f:facet>
@@ -57,6 +57,8 @@
 			</h:form>
 		</f:facet>
 	</p:toolbar>
+	
+	<p:sticky target="fixedTb"></p:sticky>
 
 
 </ui:composition>
