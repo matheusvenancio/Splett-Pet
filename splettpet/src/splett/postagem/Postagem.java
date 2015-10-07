@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,10 +29,22 @@ public class Postagem {
 
     private String foto;
     
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
     private Usuario usuario;
 
-    public int getId() {
+    private boolean visibilidade;
+    
+    
+    public boolean isVisibilidade() {
+		return visibilidade;
+	}
+
+	public void setVisibilidade(boolean visibilidade) {
+		this.visibilidade = visibilidade;
+	}
+
+	public int getId() {
 	return id;
     }
 

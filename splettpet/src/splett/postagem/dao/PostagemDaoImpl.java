@@ -1,7 +1,11 @@
 package splett.postagem.dao;
 
+import java.util.List;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import splett.dao.GenericDao;
 import splett.postagem.Postagem;
@@ -14,5 +18,13 @@ public class PostagemDaoImpl extends GenericDao<Postagem> implements PostagemDao
 
 	public PostagemDaoImpl() {
 		super(Postagem.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Postagem> listarPostagens(Integer id){
+		EntityManager em = emf.createEntityManager();
+		Query query = em.createQuery("SELECT p from Postagem p where usuario_id IN :id_usuario");
+		query.setParameter("id_usuario", id);
+		return query.getResultList();
 	}
 }
