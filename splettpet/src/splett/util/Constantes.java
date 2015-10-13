@@ -6,7 +6,7 @@ public class Constantes {
      * Facebook Login
      */
     public static final String PAGINA_AUTENTICACAO_LOGIN = "/loginAuthenticate.xhtml";
-    public static final String APP_ID = "808128142598733";
-    public static final String APP_SECRET = "c1fc541f5b232adf4b631ac0561ac805";
+    public static final String APP_ID = "1639329729657540";
+    public static final String APP_SECRET = "ac0fead7f897b3b38d13f8f9e25d231e";
  
 }

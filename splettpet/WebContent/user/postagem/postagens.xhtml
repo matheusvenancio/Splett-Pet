@@ -13,28 +13,39 @@
 					value="Nova"
 					actionListener="#{postagemMB.criar}"
 					oncomplete="PF('novaPostagemDialog').show()"
-					update=":novaPostagemDlg"
+					update=":novaPostagemDlg :novaPostagem_form"
 				/>
 	</h:form>
-	<h:form> 
-		<p:dataScroller value="#{postagemMB.postagens}" var="postagem" chunkSize="10">
-		   <f:facet name="header">
-            	Postagens
-        	</f:facet>
-			<h:panelGrid columns="1" style="width:35%" >
-	            <p:graphicImage library="img" name="android_icon.png"
-						styleClass="fotoPerfil"  />
-				 <h:outputText value="#{postagem.usuario.nome}" style="font-weight: bold"/> 
-	       
-	                    <h:outputText value="Data:" />
-	                    <h:outputText value="#{postagem.dataPostagem}"/>
-	 					
-	                    <h:outputText value="Texto: " />
-	                    <h:outputText value="#{postagem.texto}"/>
-	                    <p:commandButton id="visualizarPostagem" value="Visualizar"/>
-	                </h:panelGrid>
-			</p:dataScroller>
-		</h:form> 
+	<p:panel id="panelPostagens" >
+		<h:form id="tableForm"> 
+			<p:dataScroller value="#{postagemMB.postagens}" var="postagem" chunkSize="10" id="postagensDs">
+			   <f:facet name="header">
+	            	Postagens
+	        	</f:facet>
+						<p:panel style="width: 96%;" styleClass="post">
+							<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
+								style="width:100%;">
+								<p:graphicImage library="img" name="android_icon.png"
+									style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+								<p:panelGrid columns="1">
+									<p:outputLabel value="#{postagem.usuario.nome}" styleClass="label"
+										style="color: #6DB6D5;" />
+									<h:outputText value="12/06/2015"
+										style="font-size: 0.8em; color:gray" />
+								</p:panelGrid>
+							</p:panelGrid>
+	
+							<div style="margin-top: 5px; margin-bottom: 2px;">
+								<h:outputText styleClass="postText"
+									value="#{postagem.texto}" />
+							</div>
+							<p:commandButton value="Ver Mais" action="postagem">
+								<f:setPropertyActionListener value="#{postagem}" target="#{postagemMB.postagemVisualizar}" />
+							</p:commandButton>
+						</p:panel>
+				</p:dataScroller>
+			</h:form>
+		</p:panel> 
 		
 		
 	
@@ -45,14 +56,14 @@
 			<h:form id="novaPostagem_form">
 
 				<h:panelGrid columns="1">
-					<p:inputTextarea rows="5" cols="60" counter="display" maxlength="255" counterTemplate="{0} characters remaining." autoResize="false" binding="#{textoPostagem}" />
+					<p:inputTextarea rows="5" cols="60" counter="display" maxlength="255" counterTemplate="{0} characters remaining." autoResize="false" value="#{postagemMB.postagem.texto}" />
   					<h:outputText id="display" />
 
 				</h:panelGrid>
 
 				<p:commandButton id="enviarBt" value="Salvar" icon="salvar16"
-					update=":novaPostagem_form"
-					actionListener="#{postagemMB.salvarPostagem(textoPostagem.value)}"
+					update=":tableForm"
+					action="#{postagemMB.salvarPostagem}"
 					oncomplete="if(!args.validationFailed) PF('novaPostagemDialog').hide()" />
 
 				<p:commandButton id="cancelarBtE" value="Cancelar" icon="cancelar16"

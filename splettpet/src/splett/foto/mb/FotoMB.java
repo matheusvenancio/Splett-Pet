@@ -38,7 +38,7 @@ public class FotoMB {
 
 	private UploadedFile fileUp;
 
-	private String destino = "/image/";
+	private String destino = "\\image\\";
 	
 	private UploadArquivo arquivo = new UploadArquivo();
 	

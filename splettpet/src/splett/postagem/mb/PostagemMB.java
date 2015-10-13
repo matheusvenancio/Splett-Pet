@@ -7,20 +7,22 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import splett.postagem.Postagem;
 import splett.postagem.dao.PostagemDao;
 import splett.session.SessionMB;
 
 @ManagedBean(name = "postagemMB")
-@ViewScoped
+@SessionScoped
 public class PostagemMB {
 
 	@ManagedProperty(value = "#{postagemDao}")
 	private PostagemDao postagemDao;
 
 	private Postagem postagem;
+	
+	private Postagem postagemVisualizar;
 
 
 	@ManagedProperty(value = "#{sessionMB}")
@@ -38,11 +40,16 @@ public class PostagemMB {
     	listarPostagens();
     }
 
-	public void salvarPostagem(String texto){
+	public String salvarPostagem(){
 		postagem.setDataPostagem(new Date());
 		postagem.setUsuario(session.getUsuarioLogado());
-		postagem.setTexto(texto);
 		postagemDao.salvar(postagem);
+		listarPostagens();
+		return "postagens";
+	}
+	
+	public void setarPostagem(Integer id){
+		postagemVisualizar = postagemDao.findByIdInteger(id);
 	}
 	
 	public void criar() {
@@ -92,6 +99,13 @@ public class PostagemMB {
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
 	}
-	
-	
+
+	public Postagem getPostagemVisualizar() {
+		return postagemVisualizar;
+	}
+
+	public void setPostagemVisualizar(Postagem postagemVisualizar) {
+		this.postagemVisualizar = postagemVisualizar;
+	}
+
 }

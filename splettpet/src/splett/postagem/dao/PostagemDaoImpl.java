@@ -23,7 +23,7 @@ public class PostagemDaoImpl extends GenericDao<Postagem> implements PostagemDao
 	@SuppressWarnings("unchecked")
 	public List<Postagem> listarPostagens(Integer id){
 		EntityManager em = emf.createEntityManager();
-		Query query = em.createQuery("SELECT p from Postagem p where usuario_id IN :id_usuario");
+		Query query = em.createQuery("SELECT p from Postagem p where usuario_id IN :id_usuario order by p.id desc");
 		query.setParameter("id_usuario", id);
 		return query.getResultList();
 	}
