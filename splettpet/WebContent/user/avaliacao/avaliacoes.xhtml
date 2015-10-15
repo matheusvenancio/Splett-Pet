@@ -13,7 +13,7 @@
 		<p:commandButton id="addAvaliacao" value="Avaliar"
 			actionListener="#{avaliacaoMB.criar}"
 			oncomplete="PF('avaliacaoDialog').show()" update=":avaliacaoDlg"
-			rendered="#{sessionMB.isManagementAllowed()}" />
+			rendered="#{perfilMB.isManagementAllowed()}" />
 		<br />
 
 		<p:dialog id="avaliacaoDlg" widgetVar="avaliacaoDialog"
@@ -22,11 +22,11 @@
 			<h:form id="avaliacoes_form">
 
 				<h:panelGrid columns="3" styleClass="CRUDform">
-					<h:outputText id = "pontuacaoLb" value="Pontuação:" for = "pontuacao" />
-					<p:rating id = "pontuacao" value="#{avaliacaoMB.avaliacao.pontuacao}" />
-					<p:message for = "pontuacao"  />
+					<h:outputText id="pontuacaoLb" value="Pontuação:" for="pontuacao" />
+					<p:rating id="pontuacao" value="#{avaliacaoMB.avaliacao.pontuacao}" />
+					<p:message for="pontuacao" />
 				</h:panelGrid>
-				
+
 				<h:outputLabel id="descricaoLb" value="Avaliacao: " for="descricao"
 					style="float:left; margin-right:2px;" />
 				<p:inputTextarea id="descricao" autoResize="false" rows="5"
@@ -39,7 +39,6 @@
 				<!--  update=":tableForm:videosTable :videos_form :msg"-->
 
 				<p:commandButton id="salvarBT" value="Salvar" icon="salvar16"
-					
 					actionListener="#{avaliacaoMB.salvar}"
 					oncomplete="if(!args.validationFailed) PF('avaliacaoDialog').hide()" />
 				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"

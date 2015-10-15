@@ -11,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import splett.session.SessionMB;
+import splett.perfil.mb.PerfilMB;
 import splett.usuario.Usuario;
 import splett.video.Video;
 import splett.video.dao.VideoDao;
@@ -20,63 +20,63 @@ import splett.video.dao.VideoDao;
 @ViewScoped
 public class VideoLazyDataModel extends LazyDataModel<Video> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{videoDao}")
-	private VideoDao videoDao;
+    @ManagedProperty(value = "#{videoDao}")
+    private VideoDao videoDao;
 
-	@ManagedProperty(value = "#{sessionMB}")
-	private SessionMB sessionMB;
+    @ManagedProperty(value = "#{perfilMB}")
+    private PerfilMB perfilMB;
 
-	@Override
-	public List<Video> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters) {
-		List<Video> source = null;
-		Usuario u = new Usuario();
+    @Override
+    public List<Video> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	    Map<String, Object> filters) {
+	List<Video> source = null;
+	Usuario u = new Usuario();
 
-		u = sessionMB.getUsuarioLogado();
+	u = perfilMB.getUsuarioVisualizado();
 
-		source = videoDao.listVideo(u.getId());
+	source = videoDao.listVideo(u.getId());
 
-		// sort
-		if (sortField != null) {
-			Collections.sort(source, new LazyVideoSorter(sortField, sortOrder));
-		}
-
-		// rowCount
-		this.setRowCount(videoDao.getRowCount());
-
-		return source;
+	// sort
+	if (sortField != null) {
+	    Collections.sort(source, new LazyVideoSorter(sortField, sortOrder));
 	}
 
-	@Override
-	public Video getRowData(String rowKey) {
-		return videoDao.findById(Integer.parseInt(rowKey));
-	}
+	// rowCount
+	this.setRowCount(videoDao.getRowCount());
 
-	@Override
-	public Object getRowKey(Video video) {
-		return video.getId();
-	}
+	return source;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    @Override
+    public Video getRowData(String rowKey) {
+	return videoDao.findById(Integer.parseInt(rowKey));
+    }
 
-	public VideoDao getVideoDao() {
-		return videoDao;
-	}
+    @Override
+    public Object getRowKey(Video video) {
+	return video.getId();
+    }
 
-	public void setVideoDao(VideoDao videoDao) {
-		this.videoDao = videoDao;
-	}
+    public static long getSerialversionuid() {
+	return serialVersionUID;
+    }
 
-	public SessionMB getSessionMB() {
-		return sessionMB;
-	}
+    public VideoDao getVideoDao() {
+	return videoDao;
+    }
 
-	public void setSessionMB(SessionMB sessionMB) {
-		this.sessionMB = sessionMB;
-	}
+    public void setVideoDao(VideoDao videoDao) {
+	this.videoDao = videoDao;
+    }
+
+    public PerfilMB getPerfilMB() {
+	return perfilMB;
+    }
+
+    public void setPerfilMB(PerfilMB perfilMB) {
+	this.perfilMB = perfilMB;
+    }
 
 }

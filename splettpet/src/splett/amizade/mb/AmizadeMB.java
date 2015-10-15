@@ -6,6 +6,7 @@ import javax.faces.bean.ViewScoped;
 
 import splett.amizade.Amizade;
 import splett.amizade.dao.AmizadeDao;
+import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
 import splett.usuario.dao.UsuarioDao;
 
@@ -14,6 +15,9 @@ import splett.usuario.dao.UsuarioDao;
 public class AmizadeMB {
     @ManagedProperty(value = "#{sessionMB}")
     private SessionMB sessionMB;
+
+    @ManagedProperty(value = "#{perfilMB}")
+    private PerfilMB perfilMB;
 
     @ManagedProperty(value = "#{amizadeDao}")
     private AmizadeDao amizadeDao;
@@ -25,7 +29,7 @@ public class AmizadeMB {
 	Amizade amizade = new Amizade();
 
 	amizade.setUsuarioOrigem(sessionMB.getUsuarioLogado());
-	amizade.setUsuarioDestino(sessionMB.getUsuarioVisualizado());
+	amizade.setUsuarioDestino(perfilMB.getUsuarioVisualizado());
 
 	amizadeDao.salvar(amizade);
     }

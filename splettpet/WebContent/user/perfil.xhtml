@@ -27,26 +27,26 @@
 					<p:panelGrid id="dadosPessoais" columns="2" layout="tabular">
 						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
 						<h:outputText
-							value="#{sessionMB.usuarioVisualizado.dataNascimento}">
+							value="#{perfilMB.usuarioVisualizado.dataNascimento}">
 							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
 						</h:outputText>
 
 						<h:outputLabel styleClass="coisa" value="E-mail:" />
-						<h:outputText value="#{sessionMB.usuarioVisualizado.email}" />
+						<h:outputText value="#{perfilMB.usuarioVisualizado.email}" />
 
 						<h:outputLabel styleClass="coisa" value="Gênero:" />
 						<h:outputText
-							value="#{sessionMB.usuarioVisualizado.genero.toString()}" />
+							value="#{perfilMB.usuarioVisualizado.genero.toString()}" />
 
 						<h:outputLabel styleClass="coisa" value="Endereço:" />
-						<h:outputText value="#{sessionMB.usuarioVisualizado.endereco}" />
+						<h:outputText value="#{perfilMB.usuarioVisualizado.endereco}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone celular:" />
 						<h:outputText
-							value="#{sessionMB.usuarioVisualizado.telefoneCelular}" />
+							value="#{perfilMB.usuarioVisualizado.telefoneCelular}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone Fixo:" />
-						<h:outputText value="#{sessionMB.usuarioVisualizado.telefoneFixo}" />
+						<h:outputText value="#{perfilMB.usuarioVisualizado.telefoneFixo}" />
 
 					</p:panelGrid>
 				</p:panel>

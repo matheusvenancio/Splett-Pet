@@ -11,7 +11,7 @@
 		<p:commandButton id="addVideo" value="Adicionar Video"
 			actionListener="#{videoMB.criar}"
 			oncomplete="PF('videoDialog').show()" update=":videoDlg"
-			rendered="#{sessionMB.isManagementAllowed()}" />
+			rendered="#{perfilMB.isManagementAllowed()}" />
 		<br />
 
 		<h:form id="tableForm">
@@ -29,7 +29,7 @@
 
 						<p:commandButton id="editarVideo" value="Editar" icon="editar16"
 							oncomplete="PF('videoDialog').show()" update=":videos_form"
-							rendered="#{sessionMB.isManagementAllowed()}">
+							rendered="#{perfilMB.isManagementAllowed()}">
 							<f:setPropertyActionListener value="#{video}"
 								target="#{videoMB.video}" />
 						</p:commandButton>
@@ -37,7 +37,7 @@
 						<p:commandButton id="removerVideo" value="Remover"
 							icon="remover16" update=":confirm"
 							oncomplete="PF('videoConfirmDialog').show()"
-							rendered="#{sessionMB.isManagementAllowed()}">
+							rendered="#{perfilMB.isManagementAllowed()}">
 							<f:setPropertyActionListener value="#{video}"
 								target="#{videoMB.video}" />
 						</p:commandButton>
@@ -72,12 +72,13 @@
 						required="true" requiredMessage="Link é obrigatório" />
 					<p:message for="link" />
 
-					
+
 				</h:panelGrid>
-				
-				<h:outputText id="publicoLb" value="Publico: " for="publico"/>
-					<p:selectBooleanCheckbox id = "publico" value="#{videoMB.video.publico}"/>
-				<br/>
+
+				<h:outputText id="publicoLb" value="Publico: " for="publico" />
+				<p:selectBooleanCheckbox id="publico"
+					value="#{videoMB.video.publico}" />
+				<br />
 
 				<p:commandButton id="salvarBT" value="Salvar" icon="salvar16"
 					update=":tableForm:videosTable :videos_form :msg"

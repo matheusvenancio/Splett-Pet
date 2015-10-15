@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import splett.perfil.mb.PerfilMB;
 import splett.postagem.Postagem;
 import splett.postagem.dao.PostagemDao;
 import splett.session.SessionMB;
@@ -17,95 +18,113 @@ import splett.session.SessionMB;
 @SessionScoped
 public class PostagemMB {
 
-	@ManagedProperty(value = "#{postagemDao}")
-	private PostagemDao postagemDao;
+    @ManagedProperty(value = "#{postagemDao}")
+    private PostagemDao postagemDao;
 
-	private Postagem postagem;
-	
-	private Postagem postagemVisualizar;
+    private Postagem postagem;
 
+    private Postagem postagemVisualizar;
 
-	@ManagedProperty(value = "#{sessionMB}")
-	private SessionMB session;
-	
-	private List<Postagem> postagens;
-	
-	public PostagemMB() {
-		postagens = new ArrayList<Postagem>();
-		
-	}
-	
-    @PostConstruct
-    public void init() {
-    	listarPostagens();
+    @ManagedProperty(value = "#{sessionMB}")
+    private SessionMB sessionMB;
+
+    @ManagedProperty(value = "#{perfilMB}")
+    private PerfilMB perfilMB;
+
+    private List<Postagem> postagens;
+
+    public PostagemMB() {
+	postagens = new ArrayList<Postagem>();
+
     }
 
-	public String salvarPostagem(){
-		postagem.setDataPostagem(new Date());
-		postagem.setUsuario(session.getUsuarioLogado());
-		postagemDao.salvar(postagem);
-		listarPostagens();
-		return "postagens";
-	}
-	
-	public void setarPostagem(Integer id){
-		postagemVisualizar = postagemDao.findByIdInteger(id);
-	}
-	
-	public void criar() {
-		postagem = new Postagem();
-	}
+    @PostConstruct
+    public void init() {
+	listarPostagens();
+    }
 
-	public void remover() {
-		postagemDao.remover(postagem);
-	}
-	
-	public void listarPostagens(){
-		postagens = postagemDao.listarPostagens(session.getUsuarioLogado().getId());
-	}
+    public String salvarPostagem() {
+	postagem.setDataPostagem(new Date());
+	postagem.setUsuario(sessionMB.getUsuarioLogado());
+	postagemDao.salvar(postagem);
+	listarPostagens();
+	return "postagens";
+    }
 
-	public void cancelar() {
-		postagem = null;
-	}
+    public void setarPostagem(Integer id) {
+	postagemVisualizar = postagemDao.findByIdInteger(id);
+    }
 
-	public Postagem getPostagem() {
-		return postagem;
-	}
+    public void criar() {
+	postagem = new Postagem();
+    }
 
-	public void setPostagem(Postagem postagem) {
-		this.postagem = postagem;
-	}
+    public void remover() {
+	postagemDao.remover(postagem);
+    }
 
-	public PostagemDao getPostagemDao() {
-		return postagemDao;
-	}
+    public void listarPostagens() {
+	postagens = postagemDao.listarPostagens(perfilMB.getUsuarioVisualizado().getId());
+    }
 
-	public void setPostagemDao(PostagemDao postagemDao) {
-		this.postagemDao = postagemDao;
-	}
+    public void cancelar() {
+	postagem = null;
+    }
 
-	public SessionMB getSession() {
-		return session;
-	}
+    public Postagem getPostagem() {
+	return postagem;
+    }
 
-	public void setSession(SessionMB session) {
-		this.session = session;
-	}
+    public void setPostagem(Postagem postagem) {
+	this.postagem = postagem;
+    }
 
-	public List<Postagem> getPostagens() {
-		return postagens;
-	}
+    public PostagemDao getPostagemDao() {
+	return postagemDao;
+    }
 
-	public void setPostagens(List<Postagem> postagens) {
-		this.postagens = postagens;
-	}
+    public void setPostagemDao(PostagemDao postagemDao) {
+	this.postagemDao = postagemDao;
+    }
 
-	public Postagem getPostagemVisualizar() {
-		return postagemVisualizar;
-	}
+    public SessionMB getSession() {
+	return sessionMB;
+    }
 
-	public void setPostagemVisualizar(Postagem postagemVisualizar) {
-		this.postagemVisualizar = postagemVisualizar;
-	}
+    public void setSession(SessionMB sessionMB) {
+	this.sessionMB = sessionMB;
+    }
+
+    public List<Postagem> getPostagens() {
+	return postagens;
+    }
+
+    public void setPostagens(List<Postagem> postagens) {
+	this.postagens = postagens;
+    }
+
+    public Postagem getPostagemVisualizar() {
+	return postagemVisualizar;
+    }
+
+    public void setPostagemVisualizar(Postagem postagemVisualizar) {
+	this.postagemVisualizar = postagemVisualizar;
+    }
+
+    public SessionMB getSessionMB() {
+	return sessionMB;
+    }
+
+    public void setSessionMB(SessionMB sessionMB) {
+	this.sessionMB = sessionMB;
+    }
+
+    public PerfilMB getPerfilMB() {
+	return perfilMB;
+    }
+
+    public void setPerfilMB(PerfilMB perfilMB) {
+	this.perfilMB = perfilMB;
+    }
 
 }

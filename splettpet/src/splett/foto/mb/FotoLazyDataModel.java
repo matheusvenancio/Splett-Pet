@@ -13,6 +13,7 @@ import org.primefaces.model.SortOrder;
 
 import splett.foto.Foto;
 import splett.foto.dao.FotoDao;
+import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
 import splett.usuario.Usuario;
 
@@ -20,63 +21,70 @@ import splett.usuario.Usuario;
 @ViewScoped
 public class FotoLazyDataModel extends LazyDataModel<Foto> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
+    @ManagedProperty(value = "#{fotoDao}")
+    private FotoDao fotoDao;
 
-	@ManagedProperty(value = "#{fotoDao}")
-	private FotoDao fotoDao;
-	
-	
-	@ManagedProperty(value = "#{sessionMB}")
-	private SessionMB sessionMB;
+    @ManagedProperty(value = "#{sessionMB}")
+    private SessionMB sessionMB;
 
+    @ManagedProperty(value = "#{perfilMB}")
+    private PerfilMB perfilMB;
 
-	@Override
-	public Foto getRowData(String rowKey) {
-		return fotoDao.findById(Integer.parseInt(rowKey));
+    @Override
+    public Foto getRowData(String rowKey) {
+	return fotoDao.findById(Integer.parseInt(rowKey));
+    }
+
+    @Override
+    public Object getRowKey(Foto foto) {
+	return foto.getId();
+    }
+
+    @Override
+    public List<Foto> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	    Map<String, Object> filters) {
+	List<Foto> source = null;
+
+	Usuario u = new Usuario();
+	u = perfilMB.getUsuarioVisualizado();
+
+	source = fotoDao.listFoto(u.getId());
+
+	// sort
+	if (sortField != null) {
+	    Collections.sort(source, new LazyFotoSorter(sortField, sortOrder));
 	}
 
-	@Override
-	public Object getRowKey(Foto foto) {
-		return foto.getId();
-	}
+	// rowCount
+	this.setRowCount(fotoDao.getRowCount());
 
-	@Override
-	public List<Foto> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters) {
-		List<Foto> source = null;
-		
-		Usuario u = new Usuario();
-		u = sessionMB.getUsuarioLogado();
+	return source;
+    }
 
-		source = fotoDao.listFoto(u.getId());
+    public FotoDao getFotoDao() {
+	return fotoDao;
+    }
 
-		// sort
-		if (sortField != null) {
-			Collections.sort(source, new LazyFotoSorter(sortField, sortOrder));
-		}
+    public void setFotoDao(FotoDao fotoDao) {
+	this.fotoDao = fotoDao;
+    }
 
-		// rowCount
-		this.setRowCount(fotoDao.getRowCount());
+    public SessionMB getSessionMB() {
+	return sessionMB;
+    }
 
-		return source;
-	}
+    public void setSessionMB(SessionMB sessionMB) {
+	this.sessionMB = sessionMB;
+    }
 
-	public FotoDao getFotoDao() {
-		return fotoDao;
-	}
+    public PerfilMB getPerfilMB() {
+	return perfilMB;
+    }
 
-	public void setFotoDao(FotoDao fotoDao) {
-		this.fotoDao = fotoDao;
-	}
+    public void setPerfilMB(PerfilMB perfilMB) {
+	this.perfilMB = perfilMB;
+    }
 
-	public SessionMB getSessionMB() {
-		return sessionMB;
-	}
-
-	public void setSessionMB(SessionMB sessionMB) {
-		this.sessionMB = sessionMB;
-	}
-	
-	
 }
