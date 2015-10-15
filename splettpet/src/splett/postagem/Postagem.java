@@ -28,23 +28,22 @@ public class Postagem {
     private Date dataPostagem;
 
     private String foto;
-    
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     private Usuario usuario;
 
     private boolean visibilidade;
-    
-    
+
     public boolean isVisibilidade() {
-		return visibilidade;
-	}
+	return visibilidade;
+    }
 
-	public void setVisibilidade(boolean visibilidade) {
-		this.visibilidade = visibilidade;
-	}
+    public void setVisibilidade(boolean visibilidade) {
+	this.visibilidade = visibilidade;
+    }
 
-	public int getId() {
+    public int getId() {
 	return id;
     }
 

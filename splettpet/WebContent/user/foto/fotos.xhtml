@@ -9,7 +9,7 @@
 
 		<p:commandButton id="addFoto" value="Adicionar Foto"
 			actionListener="#{fotoMB.criar}" oncomplete="PF('fotoDialog').show()"
-			update=":fotoDlg" />
+			update=":fotoDlg" rendered="#{perfilMB.isManagementAllowed()}" />
 
 
 		<h:form id="tableForm">

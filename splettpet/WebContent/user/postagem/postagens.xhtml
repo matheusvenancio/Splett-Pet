@@ -12,7 +12,8 @@
 			<p:commandButton id="novaPost" value="Nova"
 				actionListener="#{postagemMB.criar}"
 				oncomplete="PF('novaPostagemDialog').show()"
-				update=":novaPostagemDlg :novaPostagem_form" />
+				update=":novaPostagemDlg :novaPostagem_form"
+				rendered="#{perfilMB.isManagementAllowed()}" />
 		</h:form>
 		<p:panel id="panelPostagens">
 			<h:form id="tableForm">

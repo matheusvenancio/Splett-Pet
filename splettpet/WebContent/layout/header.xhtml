@@ -10,9 +10,11 @@
 	<p:toolbar id="fixedTb" styleClass="fixedTb">
 		<f:facet name="left">
 			<h:form>
-				<p:commandLink action="#{perfilMB.returnToSelfProfile()}"
-					outcome="perfil" value="SplettPet" styleClass="fixedTbLink"
-					ajax="false" />
+				<p:commandLink action="perfil" value="SplettPet"
+					styleClass="fixedTbLink" ajax="false">
+					<f:setPropertyActionListener value="#{sessionMB.usuarioLogado}"
+						target="#{perfilMB.usuarioVisualizado}" />
+				</p:commandLink>
 			</h:form>
 		</f:facet>
 
