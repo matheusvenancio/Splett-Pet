@@ -79,10 +79,21 @@ table {
 }
 
 .fotoPerfil {
-	width: 12%;
+	width: 20%;
 	border-style: solid;
 	border-color: white;
-	background-color: white
+	background-color: white;
+	margin-left: 1%;
+	margin-top: 1%;
+	margin-right: 1%;
+	box-shadow: 2px 2px 8px black;
+}
+
+.nomeLb {
+	font-size: 3em;
+	color: white;
+	text-shadow: 2px 2px 8px black;
+	font-weight: bold;
 }
 
 .animaisTable {

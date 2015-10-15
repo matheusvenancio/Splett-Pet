@@ -4,6 +4,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+
+	<div
+		style="background-image: url('../resources/img/menu_background/slide2.jpg'); background-color: #6DB6D5; padding: 20px; border-style: solid; border-width: 1px; border-color: aqua; border-radius: 10px;">
+		<div align="left">
+			<p:graphicImage name="img/foto_perfil.jpg" styleClass="fotoPerfil" />
+			<p:outputLabel value="#{perfilMB.usuarioVisualizado.nome}"
+				styleClass="nomeLb" />
+		</div>
+	</div>
+
 	<h:form>
 		<p:menubar>
 			<p:menuitem styleClass="menuBarItem" id="InicioMn" value="Início"
