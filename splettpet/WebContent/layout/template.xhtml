@@ -17,15 +17,24 @@
 		<div id="header" align="center">
 			<ui:include src="header.xhtml" />
 		</div>
+		<p:spacer height="10" />
+
 		<table width="1100px" border="0" align="center">
 			<tr>
-				<td><p:spacer height="10" /> <ui:insert name="body" /> <p:spacer
-						height="10" /></td>
+				<td><ui:include src="menu.xhtml" /> <p:spacer height="10" />
+				</td>
 			</tr>
+			<tr>
+				<td><ui:insert name="body" /> <p:spacer height="10" /></td>
+			</tr>
+
 			<tr>
 				<td id="footer"><ui:include src="footer.xhtml" /></td>
 			</tr>
 		</table>
+
+
+
 	</h:body>
 </f:view>
 </html>

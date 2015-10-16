@@ -15,38 +15,36 @@
 				update=":novaPostagemDlg :novaPostagem_form"
 				rendered="#{perfilMB.isManagementAllowed()}" />
 		</h:form>
-		<p:panel id="panelPostagens">
-			<h:form id="tableForm">
-				<p:dataScroller value="#{postagemMB.postagens}" var="postagem"
-					chunkSize="10" id="postagensDs">
-					<f:facet name="header">
-	            		Postagens
-	        		</f:facet>
-					<p:panel style="width: 96%;" styleClass="post">
-						<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
-							style="width:100%;">
-							<p:graphicImage library="img" name="android_icon.png"
-								style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
-							<p:panelGrid columns="1">
-								<p:outputLabel value="#{postagem.usuario.nome}"
-									styleClass="label" style="color: #6DB6D5;" />
-								<h:outputText value="12/06/2015"
-									style="font-size: 0.8em; color:gray" />
-							</p:panelGrid>
+
+		<h:form id="tableForm">
+			<p:dataScroller value="#{postagemMB.postagens}" var="postagem"
+				chunkSize="10" id="postagensDs">
+				<f:facet name="header">
+					<h:outputText value="Postagens" />
+				</f:facet>
+				<p:panel style="width: 96%;" styleClass="post">
+					<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
+						style="width:100%;">
+						<p:graphicImage library="img" name="android_icon.png"
+							style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+						<p:panelGrid columns="1">
+							<p:outputLabel value="#{postagem.usuario.nome}"
+								styleClass="label" style="color: #6DB6D5;" />
+							<h:outputText value="12/06/2015"
+								style="font-size: 0.8em; color:gray" />
 						</p:panelGrid>
+					</p:panelGrid>
 
-						<div style="margin-top: 5px; margin-bottom: 2px;">
-							<h:outputText styleClass="postText" value="#{postagem.texto}" />
-						</div>
-						<p:commandButton value="Ver Mais" action="postagem">
-							<f:setPropertyActionListener value="#{postagem}"
-								target="#{postagemMB.postagemVisualizar}" />
-						</p:commandButton>
-					</p:panel>
-				</p:dataScroller>
-			</h:form>
-		</p:panel>
-
+					<div style="margin-top: 5px; margin-bottom: 2px;">
+						<h:outputText styleClass="postText" value="#{postagem.texto}" />
+					</div>
+					<p:commandButton value="Ver Mais" action="postagem">
+						<f:setPropertyActionListener value="#{postagem}"
+							target="#{postagemMB.postagemVisualizar}" />
+					</p:commandButton>
+				</p:panel>
+			</p:dataScroller>
+		</h:form>
 
 
 		<p:dialog id="novaPostagemDlg" widgetVar="novaPostagemDialog"
