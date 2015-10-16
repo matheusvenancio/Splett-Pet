@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import splett.session.SessionMB;
+import splett.perfil.mb.PerfilMB;
 import splett.usuario.Usuario;
 import splett.video.Video;
 import splett.video.dao.VideoDao;
@@ -16,86 +16,87 @@ import splett.video.dao.VideoDao;
 @ViewScoped
 public class VideoMB {
 
-    @ManagedProperty(value = "#{videoDao}")
-    private VideoDao videoDao;
+	@ManagedProperty(value = "#{videoDao}")
+	private VideoDao videoDao;
 
-    @ManagedProperty(value = "#{videoLazyDataModel}")
-    private VideoLazyDataModel videoLazyDataModel;
+	@ManagedProperty(value = "#{videoLazyDataModel}")
+	private VideoLazyDataModel videoLazyDataModel;
 
-    @ManagedProperty(value = "#{sessionMB}")
-    private SessionMB sessionMB;
+	@ManagedProperty(value = "#{perfilMB}")
+	private PerfilMB perfilMB;
 
-    private List<Video> videosFiltered;
+	private List<Video> videosFiltered;
 
-    private Video video;
+	private Video video;
 
-    public VideoMB() {
-	videosFiltered = new ArrayList<Video>();
-    }
-
-    public void criar() {
-	video = new Video();
-    }
-
-    public void salvar() {
-	String caminho = video.getCaminho().replace("/watch?v=", "/v/");
-	video.setCaminho(caminho);
-
-	if (video.getId() != null) {
-	    videoDao.update(video);
-	} else {
-	    video.setUsuario(new Usuario());
-	    video.setUsuario(sessionMB.getUsuarioLogado());
-	    videoDao.salvar(video);
+	public VideoMB() {
+		videosFiltered = new ArrayList<Video>();
 	}
-    }
 
-    public void remover() {
-	videoDao.remover(video);
-    }
+	public void criar() {
+		video = new Video();
+	}
 
-    public void cancelar() {
-	video = null;
-    }
+	public void salvar() {
+		String caminho = video.getCaminho().replace("/watch?v=", "/embed/");
+		video.setCaminho(caminho);
 
-    public VideoDao getVideoDao() {
-	return videoDao;
-    }
+		if (video.getId() != null) {
+			videoDao.update(video);
+		} else {
+			video.setUsuario(new Usuario());
+			video.setUsuario(perfilMB.getUsuarioVisualizado());
+			videoDao.salvar(video);
+		}
+		video = null;
+	}
 
-    public void setVideoDao(VideoDao videoDao) {
-	this.videoDao = videoDao;
-    }
+	public void remover() {
+		videoDao.remover(video);
+	}
 
-    public VideoLazyDataModel getVideoLazyDataModel() {
-	return videoLazyDataModel;
-    }
+	public void cancelar() {
+		video = null;
+	}
 
-    public void setVideoLazyDataModel(VideoLazyDataModel videoLazyDataModel) {
-	this.videoLazyDataModel = videoLazyDataModel;
-    }
+	public VideoDao getVideoDao() {
+		return videoDao;
+	}
 
-    public List<Video> getVideosFiltered() {
-	return videosFiltered;
-    }
+	public void setVideoDao(VideoDao videoDao) {
+		this.videoDao = videoDao;
+	}
 
-    public void setVideosFiltered(List<Video> videosFiltered) {
-	this.videosFiltered = videosFiltered;
-    }
+	public VideoLazyDataModel getVideoLazyDataModel() {
+		return videoLazyDataModel;
+	}
 
-    public Video getVideo() {
-	return video;
-    }
+	public void setVideoLazyDataModel(VideoLazyDataModel videoLazyDataModel) {
+		this.videoLazyDataModel = videoLazyDataModel;
+	}
 
-    public void setVideo(Video video) {
-	this.video = video;
-    }
+	public List<Video> getVideosFiltered() {
+		return videosFiltered;
+	}
 
-    public SessionMB getSessionMB() {
-	return sessionMB;
-    }
+	public void setVideosFiltered(List<Video> videosFiltered) {
+		this.videosFiltered = videosFiltered;
+	}
 
-    public void setSessionMB(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+	public Video getVideo() {
+		return video;
+	}
+
+	public void setVideo(Video video) {
+		this.video = video;
+	}
+
+	public PerfilMB getPerfilMB() {
+		return perfilMB;
+	}
+
+	public void setPerfilMB(PerfilMB perfilMB) {
+		this.perfilMB = perfilMB;
+	}
 
 }

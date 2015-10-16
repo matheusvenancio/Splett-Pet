@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 
 import splett.avaliacao.Avaliacao;
 import splett.avaliacao.dao.AvaliacaoDao;
+import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
 import splett.usuario.Usuario;
 
@@ -16,85 +17,99 @@ import splett.usuario.Usuario;
 @ViewScoped
 public class AvaliacaoMB {
 
-    @ManagedProperty(value = "#{avaliacaoDao}")
-    private AvaliacaoDao avaliacaoDao;
+	@ManagedProperty(value = "#{avaliacaoDao}")
+	private AvaliacaoDao avaliacaoDao;
 
-    @ManagedProperty(value = "#{avaliacaoLazyDataModel}")
-    private AvaliacaoLazyDataModel avaliacaoLazyDataModel;
+	@ManagedProperty(value = "#{avaliacaoLazyDataModel}")
+	private AvaliacaoLazyDataModel avaliacaoLazyDataModel;
 
-    @ManagedProperty(value = "#{sessionMB}")
-    private SessionMB sessionMB;
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
+	
+	@ManagedProperty(value = "#{perfilMB}")
+	private PerfilMB perfilMB;
 
-    private List<Avaliacao> avaliacoesFiltered;
+	private List<Avaliacao> avaliacoesFiltered;
 
-    private Avaliacao avaliacao;
+	private Avaliacao avaliacao;
 
-    public AvaliacaoMB() {
-	avaliacoesFiltered = new ArrayList<Avaliacao>();
-    }
-
-    public void criar() {
-	avaliacao = new Avaliacao();
-	avaliacao.setAvaliado(new Usuario());
-	avaliacao.setAvaliador(new Usuario());
-    }
-
-    public void salvar() {
-	if (avaliacao.getId() != null) {
-	    avaliacaoDao.update(avaliacao);
-	} else {
-	    avaliacao.setAvaliador(sessionMB.getUsuarioLogado());
-	    avaliacao.setAvaliado(sessionMB.getUsuarioLogado());
-	    avaliacaoDao.salvar(avaliacao);
+	public AvaliacaoMB() {
+		avaliacoesFiltered = new ArrayList<Avaliacao>();
 	}
-    }
 
-    public void remover() {
-	avaliacaoDao.remover(avaliacao);
-    }
+	public void criar() {
+		avaliacao = new Avaliacao();
+	}
 
-    public void cancelar() {
-	avaliacao = null;
-    }
+	public void salvar() {
+		if (avaliacao.getId() != null) {
+			avaliacaoDao.update(avaliacao);
+		} else {
+			avaliacao.setAvaliado(new Usuario());
+			avaliacao.setAvaliador(new Usuario());
+			avaliacao.setAvaliador(sessionMB.getUsuarioLogado());
+			avaliacao.setAvaliado(perfilMB.getUsuarioVisualizado());
+			avaliacaoDao.salvar(avaliacao);
+			avaliacao = null;
+		}
+	}
+	
+	public PerfilMB getPerfilMB() {
+		return perfilMB;
+	}
 
-    public AvaliacaoDao getAvaliacaoDao() {
-	return avaliacaoDao;
-    }
+	public void setPerfilMB(PerfilMB perfilMB) {
+		this.perfilMB = perfilMB;
+	}
 
-    public void setAvaliacaoDao(AvaliacaoDao avaliacaoDao) {
-	this.avaliacaoDao = avaliacaoDao;
-    }
+	public void remover() {
+		avaliacaoDao.remover(avaliacao);
+	}
 
-    public SessionMB getSessionMB() {
-	return sessionMB;
-    }
+	public void cancelar() {
+		avaliacao = null;
+	}
 
-    public AvaliacaoLazyDataModel getAvaliacaoLazyDataModel() {
-	return avaliacaoLazyDataModel;
-    }
+	public AvaliacaoDao getAvaliacaoDao() {
+		return avaliacaoDao;
+	}
 
-    public void setAvaliacaoLazyDataModel(AvaliacaoLazyDataModel avaliacaoLazyDataModel) {
-	this.avaliacaoLazyDataModel = avaliacaoLazyDataModel;
-    }
+	
+	public void setAvaliacaoDao(AvaliacaoDao avaliacaoDao) {
+		this.avaliacaoDao = avaliacaoDao;
+	}
 
-    public void setSessionMB(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
 
-    public List<Avaliacao> getAvaliacoesFiltered() {
-	return avaliacoesFiltered;
-    }
+	public AvaliacaoLazyDataModel getAvaliacaoLazyDataModel() {
+		return avaliacaoLazyDataModel;
+	}
 
-    public void setAvaliacoesFiltered(List<Avaliacao> avaliacoesFiltered) {
-	this.avaliacoesFiltered = avaliacoesFiltered;
-    }
+	public void setAvaliacaoLazyDataModel(
+			AvaliacaoLazyDataModel avaliacaoLazyDataModel) {
+		this.avaliacaoLazyDataModel = avaliacaoLazyDataModel;
+	}
 
-    public Avaliacao getAvaliacao() {
-	return avaliacao;
-    }
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
 
-    public void setAvaliacao(Avaliacao avaliacao) {
-	this.avaliacao = avaliacao;
-    }
+	public List<Avaliacao> getAvaliacoesFiltered() {
+		return avaliacoesFiltered;
+	}
+
+	public void setAvaliacoesFiltered(List<Avaliacao> avaliacoesFiltered) {
+		this.avaliacoesFiltered = avaliacoesFiltered;
+	}
+
+	public Avaliacao getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(Avaliacao avaliacao) {
+		this.avaliacao = avaliacao;
+	}
 
 }

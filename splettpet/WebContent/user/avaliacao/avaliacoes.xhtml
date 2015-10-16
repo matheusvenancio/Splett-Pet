@@ -16,15 +16,54 @@
 			rendered="#{perfilMB.isManagementAllowed()}" />
 		<br />
 
+		<h:form id="tableForm">
+			<p:dataTable id="avaliacoesTable" var="avaliacao" rows="10"
+				value="#{avaliacaoMB.avaliacaoLazyDataModel}"
+				rowKey="#{avaliacao.id}" paginator="true" lazy="true"
+				emptyMessage="Nenhum registro encontrado">
+
+				<f:facet name="header">
+					<h:outputText value="Avaliações" />
+				</f:facet>
+
+				<p:column>
+					<div align="right">
+
+						<p:commandButton id="editarAvaliacao" value="Editar"
+							icon="editar16" oncomplete="PF('avaliacaoDialog').show()"
+							update=":avaliacoes_form"
+							rendered="#{sessionMB.usuarioLogado == avaliacao.avaliador}">
+							<f:setPropertyActionListener value="#{avaliacao}"
+								target="#{avaliacaoMB.avaliacao}" />
+						</p:commandButton>
+
+						<p:commandButton id="removerAvaliacao" value="Remover"
+							icon="remover16" update=":confirm"
+							oncomplete="PF('avaliacaoConfirmDialog').show()"
+							rendered="#{perfilMB.isManagementAllowed() || sessionMB.getUsuarioLogado() == avaliacao.getAvaliador()}">
+							<f:setPropertyActionListener value="#{avaliacao}"
+								target="#{avaliacaoMB.avaliacao}" />
+						</p:commandButton>
+
+					</div>
+
+						<p:rating readonly="true" id="pontuacao"
+							value="#{avaliacao.pontuacao}" />
+						<br/>
+					<h:outputText id="descricaoLb" value="#{avaliacao.texto}"/>
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
 		<p:dialog id="avaliacaoDlg" widgetVar="avaliacaoDialog"
 			header="Avaliar" height="40%" modal="true" resizable="false"
 			draggable="false">
 			<h:form id="avaliacoes_form">
 
-				<h:panelGrid columns="3" styleClass="CRUDform">
+				<h:panelGrid columns="2" styleClass="CRUDform">
 					<h:outputText id="pontuacaoLb" value="Pontuação:" for="pontuacao" />
 					<p:rating id="pontuacao" value="#{avaliacaoMB.avaliacao.pontuacao}" />
-					<p:message for="pontuacao" />
 				</h:panelGrid>
 
 				<h:outputLabel id="descricaoLb" value="Avaliacao: " for="descricao"
@@ -36,10 +75,10 @@
 				<br />
 				<h:outputText id="display" />
 				<br />
-				<!--  update=":tableForm:videosTable :videos_form :msg"-->
 
 				<p:commandButton id="salvarBT" value="Salvar" icon="salvar16"
 					actionListener="#{avaliacaoMB.salvar}"
+					update=":tableForm:avaliacoesTable :avaliacoes_form"
 					oncomplete="if(!args.validationFailed) PF('avaliacaoDialog').hide()" />
 				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
 					oncomplete="PF('avaliacaoDialog').hide()" immediate="true"
@@ -47,6 +86,17 @@
 			</h:form>
 		</p:dialog>
 
+		<p:confirmDialog id="confirm" widgetVar="avaliacaoConfirmDialog"
+			global="true" header="Confirma exclusão da avaliacao?"
+			message="Deseja realmente excluir a avaliação?">
+			<h:form>
+				<p:commandButton value="Sim" actionListener="#{avaliacaoMB.remover}"
+					oncomplete="PF('avaliacaoConfirmDialog').hide()" icon="ok16"
+					update=":tableForm:avaliacoesTable" />
+				<p:commandButton value="Não"
+					oncomplete="PF('avaliacaoConfirmDialog').hide()" icon="cancelar16" />
+			</h:form>
+		</p:confirmDialog>
 
 
 	</ui:define>

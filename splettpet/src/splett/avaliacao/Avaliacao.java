@@ -1,12 +1,11 @@
 package splett.avaliacao;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import splett.usuario.Usuario;
@@ -24,11 +23,11 @@ public class Avaliacao {
 	private int pontuacao = 3;
 
 	@JoinColumn(referencedColumnName = "id", name = "usuario_avaliador_id")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Usuario avaliador;
 
 	@JoinColumn(referencedColumnName = "id", name = "usuario_avaliado_id")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Usuario avaliado;
 
 	public Integer getId() {

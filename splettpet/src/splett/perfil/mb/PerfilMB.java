@@ -12,54 +12,55 @@ import splett.usuario.dao.UsuarioDao;
 @ManagedBean(name = "perfilMB")
 @SessionScoped
 public class PerfilMB {
-    @ManagedProperty(value = "#{sessionMB}")
-    private SessionMB sessionMB;
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
 
-    @ManagedProperty(value = "#{usuarioDao}")
-    private UsuarioDao usuarioDao;
+	@ManagedProperty(value = "#{usuarioDao}")
+	private UsuarioDao usuarioDao;
 
-    @ManagedProperty(value = "#{usuarioVisualizado}")
-    private Usuario usuarioVisualizado;
+	@ManagedProperty(value = "#{usuarioVisualizado}")
+	private Usuario usuarioVisualizado;
 
-    @PostConstruct
-    public void init() {
-	usuarioVisualizado = usuarioDao.findById(sessionMB.getUsuarioLogado().getId() + 1);
-    }
+	@PostConstruct
+	public void init() {
+		usuarioVisualizado = usuarioDao.findById(sessionMB.getUsuarioLogado()
+				.getId() + 1);
+	}
 
-    public boolean isSelfProfile() {
-	return usuarioVisualizado == sessionMB.getUsuarioLogado();
-    }
+	public boolean isSelfProfile() {
+		return usuarioVisualizado == sessionMB.getUsuarioLogado();
+	}
 
-    public SessionMB getSessionMB() {
-	return sessionMB;
-    }
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
 
-    public void setSessionMB(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
 
-    public UsuarioDao getUsuarioDao() {
-	return usuarioDao;
-    }
+	public UsuarioDao getUsuarioDao() {
+		return usuarioDao;
+	}
 
-    public void setUsuarioDao(UsuarioDao usuarioDao) {
-	this.usuarioDao = usuarioDao;
-    }
+	public void setUsuarioDao(UsuarioDao usuarioDao) {
+		this.usuarioDao = usuarioDao;
+	}
 
-    public boolean isManagementAllowed() {
-	return isSelfProfile() || sessionMB.isUserAdm();
-    }
+	public boolean isManagementAllowed() {
+		return isSelfProfile() || sessionMB.isUserAdm();
+	}
 
-    public boolean isFriendshipRequestAllowed() {
-	return !isSelfProfile();
-    }
+	public boolean isFriendshipRequestAllowed() {
+		return !isSelfProfile();
+	}
 
-    public Usuario getUsuarioVisualizado() {
-	return usuarioVisualizado;
-    }
+	public Usuario getUsuarioVisualizado() {
+		return usuarioVisualizado;
+	}
 
-    public void setUsuarioVisualizado(Usuario usuarioVisualizado) {
-	this.usuarioVisualizado = usuarioVisualizado;
-    }
+	public void setUsuarioVisualizado(Usuario usuarioVisualizado) {
+		this.usuarioVisualizado = usuarioVisualizado;
+	}
 
 }
