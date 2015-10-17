@@ -12,6 +12,11 @@
 			<p:outputLabel value="#{perfilMB.usuarioVisualizado.nome}"
 				styleClass="nomeLb" />
 		</div>
+
+
+		<p:commandButton id="addFriendButton" icon="plus16"
+			value="Adicionar amigo" actionListener="#{amizadeMB.addFriend()}"
+			rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
 	</div>
 
 	<h:form>
@@ -37,19 +42,11 @@
 			<p:menuitem styleClass="menuBarItem" id="avaliacoesMn"
 				value="Avaliações" action="avaliacoes" />
 
-			<f:facet name="options">
-				<p:commandButton icon="plus16" value="Adicionar amigo"
-					actionListener="#{amizadeMB.addFriend()}"
-					rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
-			</f:facet>
-			
-			<f:facet name="options">
-				<p:commandButton value="Configurações de privacidade" />
-			</f:facet>
-			
-			<f:facet name="options">
-				<p:commandButton value="Editar perfil" />
-			</f:facet>
+			<p:submenu label="Configurações" styleClass="menuBarItem"
+				rendered="#{perfilMB.isManagementAllowed()}">
+				<p:menuitem value="Editar Perfil" />
+				<p:menuitem value="Privacidade" />
+			</p:submenu>
 
 		</p:menubar>
 

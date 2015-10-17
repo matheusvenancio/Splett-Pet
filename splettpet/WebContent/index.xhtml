@@ -30,7 +30,7 @@
 						style="width: 100%; position: relative; font-size: 1.5em;" />
 
 					<input type="submit" value="Entrar" class="loginButton" />
-					
+
 					<p:commandLink style="font-size: 1.2em;"
 						actionListener="#{usuarioMB.criar}"
 						oncomplete="PF('enviarSenhaDialog').show()"
@@ -39,13 +39,13 @@
 				</p:panelGrid>
 
 			</form>
-			
+
 			<h:form>
-					<p:commandButton id="cbtLogarFace" ajax="false" async="false"
-						title="Logar Face" immediate="true" value="Facebook"
-						action="#{autenticacaoControle.autenticarSpringComFacebook}"
-						tabindex="4" />
-</h:form>
+				<p:commandButton id="cbtLogarFace" ajax="false" async="false"
+					title="Logar Face" immediate="true" value="Facebook"
+					action="#{autenticacaoControle.autenticarSpringComFacebook}"
+					tabindex="4" />
+			</h:form>
 
 			<br />
 		</p:panel>

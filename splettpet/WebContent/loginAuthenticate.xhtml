@@ -7,35 +7,30 @@
 	template="/layout/templateLogin.xhtml">
 
 	<ui:define name="body">
-	<h:form id="form" prependId="false">
-	
-
+		<h:form id="form" prependId="false">
 
 			<f:metadata>
 				<f:event type="preRenderView"
 					listener="#{autenticacaoControle.processLoginFacebook}" />
 			</f:metadata>
-	<h:panelGroup id="pgrContaFacebook" layout="block"
+			<h:panelGroup id="pgrContaFacebook" layout="block"
 				rendered="#{autenticacaoControle.exibeCriaContaFacebook}">
 
 				<div>
-					<h:outputLabel
-						value="Crie sua conta com o Facebook" />
+					<h:outputLabel value="Crie sua conta com o Facebook" />
 				</div>
 
 				<div style="padding-top: 10px;">
 
 					<h:panelGrid id="pgrCadastro" columns="2" cellspacing="5">
-					
 
-						<h:outputText id="optSenhaUsuario" 
-							value="Senha: " />
+
+						<h:outputText id="optSenhaUsuario" value="Senha: " />
 						<h:inputSecret id="j_password" tabindex="2" required="true"
 							value="#{autenticacaoControle.usuario.senha}"
-							requiredMessage="Senha é obrigatória!"
-							maxlength="30" />
+							requiredMessage="Senha é obrigatória!" maxlength="30" />
 					</h:panelGrid>
-					
+
 
 					<div id="botoes" style="position: relative; margin-top: 20px;">
 						<h:commandButton id="cbtCriarConta" type="submit"
@@ -50,8 +45,8 @@
 				</div>
 
 			</h:panelGroup>
-			
-	
-	</h:form>
+
+
+		</h:form>
 	</ui:define>
 </ui:composition>
