@@ -13,8 +13,14 @@
 				styleClass="nomeLb" />
 		</div>
 
-		<p:commandButton value="" icon="" styleClass="notification" />
-
+		<p:commandButton id="caixaDeEntradaBt" value="Caixa de entrada"
+			icon="caixaDeEntrada" styleClass="notification"
+			rendered="#{perfilMB.isManagementAllowed()}" />
+		<p:commandButton id="enviarMensagemBt" style="margin-top:-8.7%"
+			value="Enviar Mensagem" icon="" styleClass="notification"
+			rendered="#{!perfilMB.isSelfProfile()}" />
+		<p:commandButton id="outraCoisaBt" style="margin-top:-2.5%" value=""
+			icon="" styleClass="notification" />
 	</div>
 
 	<h:form>

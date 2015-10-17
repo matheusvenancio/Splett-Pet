@@ -8,8 +8,8 @@
 
 	<ui:define name="body">
 		<h:form id="tableForm">
-			<p:dataScroller value="#{postagemMB.postagens}" var="postagem"
-				chunkSize="10" id="postagensDs">
+			<p:dataScroller value="#{amizadeMB.amigosUsuarioVisualizado}"
+				var="amigo" chunkSize="10" id="postagensDs">
 				<f:facet name="header">
 					<h:outputText value="Amigos" />
 				</f:facet>
@@ -28,12 +28,8 @@
 					</p:panelGrid>
 
 					<div style="margin-top: 5px; margin-bottom: 2px;">
-						<h:outputText styleClass="postText" value="#{postagem.texto}" />
+						<h:outputText styleClass="postText" value="#{amigo.nome}" />
 					</div>
-					<p:commandButton value="Ver Mais" action="postagem">
-						<f:setPropertyActionListener value="#{postagem}"
-							target="#{postagemMB.postagemVisualizar}" />
-					</p:commandButton>
 				</div>
 
 			</p:dataScroller>

@@ -17,7 +17,7 @@ import splett.usuario.Usuario;
 public class Amizade {
 
     public Amizade() {
-	status = Status.ESPERA;
+	status = Status.ACEITO;
     }
 
     @Id

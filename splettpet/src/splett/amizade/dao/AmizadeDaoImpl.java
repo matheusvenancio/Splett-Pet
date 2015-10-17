@@ -26,7 +26,7 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     public List<Usuario> listAmigos(Usuario usuario) {
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery(
-		"Select u from Usuario u where Amizade a.usuarioorigem.id = :id or a.usuariodestino.id = :id and a.status = 'aceito'");
+		"Select u from Usuario u, Amizade a where a.usuarioOrigem.id = :id or a.usuarioDestino.id = :id and a.status = 'ACEITO'");
 	q.setParameter("id", usuario.getId());
 	return q.getResultList();
     }

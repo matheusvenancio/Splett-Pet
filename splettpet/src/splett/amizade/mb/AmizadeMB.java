@@ -57,6 +57,14 @@ public class AmizadeMB {
 	this.sessionMB = sessionMB;
     }
 
+    public PerfilMB getPerfilMB() {
+	return perfilMB;
+    }
+
+    public void setPerfilMB(PerfilMB perfilMB) {
+	this.perfilMB = perfilMB;
+    }
+
     public UsuarioDao getUsuarioDao() {
 	return usuarioDao;
     }
@@ -66,6 +74,7 @@ public class AmizadeMB {
     }
 
     public List<Usuario> getAmigosUsuarioVisualizado() {
+	amigosUsuarioVisualizado = amizadeDao.listAmigos(perfilMB.getUsuarioVisualizado());
 	return amigosUsuarioVisualizado;
     }
 
