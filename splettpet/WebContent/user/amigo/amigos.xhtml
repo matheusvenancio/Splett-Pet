@@ -13,7 +13,8 @@
 				<f:facet name="header">
 					<h:outputText value="Amigos" />
 				</f:facet>
-				<p:panel style="width: 96%;" styleClass="post">
+
+				<div class="amigo">
 					<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
 						style="width:100%;">
 						<p:graphicImage library="img" name="android_icon.png"
@@ -33,7 +34,8 @@
 						<f:setPropertyActionListener value="#{postagem}"
 							target="#{postagemMB.postagemVisualizar}" />
 					</p:commandButton>
-				</p:panel>
+				</div>
+
 			</p:dataScroller>
 		</h:form>
 	</ui:define>

@@ -1,5 +1,7 @@
 package splett.amizade.mb;
 
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -8,6 +10,7 @@ import splett.amizade.Amizade;
 import splett.amizade.dao.AmizadeDao;
 import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
+import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
 
 @ManagedBean(name = "amizadeMB")
@@ -24,6 +27,10 @@ public class AmizadeMB {
 
     @ManagedProperty(value = "#{usuarioDao}")
     private UsuarioDao usuarioDao;
+
+    private List<Usuario> amigosUsuarioVisualizado;
+
+    private List<Usuario> amigosUsuarioLogado;
 
     public void addFriend() {
 	Amizade amizade = new Amizade();
@@ -56,5 +63,21 @@ public class AmizadeMB {
 
     public void setUsuarioDao(UsuarioDao usuarioDao) {
 	this.usuarioDao = usuarioDao;
+    }
+
+    public List<Usuario> getAmigosUsuarioVisualizado() {
+	return amigosUsuarioVisualizado;
+    }
+
+    public void setAmigosUsuarioVisualizado(List<Usuario> amigosUsuarioVisualizado) {
+	this.amigosUsuarioVisualizado = amigosUsuarioVisualizado;
+    }
+
+    public List<Usuario> getAmigosUsuarioLogado() {
+	return amigosUsuarioLogado;
+    }
+
+    public void setAmigosUsuarioLogado(List<Usuario> amigosUsuarioLogado) {
+	this.amigosUsuarioLogado = amigosUsuarioLogado;
     }
 }

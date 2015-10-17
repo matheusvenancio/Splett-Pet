@@ -13,10 +13,8 @@
 				styleClass="nomeLb" />
 		</div>
 
+		<p:commandButton value="" icon="" styleClass="notification" />
 
-		<p:commandButton id="addFriendButton" icon="plus16"
-			value="Adicionar amigo" actionListener="#{amizadeMB.addFriend()}"
-			rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
 	</div>
 
 	<h:form>
@@ -47,6 +45,12 @@
 				<p:menuitem value="Editar Perfil" />
 				<p:menuitem value="Privacidade" />
 			</p:submenu>
+
+			<f:facet name="options">
+				<p:commandButton id="addFriendButton" icon="plus16"
+					value="Adicionar amigo" actionListener="#{amizadeMB.addFriend()}"
+					rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
+			</f:facet>
 
 		</p:menubar>
 

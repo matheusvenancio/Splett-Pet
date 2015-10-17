@@ -11,12 +11,16 @@ import splett.usuario.Usuario;
 
 public interface UsuarioDao extends Dao<Usuario> {
 
-	public List<Usuario> pesquisarPorNome(String nome);
+    public List<Usuario> pesquisarPorNome(String nome);
 
-	public Usuario pesquisarPorEmail(String email);
-	public void realizaAutenticacaoAutomatica(HttpServletRequest request,
-			Usuario usuario) throws Exception ;
-	public Authentication authenticate(Authentication auth);
-	public Usuario recoverAuthenticatedUser();
-	public List<Usuario> listUsuariosByEmail(String email);
+    public Usuario pesquisarPorEmail(String email);
+
+    public void realizaAutenticacaoAutomatica(HttpServletRequest request, Usuario usuario)
+	    throws Exception;
+
+    public Authentication authenticate(Authentication auth);
+
+    public Usuario recoverAuthenticatedUser();
+
+    public List<Usuario> listUsuariosByEmail(String email);
 }

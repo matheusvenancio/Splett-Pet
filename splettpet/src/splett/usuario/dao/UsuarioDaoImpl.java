@@ -27,89 +27,75 @@ import splett.usuario.Usuario;
 @SuppressWarnings("deprecation")
 @ManagedBean(name = "usuarioDao")
 @ApplicationScoped
-public class UsuarioDaoImpl extends GenericDao<Usuario> implements UsuarioDao {
+public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public UsuarioDaoImpl() {
-		super(Usuario.class);
+    public UsuarioDaoImpl() {
+	super(Usuario.class);
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Usuario> pesquisarPorNome(String nome) {
+	EntityManager em = emf.createEntityManager();
+	Query q = em.createQuery(
+		"select u from Usuario u where lower(u.nome) like concat('%', :nome, '%')");
+	q.setParameter("nome", nome);
+	q.setMaxResults(50);
+	return q.getResultList();
+    }
+
+    public Authentication authenticate(Authentication auth) {
+	Usuario usuario = new Usuario();
+	try {
+	    usuario = pesquisarPorEmail(auth.getName());
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+	List<GrantedAuthority> lista = new ArrayList<GrantedAuthority>();
+	lista.add(new GrantedAuthorityImpl(usuario.getTipo().toString()));
 
-	@SuppressWarnings("unchecked")
-	public List<Usuario> pesquisarPorNome(String nome) {
-		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select u from Usuario u where lower(u.nome) like concat('%', :nome, '%')");
-		q.setParameter("nome", nome);
-		q.setMaxResults(50);
-		return q.getResultList();
+	return new UsernamePasswordAuthenticationToken(usuario, auth.getCredentials(), lista);
+    }
+
+    public void realizaAutenticacaoAutomatica(HttpServletRequest request, Usuario usuario)
+	    throws Exception {
+	Criptografia criptografia = new Criptografia();
+	UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+		usuario.getEmail(), criptografia.criptografar(usuario.getSenha()));
+	token.setDetails(new WebAuthenticationDetails(request));
+	Authentication authentication = (Authentication) pesquisarPorEmail(usuario.getEmail());
+	SecurityContextHolder.getContext().setAuthentication(authentication);
+	request.getSession().setAttribute(
+		HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+		SecurityContextHolder.getContext());
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public Usuario recoverAuthenticatedUser() {
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	if (authentication.getPrincipal() instanceof UserDetails) {
+	    Usuario usuarioAutenticado = (Usuario) authentication.getPrincipal();
+	    return usuarioAutenticado;
 	}
-	
-	public Authentication authenticate(Authentication auth) {
-		Usuario usuario = new Usuario();
-		try {
-			usuario = pesquisarPorEmail(auth.getName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		List<GrantedAuthority> lista = new ArrayList<GrantedAuthority>();
-		lista.add(new GrantedAuthorityImpl(usuario.getTipo().toString()));
+	return null;
+    }
 
-		return new UsernamePasswordAuthenticationToken(usuario,
-				auth.getCredentials(), lista);
-	}
-	
-	
-	public void realizaAutenticacaoAutomatica(HttpServletRequest request,
-			Usuario usuario) throws Exception {
-		Criptografia criptografia = new Criptografia();
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				usuario.getEmail(), criptografia.criptografar(usuario
-						.getSenha()));
-		token.setDetails(new WebAuthenticationDetails(request));
-		Authentication authentication = (Authentication) pesquisarPorEmail(usuario
-				.getEmail());
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		request.getSession()
-				.setAttribute(
-						HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-						SecurityContextHolder.getContext());
-	}
+    public Usuario pesquisarPorEmail(String email) {
 
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public Usuario recoverAuthenticatedUser() {
-		Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
-		if (authentication.getPrincipal() instanceof UserDetails) {
-			Usuario usuarioAutenticado = (Usuario) authentication
-					.getPrincipal();
-			return usuarioAutenticado;
-		}
-		return null;
-	}
-	
-	
+	EntityManager em = emf.createEntityManager();
+	Query q = em.createQuery("select u from Usuario u where lower(u.email) = :email");
+	q.setParameter("email", email);
+	return (Usuario) q.getSingleResult();
+    }
 
-	public Usuario pesquisarPorEmail(String email) {
-
-		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select u from Usuario u where lower(u.email) = :email");
-		q.setParameter("email", email);
-		return (Usuario) q.getSingleResult();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Usuario> listUsuariosByEmail(String email) {
-
-		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select u from Usuario u where lower(u.email) like concat('%', :email, '%')");
-		q.setParameter("email", email);
-		return q.getResultList();
-	}
-	
-	
-
+    @SuppressWarnings("unchecked")
+    public List<Usuario> listUsuariosByEmail(String email) {
+	EntityManager em = emf.createEntityManager();
+	Query q = em.createQuery(
+		"select u from Usuario u where lower(u.email) like concat('%', :email, '%')");
+	q.setParameter("email", email);
+	return q.getResultList();
+    }
 }

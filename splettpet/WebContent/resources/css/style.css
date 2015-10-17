@@ -54,14 +54,23 @@ body {
 	padding-left: 3.4%;
 }
 
-#addFriendButton {
+.notification {
+	background: white;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
 	float: right;
-	margin-top: -14.5%;
+	margin-top: -15%;
 }
 
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+.amigo {
+	border-bottom: 1px solid #4297d7;
+	padding: 10px;
 }
 
 .fixedTb {
