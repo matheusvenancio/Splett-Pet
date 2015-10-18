@@ -18,51 +18,50 @@ import splett.animal.dao.AnimalDao;
 @ViewScoped
 public class AnimalLazyDataModel extends LazyDataModel<Animal> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{animalDao}")
-	private AnimalDao animalDao;
+    @ManagedProperty(value = "#{animalDao}")
+    private AnimalDao animalDao;
 
-	@Override
-	public Animal getRowData(String rowKey) {
-		return animalDao.findById(Integer.parseInt(rowKey));
+    @Override
+    public Animal getRowData(String rowKey) {
+	return animalDao.findById(Integer.parseInt(rowKey));
+    }
+
+    @Override
+    public Object getRowKey(Animal animal) {
+	return animal.getId();
+    }
+
+    @Override
+    public List<Animal> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	    Map<String, Object> filters) {
+	List<Animal> source = null;
+
+	if (filters.containsKey("nome")) {
+	    String nomePesquisa = filters.get("nome").toString();
+	    source = animalDao.pesquisarPorNome(nomePesquisa);
+	} else {
+	    source = animalDao.list(first, pageSize);
 	}
 
-	@Override
-	public Object getRowKey(Animal animal) {
-		return animal.getId();
+	// sort
+	if (sortField != null) {
+	    Collections.sort(source, new LazyAnimalSorter(sortField, sortOrder));
 	}
 
-	@Override
-	public List<Animal> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters) {
-		List<Animal> source = null;
+	// rowCount
+	this.setRowCount(animalDao.getRowCount());
 
-		if (filters.containsKey("nome")) {
-			String nomePesquisa = filters.get("nome").toString();
-			source = animalDao.pesquisarPorNome(nomePesquisa);
-		} else {
-			source = animalDao.list(first, pageSize);
-		}
+	return source;
+    }
 
-		// sort
-		if (sortField != null) {
-			Collections
-					.sort(source, new LazyAnimalSorter(sortField, sortOrder));
-		}
+    public AnimalDao getAnimalDao() {
+	return animalDao;
+    }
 
-		// rowCount
-		this.setRowCount(animalDao.getRowCount());
-
-		return source;
-	}
-
-	public AnimalDao getAnimalDao() {
-		return animalDao;
-	}
-
-	public void setAnimalDao(AnimalDao animalDao) {
-		this.animalDao = animalDao;
-	}
+    public void setAnimalDao(AnimalDao animalDao) {
+	this.animalDao = animalDao;
+    }
 
 }

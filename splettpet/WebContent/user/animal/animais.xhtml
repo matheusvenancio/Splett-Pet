@@ -7,9 +7,122 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="body">
-	
-		
+		<p:growl id="msg" showDetail="true"></p:growl>
 
+		<h:form>
+			<p:commandButton id="novoAnimal" value="Novo"
+				actionListener="#{animalMB.criar}"
+				oncomplete="PF('novoAnimalDialog').show()"
+				update=":novoAnimalDlg :novoAnimal_form"
+				rendered="#{perfilMB.isManagementAllowed()}" />
+		</h:form>
+
+		<h:form id="tableForm">
+			<p:dataScroller value="#{animalMB.animaisUsuarioVisualizado}"
+				var="animal" chunkSize="10" id="animaisDs">
+				<f:facet name="header">
+					<h:outputText value="Animais" />
+				</f:facet>
+
+				<div class="animal">
+					<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
+						style="width:100%;">
+						<p:graphicImage library="img" name="android_icon.png"
+							style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+						<p:panelGrid columns="1">
+							<p:outputLabel value="#{animal.nome}" styleClass="label"
+								style="color: #6DB6D5;" />
+						</p:panelGrid>
+					</p:panelGrid>
+
+					<div style="margin-top: 5px; margin-bottom: 2px;">
+						<h:outputText styleClass="postText" value="#{amigo.nome}" />
+					</div>
+				</div>
+
+			</p:dataScroller>
+		</h:form>
+
+		<p:dialog id="novoAnimalDlg" widgetVar="novoAnimalDialog"
+			header="Novo Animal" width="40%" modal="true" resizable="false"
+			closable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="novoAnimal_form">
+
+				<h:panelGrid columns="3" styleClass="CRUDform">
+					<h:outputLabel id="nomeLb" value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{animalMB.animal.nome}" size="50"
+						required="true" requiredMessage="Nome é obrigatório" />
+					<p:message for="nome" />
+
+					<h:outputLabel id="generoLb" value="Gênero:" for="genero" />
+					<p:selectOneMenu id="genero" value="#{animalMB.animal.genero}"
+						required="true" requiredMessage="Gênero é obrigatório">
+						<f:selectItem itemLabel="Selecione um" itemValue="" />
+						<f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
+						<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
+					</p:selectOneMenu>
+					<p:message for="genero" />
+
+					<h:outputLabel id="tipoLb" value="Tipo:" for="tipo" />
+					<p:autoComplete id="tipo"
+						value="#{animalMB.animal.raca.tipoAnimal}" size="15"
+						completeMethod="#{tipoAnimalDao.pesquisarPorNome}"
+						converter="#{tipoAnimalConverter}" dropdown="true"
+						forceSelection="true" minQueryLength="3" required="true"
+						requiredMessage="Tipo de animal é obrigatório">
+						<p:ajax listener="#{animalMB.listarRacas}"
+							update=":novoAnimal_form:raca" event="blur" />
+					</p:autoComplete>
+					<p:message for="tipo" />
+
+					<h:outputLabel id="racaLb" value="Raça:" for="raca" />
+					<p:selectOneMenu id="raca" value="#{animalMB.animal.raca}"
+						converter="#{racaConverter}" var="r" filter="true"
+						filterMatchMode="contains" required="true"
+						requiredMessage="Raça é obrigatória">
+
+						<f:selectItems value="#{animalMB.racas}" var="raca"
+							itemLabel="#{raca.nome}" itemValue="#{raca}" />
+						<p:column>
+							<h:outputText value="#{r.nome}" />
+						</p:column>
+					</p:selectOneMenu>
+					<p:message for="raca" />
+
+					<h:outputLabel id="idadeLb" value="Idade:" for="idade" />
+					<p:inputText id="idade" value="#{animalMB.animal.idade}" size="10"
+						required="true" requiredMessage="Idade é obrigatória" />
+					<p:message for="idade" />
+
+					<h:outputLabel id="pesoLb" value="Peso:" for="peso" />
+					<p:inputText id="peso" value="#{animalMB.animal.peso}" size="10"
+						required="true" />
+					<p:message for="peso" />
+				</h:panelGrid>
+
+				<h:outputLabel id="necessidadesLb" value="Necessidades Especiais:"
+					for="necessidades" style="float:left; margin-right:2px;" />
+				<br />
+				<p:inputTextarea id="necessidades" autoResize="false" rows="5"
+					cols="58" counter="display" maxlength="300"
+					counterTemplate="{0} caracteres restantes"
+					value="#{animalMB.animal.necessidades}" />
+				<br />
+				<h:outputText id="display" />
+				<br />
+
+				<p:commandButton style="margin-top:10px;" id="salvarBt"
+					value="salvar" icon="salvar16"
+					update=":tableForm:animaisDs :novoAnimal_form"
+					actionListener="#{animalMB.salvar}"
+					oncomplete="if(!args.validationFailed) PF('novoAnimalDialog').hide()" />
+
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('novoAnimalDialog').hide()" immediate="true"
+					actionListener="#{animalMB.cancelar}"
+					update=":novoAnimal_form :msg" />
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>
