@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import splett.amizade.Amizade;
+import splett.amizade.Status;
 import splett.dao.GenericDao;
 import splett.usuario.Usuario;
 
@@ -24,10 +25,26 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Usuario> listAmigos(Usuario usuario) {
+    List<Usuario> amigos;
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery(
-		"Select u from Usuario u, Amizade a where a.usuarioOrigem.id = :id or a.usuarioDestino.id = :id and a.status = 'ACEITO'");
+		"Select ud from Amizade a inner join a.usuarioDestino ud where ud.id != :id and a.status = :status");
 	q.setParameter("id", usuario.getId());
-	return q.getResultList();
+	q.setParameter("status", Status.ACEITO);
+	amigos = q.getResultList();
+	List<Usuario> amigosOrigem = listarAmigosOrigem(usuario);
+	amigos.addAll(amigosOrigem);
+	return amigos;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Usuario> listarAmigosOrigem(Usuario usuario){
+    	EntityManager em = emf.createEntityManager();
+    	Query q = em.createQuery(
+    		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status");
+    	q.setParameter("id", usuario.getId());
+    	q.setParameter("status", Status.ACEITO);
+    	return q.getResultList();
     }
 }
