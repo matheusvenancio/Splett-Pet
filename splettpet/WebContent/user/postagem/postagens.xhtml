@@ -30,8 +30,10 @@
 						<p:panelGrid columns="1">
 							<p:outputLabel value="#{postagem.usuario.nome}"
 								styleClass="label" style="color: #6DB6D5;" />
-							<h:outputText value="12/06/2015"
-								style="font-size: 0.8em; color:gray" />
+							<h:outputText value="#{postagem.dataPostagem}"
+								style="font-size: 0.8em; color:gray">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
+							</h:outputText>
 						</p:panelGrid>
 					</p:panelGrid>
 
@@ -45,7 +47,6 @@
 				</p:panel>
 			</p:dataScroller>
 		</h:form>
-
 
 		<p:dialog id="novaPostagemDlg" widgetVar="novaPostagemDialog"
 			header="Nova Postagem" width="40%" modal="true" resizable="false"

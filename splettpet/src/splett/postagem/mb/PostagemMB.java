@@ -35,7 +35,6 @@ public class PostagemMB {
 
     public PostagemMB() {
 	postagens = new ArrayList<Postagem>();
-
     }
 
     @PostConstruct
