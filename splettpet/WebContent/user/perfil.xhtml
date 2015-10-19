@@ -80,7 +80,8 @@
 							<div style="margin-top: 5px; margin-bottom: 2px;">
 								<h:outputText styleClass="postText" value="#{postagem.texto}" />
 							</div>
-							<p:commandButton value="Ver Mais" action="postagem">
+							<p:commandButton value="Ver Mais"
+								oncomplete="PF('postagemDialog').show()" update=":postagemDlg">
 								<f:setPropertyActionListener value="#{postagem}"
 									target="#{postagemMB.postagemVisualizar}" />
 							</p:commandButton>
@@ -88,8 +89,14 @@
 					</p:dataScroller>
 				</h:form>
 			</div>
-
 		</div>
 
+		<p:dialog id="postagemDlg" widgetVar="postagemDialog"
+			header="Postagem" width="40%" modal="true" resizable="false"
+			showEffect="clip" hideEffect="clip">
+
+			<ui:include src="postagem/postagem.xhtml"></ui:include>
+
+		</p:dialog>
 	</ui:define>
 </ui:composition>

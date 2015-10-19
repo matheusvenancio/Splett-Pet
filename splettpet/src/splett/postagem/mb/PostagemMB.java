@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import splett.perfil.mb.PerfilMB;
 import splett.postagem.Postagem;
@@ -15,7 +15,7 @@ import splett.postagem.dao.PostagemDao;
 import splett.session.SessionMB;
 
 @ManagedBean(name = "postagemMB")
-@SessionScoped
+@ViewScoped
 public class PostagemMB {
 
     @ManagedProperty(value = "#{postagemDao}")

@@ -1,7 +1,6 @@
 package splett.usuario;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,13 +10,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import splett.animal.Animal;
 import splett.genero.Genero;
 import splett.usuario.endereco.Endereco;
 
@@ -45,7 +42,7 @@ public class Usuario {
     private String telefoneFixo;
 
     private String fotoPerfil;
-    
+
     private boolean isFacebook;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,9 +54,6 @@ public class Usuario {
 
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-
-    @OneToMany(mappedBy = "dono")
-    private List<Animal> animais;
 
     private boolean genero_isPublico;
 
@@ -119,14 +113,6 @@ public class Usuario {
 	this.email_isPublico = email_isPublico;
     }
 
-    public List<Animal> getAnimais() {
-	return animais;
-    }
-
-    public void setAnimais(List<Animal> animais) {
-	this.animais = animais;
-    }
-
     public Date getDataNascimento() {
 	return dataNascimento;
     }
@@ -136,14 +122,14 @@ public class Usuario {
     }
 
     public boolean isFacebook() {
-		return isFacebook;
-	}
+	return isFacebook;
+    }
 
-	public void setFacebook(boolean isFacebook) {
-		this.isFacebook = isFacebook;
-	}
+    public void setFacebook(boolean isFacebook) {
+	this.isFacebook = isFacebook;
+    }
 
-	public Integer getId() {
+    public Integer getId() {
 	return id;
     }
 
@@ -228,10 +214,9 @@ public class Usuario {
 	return id != null ? this.getClass().hashCode() + id.hashCode() : super.hashCode();
     }
 
-	@Override
-	public String toString() {
-		return  this.email ;
-	}
-    
-    
+    @Override
+    public String toString() {
+	return this.email;
+    }
+
 }
