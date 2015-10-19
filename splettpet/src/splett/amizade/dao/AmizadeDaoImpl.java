@@ -38,8 +38,7 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     }
     
     @SuppressWarnings("unchecked")
-    @Override
-    public List<Usuario> listarAmigosOrigem(Usuario usuario){
+    private List<Usuario> listarAmigosOrigem(Usuario usuario){
     	EntityManager em = emf.createEntityManager();
     	Query q = em.createQuery(
     		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status");

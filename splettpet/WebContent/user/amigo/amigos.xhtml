@@ -18,10 +18,14 @@
 					<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
 						style="width:100%;">
 						<p:graphicImage library="img" name="android_icon.png"
-							style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+							style="width:110px; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
 						<p:panelGrid columns="1">
-							<p:outputLabel value="#{usuario.nome}"
-								styleClass="label" style="color: #6DB6D5;" />
+							<p:commandLink value="#{usuario.nome}" styleClass="label"
+								style="color: #6DB6D5; text-decoration: none; float: left; margin-top: -45px;"
+								action="perfil">
+								<f:setPropertyActionListener value="#{usuario}"
+									target="#{perfilMB.usuarioVisualizado}" />
+							</p:commandLink>
 						</p:panelGrid>
 					</p:panelGrid>
 				</div>

@@ -23,7 +23,7 @@ public class PerfilMB {
 
     @PostConstruct
     public void init() {
-	usuarioVisualizado = usuarioDao.findById(sessionMB.getUsuarioLogado().getId() + 1);
+	usuarioVisualizado = sessionMB.getUsuarioLogado();
     }
 
     public boolean isSelfProfile() {

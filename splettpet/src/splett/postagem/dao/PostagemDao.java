@@ -7,6 +7,6 @@ import splett.postagem.Postagem;
 
 public interface PostagemDao extends Dao<Postagem>{
 	
-	public List<Postagem> listarPostagens(Integer id);
+    public List<Postagem> listarPostagens(Integer id);
 
 }

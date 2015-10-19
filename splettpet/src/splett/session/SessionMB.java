@@ -17,44 +17,44 @@ import splett.usuario.dao.UsuarioDao;
 @SessionScoped
 public class SessionMB {
 
-	@ManagedProperty(value = "#{usuarioLogado}")
-	private Usuario usuarioLogado;
+    @ManagedProperty(value = "#{usuarioLogado}")
+    private Usuario usuarioLogado;
 
-	@ManagedProperty(value = "#{usuarioDao}")
-	private UsuarioDao usuarioDao;
+    @ManagedProperty(value = "#{usuarioDao}")
+    private UsuarioDao usuarioDao;
 
-	@PostConstruct
-	public void init() {
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
+    @PostConstruct
+    public void init() {
+	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	usuarioLogado = usuarioDao.pesquisarPorEmail(user.getUsername());
+    }
+
+    public Usuario getUsuarioLogado() {
+	return usuarioLogado;
+    }
+
+    public boolean isLogado() {
+	if (SecurityContextHolder.getContext()
+		.getAuthentication() instanceof AnonymousAuthenticationToken) {
+	    return false;
 	}
+	return true;
+    }
 
-	public Usuario getUsuarioLogado() {
-		return usuarioLogado;
-	}
+    public boolean isUserAdm() {
+	return usuarioLogado.getTipo().equals(TipoUsuario.ROLE_ADMIN);
+    }
 
-	public boolean isLogado() {
-		if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
-			return false;
-		}
-		return true;
-	}
+    public UsuarioDao getUsuarioDao() {
+	return usuarioDao;
+    }
 
-	public boolean isUserAdm() {
-		return usuarioLogado.getTipo().equals(TipoUsuario.ROLE_ADMIN);
-	}
+    public void setUsuarioDao(UsuarioDao usuarioDao) {
+	this.usuarioDao = usuarioDao;
+    }
 
-	public UsuarioDao getUsuarioDao() {
-		return usuarioDao;
-	}
-
-	public void setUsuarioDao(UsuarioDao usuarioDao) {
-		this.usuarioDao = usuarioDao;
-	}
-
-	public void setUsuarioLogado(Usuario usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
-	}
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+	this.usuarioLogado = usuarioLogado;
+    }
 
 }

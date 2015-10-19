@@ -30,8 +30,12 @@
 						<p:graphicImage library="img" name="android_icon.png"
 							style="width:90%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
 						<p:panelGrid columns="1">
-							<p:outputLabel value="#{animal.nome}" styleClass="label"
-								style="color: #6DB6D5;" />
+							<p:commandLink value="#{animal.nome}" styleClass="label"
+								style="color: #6DB6D5; text-decoration: none; float: left; margin-top: -45px;"
+								oncomplete="PF('aniDialog').show()" update=":aniDlg">
+								<f:setPropertyActionListener value="#{animal}"
+									target="#{animalMB.animal}" />
+							</p:commandLink>
 						</p:panelGrid>
 					</p:panelGrid>
 
@@ -122,6 +126,36 @@
 					actionListener="#{animalMB.cancelar}"
 					update=":novoAnimal_form :msg" />
 			</h:form>
+		</p:dialog>
+
+		<p:dialog id="aniDlg" widgetVar="aniDialog"
+			header="#{animalMB.animal.nome}" width="40%" modal="true"
+			resizable="false" draggable="false" showEffect="clip"
+			hideEffect="clip">
+
+			<p:panelGrid columns="2">
+				<h:outputLabel id="nomeLb" value="Nome:" for="nome" />
+				<h:outputText value="#{animalMB.animal.nome}" />
+
+				<h:outputLabel id="generoLb" value="Gênero:" for="genero" />
+				<h:outputText value="#{animalMB.animal.genero}" />
+
+				<h:outputLabel id="tipoLb" value="Tipo:" for="tipo" />
+				<h:outputText value="#{animalMB.animal.raca.tipoAnimal}" />
+
+				<h:outputLabel id="racaLb" value="Raça:" for="raca" />
+				<h:outputText value="#{animalMB.animal.raca}" />
+
+				<h:outputLabel id="idadeLb" value="Idade:" for="idade" />
+				<h:outputText value="#{animalMB.animal.idade}" />
+
+				<h:outputLabel id="pesoLb" value="Peso:" for="peso" />
+				<h:outputText value="#{animalMB.animal.peso}" />
+
+				<h:outputLabel id="necessidadesLb" value="Necessidades Especiais:" />
+				<h:outputText value="#{animalMB.animal.necessidades}" />
+			</p:panelGrid>
+
 		</p:dialog>
 
 	</ui:define>
