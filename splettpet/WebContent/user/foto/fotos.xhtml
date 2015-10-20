@@ -23,16 +23,18 @@
 				</f:facet>
 
 				<p:column>
+				<h:outputText value="#{foto.descricao}" />
+					<br/>
 					<div style="float: right;">
-
-						<p:commandButton id="editarVideo" value="Editar" icon="editar16"
+	
+						<p:commandButton id="editarFoto" value="Editar" icon="editar16"
 							oncomplete="PF('fotoDialog').show()"
 							rendered="#{perfilMB.isManagementAllowed()}">
 							<f:setPropertyActionListener value="#{foto}"
 								target="#{fotoMB.foto}" />
 						</p:commandButton>
 
-						<p:commandButton id="removerVideo" value="Remover"
+						<p:commandButton id="removerFoto" value="Remover"
 							icon="remover16" update=":confirm"
 							oncomplete="PF('fotoConfirmDialog').show()"
 							rendered="#{perfilMB.isManagementAllowed()}">
@@ -41,15 +43,19 @@
 						</p:commandButton>
 
 					</div>
-					<h:outputText value="#{foto.descricao}" />
-
+					
+					<h:graphicImage value="/image/#{foto.nome}" width="420" height="315" />
 					<br />
 				</p:column>
 			</p:dataTable>
+			
+					
+
 		</h:form>
 
 		<p:dialog id="fotoDlg" widgetVar="fotoDialog" header="Adicionar Foto"
 			height="40%" modal="true" resizable="false" draggable="false">
+
 
 			<h:form enctype="multipart/form-data">
 				<p:growl id="messages" showDetail="true" />
@@ -66,6 +72,10 @@
 				<p:fileUpload value="#{fotoMB.fileUp}" mode="simple"
 					skinSimple="true" />
 				<br />
+				<h:outputText id="publicoLb" value="Publico: " for="publico" />
+				<p:selectBooleanCheckbox id="publico"
+					value="#{fotoMB.foto.publico}" />
+				<br />
 				<p:commandButton value="Salvar" ajax="false"
 					actionListener="#{fotoMB.doUpload}"
 					oncomplete="if(!args.validationFailed) PF('fotoDialog').hide()"
@@ -75,6 +85,7 @@
 					actionListener="#{fotoMB.cancelar}" />
 
 			</h:form>
+
 		</p:dialog>
 
 		<p:confirmDialog id="confirm" widgetVar="fotoConfirmDialog"
@@ -82,9 +93,9 @@
 			message="Deseja realmente excluir a foto?">
 			<h:form>
 				<p:commandButton value="Sim" actionListener="#{fotoMB.remover}"
-					oncomplete="PF('fotoConfirmDialog').hide()" icon="ok16" />
+					oncomplete="PF('fotoConfirmDialog').hide()" icon="ok16" update = ":tableForm:fotosTable" />
 				<p:commandButton value="Não"
-					oncomplete="PF('fotoConfirmDialog').hide()" icon="cancelar16" />
+					oncomplete="PF('fotoConfirmDialog').hide()" icon="cancelar16"  update = ":tableForm:fotosTable" />
 			</h:form>
 		</p:confirmDialog>
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,6 +17,7 @@ import org.primefaces.model.UploadedFile;
 
 import splett.foto.Foto;
 import splett.foto.dao.FotoDao;
+import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
 import splett.usuario.Usuario;
 
@@ -23,158 +25,190 @@ import splett.usuario.Usuario;
 @ViewScoped
 public class FotoMB {
 
-    @ManagedProperty(value = "#{fotoDao}")
-    private FotoDao fotoDao;
+	@ManagedProperty(value = "#{fotoDao}")
+	private FotoDao fotoDao;
 
-    @ManagedProperty(value = "#{fotoLazyDataModel}")
-    private FotoLazyDataModel fotoLazyDataModel;
+	@ManagedProperty(value = "#{fotoLazyDataModel}")
+	private FotoLazyDataModel fotoLazyDataModel;
 
-    @ManagedProperty(value = "#{sessionMB}")
-    private SessionMB sessionMB;
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
 
-    private List<Foto> fotoFiltered;
+	@ManagedProperty(value = "#{perfilMB}")
+	private PerfilMB perfilMB;
+	
+	private List<Foto> fotoFiltered;
 
-    private Foto foto;
+	private Foto foto;
 
-    private UploadedFile fileUp;
+	private UploadedFile fileUp;
 
-    private String destino = "\\image\\";
+	private String destino = "//image//";
 
-    private UploadArquivo arquivo = new UploadArquivo();
+	private UploadArquivo arquivo = new UploadArquivo();
 
-    public FotoMB() {
-	fotoFiltered = new ArrayList<Foto>();
-    }
-
-    public void criar() {
-	foto = new Foto();
-    }
-
-    public void transferirArquivo(String nomeArquivo, InputStream in) {
-	try {
-
-	    File file = new File(arquivo.getRealPath() + destino);
-	    file.mkdirs();
-
-	    File f = new File(arquivo.getRealPath() + destino + nomeArquivo);
-	    f.createNewFile();
-	    OutputStream out = new FileOutputStream(f);
-	    int reader = 0;
-	    byte[] bytes = new byte[(int) getFileUp().getSize()];
-
-	    while ((reader = in.read(bytes)) != -1) {
-		out.write(bytes, 0, reader);
-	    }
-	    in.close();
-	    out.flush();
-	    out.close();
-	} catch (IOException exception) {
-
+	public FotoMB() {
+		fotoFiltered = new ArrayList<Foto>();
 	}
-    }
 
-    public void doUpload() {
-	if (fileUp != null) {
-	    try {
-		transferirArquivo(new java.util.Date().getTime() + ".jpg",
-			getFileUp().getInputstream());
-	    } catch (IOException exception) {
-
-	    }
-
-	    foto.setContentType(fileUp.getContentType());
-	    foto.setCaminho(
-		    arquivo.getRealPath() + destino + new java.util.Date().getTime() + ".jpg");
-	    foto.setNome(new java.util.Date().getTime() + ".jpg");
-	    foto.setUsuario(new Usuario());
-	    foto.setUsuario(sessionMB.getUsuarioLogado());
-	    fotoDao.salvar(foto);
+	public void criar() {
+		foto = new Foto();
 	}
-    }
 
-    public void salvar() {
-	if (foto.getId() != null)
-	    fotoDao.update(foto);
-	else
-	    fotoDao.salvar(foto);
-    }
+	public void transferirArquivo(String caminho, String nome, InputStream in) {
+		try {
+			File file = new File(caminho);
+			file.mkdir();
+			File f = new File(caminho + nome);
+			
+			f.createNewFile();
+			OutputStream out = new FileOutputStream(f);
+			int reader = 0;
+			byte[] bytes = new byte[(int) getFileUp().getSize()];
 
-    public void remover() {
-	File file = new File(foto.getCaminho());
-	file.delete();
-	fotoDao.remover(foto);
-    }
+			while ((reader = in.read(bytes)) != -1) {
+				out.write(bytes, 0, reader);
+			}
+			in.close();
+			out.flush();
+			out.close();
+		} catch (IOException exception) {
 
-    public void cancelar() {
-	if (foto.getCaminho() != null) {
-	    remover();
+		}
 	}
-	fileUp = null;
-	foto = null;
-    }
 
-    public SessionMB getSessionMB() {
-	return sessionMB;
-    }
+	public void doUpload() {
+		Date data = new Date(); 
+		String nome =  data.getTime() + fileUp.getFileName();
+		if (fileUp != null) {
+			try {
+				transferirArquivo(arquivo.getRealPath() + destino, nome,
+						getFileUp().getInputstream());
+			} catch (IOException exception) {
 
-    public void setSessionMB(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+			}
 
-    public FotoDao getFotoDao() {
-	return fotoDao;
-    }
+			foto.setCaminho(arquivo.getRealPath() + destino
+					+ data.getTime() + fileUp.getFileName());
+			foto.setNome(nome);
+			foto.setUsuario(new Usuario());
+			foto.setUsuario(perfilMB.getUsuarioVisualizado());
+			fotoDao.salvar(foto);
+		}
+	}
 
-    public void setFotoDao(FotoDao fotoDao) {
-	this.fotoDao = fotoDao;
-    }
+	public void salvar() {
+		if (foto.getId() != null)
+			fotoDao.update(foto);
+		else
+			fotoDao.salvar(foto);
+		foto = null;
+	}
 
-    public FotoLazyDataModel getFotoLazyDataModel() {
-	return fotoLazyDataModel;
-    }
+	public void remover() {
+		File file = new File(foto.getCaminho());
+		file.delete();
+		fotoDao.remover(foto);
+	}
+	
+	public void doUploadFotoPerfil() {
+		Date data = new Date(); 
+		String nome =  data.getTime() + fileUp.getFileName();
+		if (fileUp != null) {
+			try {
+				transferirArquivo(arquivo.getRealPath() + destino, nome,
+						getFileUp().getInputstream());
+			} catch (IOException exception) {
 
-    public void setFotoLazyDataModel(FotoLazyDataModel fotoLazyDataModel) {
-	this.fotoLazyDataModel = fotoLazyDataModel;
-    }
+			}
 
-    public List<Foto> getFotoFiltered() {
-	return fotoFiltered;
-    }
+			Usuario usuario = perfilMB.getUsuarioVisualizado();
+			usuario.setFotoPerfil(arquivo.getRealPath() + destino
+					+ data.getTime() + fileUp.getFileName());
 
-    public void setFotoFiltered(List<Foto> fotoFiltered) {
-	this.fotoFiltered = fotoFiltered;
-    }
+			usuario.setNomeFotoPerfil(nome);
+			perfilMB.getUsuarioDao().salvar(usuario);
+		}
+	}
 
-    public Foto getFoto() {
-	return foto;
-    }
+	public void cancelar() {
+		if (foto.getCaminho() != null) {
+			remover();
+		}
+		fileUp = null;
+		foto = null;
+	}
 
-    public void setFoto(Foto foto) {
-	this.foto = foto;
-    }
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
 
-    public UploadedFile getFileUp() {
-	return fileUp;
-    }
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
 
-    public void setFileUp(UploadedFile fileUp) {
-	this.fileUp = fileUp;
-    }
+	public FotoDao getFotoDao() {
+		return fotoDao;
+	}
 
-    public String getDestino() {
-	return destino;
-    }
+	public void setFotoDao(FotoDao fotoDao) {
+		this.fotoDao = fotoDao;
+	}
 
-    public void setDestino(String destino) {
-	this.destino = destino;
-    }
+	public FotoLazyDataModel getFotoLazyDataModel() {
+		return fotoLazyDataModel;
+	}
 
-    public UploadArquivo getArquivo() {
-	return arquivo;
-    }
+	public void setFotoLazyDataModel(FotoLazyDataModel fotoLazyDataModel) {
+		this.fotoLazyDataModel = fotoLazyDataModel;
+	}
 
-    public void setArquivo(UploadArquivo arquivo) {
-	this.arquivo = arquivo;
-    }
+	public List<Foto> getFotoFiltered() {
+		return fotoFiltered;
+	}
+
+	public void setFotoFiltered(List<Foto> fotoFiltered) {
+		this.fotoFiltered = fotoFiltered;
+	}
+	
+	public PerfilMB getPerfilMB() {
+		return perfilMB;
+	}
+
+	public void setPerfilMB(PerfilMB perfilMB) {
+		this.perfilMB = perfilMB;
+	}
+
+	public Foto getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Foto foto) {
+		this.foto = foto;
+	}
+
+	public UploadedFile getFileUp() {
+		return fileUp;
+	}
+
+	public void setFileUp(UploadedFile fileUp) {
+		this.fileUp = fileUp;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public UploadArquivo getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadArquivo arquivo) {
+		this.arquivo = arquivo;
+	}
 
 }
