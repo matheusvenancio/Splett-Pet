@@ -18,6 +18,13 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>editarperfil</from-outcome>
+			<to-view-id>/user/editarperfil/editarperfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<navigation-case>
@@ -103,6 +110,14 @@
 		<navigation-case>
 			<from-outcome>amigos</from-outcome>
 			<to-view-id>/user/amigo/amigos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>privacidade</from-outcome>
+			<to-view-id>/user/privacidade/privacidade.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

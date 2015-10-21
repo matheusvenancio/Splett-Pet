@@ -28,180 +28,192 @@ import splett.usuario.endereco.dao.EnderecoDao;
 @ViewScoped
 public class UsuarioMB {
 
-    @ManagedProperty(value = "#{usuarioDao}")
-    private UsuarioDao usuarioDao;
+	@ManagedProperty(value = "#{usuarioDao}")
+	private UsuarioDao usuarioDao;
 
-    @ManagedProperty(value = "#{enderecoDao}")
-    private EnderecoDao enderecoDao;
+	@ManagedProperty(value = "#{enderecoDao}")
+	private EnderecoDao enderecoDao;
 
-    @ManagedProperty(value = "#{usuarioLazyDataModel}")
-    private UsuarioLazyDataModel usuarioLazyDataModel;
+	@ManagedProperty(value = "#{usuarioLazyDataModel}")
+	private UsuarioLazyDataModel usuarioLazyDataModel;
 
-    @ManagedProperty(value = "#{criptografia}")
-    private Criptografia criptografia;
+	@ManagedProperty(value = "#{criptografia}")
+	private Criptografia criptografia;
 
-    private List<Usuario> usuariosFiltered;
+	private List<Usuario> usuariosFiltered;
 
-    private Usuario usuario;
+	private Usuario usuario;
 
-    public UsuarioMB() {
 
-	usuariosFiltered = new ArrayList<Usuario>();
-    }
+	public UsuarioMB() {
 
-    public void criar() {
-	usuario = new Usuario();
-	usuario.setEndereco(new Endereco());
-    }
-
-    public void procurarEndereco() {
-	List<Logradouro> enderecos = enderecoDao.pesquisarPorCep(usuario.getEndereco().getCep());
-	Logradouro l = enderecos.get(0);
-	usuario.getEndereco().setLogradouro(l.getNome());
-	usuario.getEndereco().setBairro(l.getBairroInicial().getNome());
-    }
-
-    public boolean validarLogin() {
-	try {
-	    usuarioDao.pesquisarPorEmail(usuario.getEmail());
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
-		    "Esse e-mail já está conectado a uma conta. Por favor, escolha outro");
-	    FacesContext.getCurrentInstance().addMessage("Atenção", message);
-	    FacesContext.getCurrentInstance().validationFailed();
-	    return false;
-	} catch (NoResultException nre) {
-	    return true;
+		usuariosFiltered = new ArrayList<Usuario>();
 	}
-    }
 
-    public void salvar() {
-	if (usuario.getId() != null) {
-	    usuarioDao.update(usuario);
-	} else if (validarLogin()) {
-	    String md5 = criptografia.criptografar(usuario.getSenha());
-	    usuario.setSenha(md5);
-	    if (usuario.getTipo() == null)
-		usuario.setTipo(TipoUsuario.ROLE_USER);
-	    usuarioDao.salvar(usuario);
+	public void criar() {
+		usuario = new Usuario();
+		usuario.setEndereco(new Endereco());
 	}
-    }
 
-    public void enviarSenha() {
-	try {
-	    usuario = usuarioDao.pesquisarPorEmail(usuario.getEmail());
-
-	    try {
-
-		Email email = new SimpleEmail();
-		definirDadosEmail(email);
-
-		String senha = gerarSenha();
-		enviarEmail(email, senha);
-
-		salvarNovaSenha(senha);
-
-	    } catch (EmailException e) {
-		e.printStackTrace();
-	    }
-	} catch (NoResultException nre) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
-		    "Esse e-mail não está conectado a uma conta.");
-	    FacesContext.getCurrentInstance().addMessage("Atenção", message);
+	public void procurarEndereco() {
+		List<Logradouro> enderecos = enderecoDao.pesquisarPorCep(usuario
+				.getEndereco().getCep());
+		Logradouro l = enderecos.get(0);
+		usuario.getEndereco().setLogradouro(l.getNome());
+		usuario.getEndereco().setBairro(l.getBairroInicial().getNome());
 	}
-    }
 
-    private void salvarNovaSenha(String senha) {
-	usuario.setSenha(criptografia.criptografar(senha));
-	usuarioDao.update(usuario);
-    }
+	public boolean validarLogin() {
+		try {
+			usuarioDao.pesquisarPorEmail(usuario.getEmail());
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Erro!",
+					"Esse e-mail já está conectado a uma conta. Por favor, escolha outro");
+			FacesContext.getCurrentInstance().addMessage("Atenção", message);
+			FacesContext.getCurrentInstance().validationFailed();
+			return false;
+		} catch (NoResultException nre) {
+			return true;
+		}
+	}
 
-    private void enviarEmail(Email email, String senha) throws EmailException {
-	email.setMsg("Olá " + usuario.getNome() + ", \n \n Sua nova senha de acesso é:  " + senha
-		+ "\n \n Atenciosamente \n Equipe Splett");
+	public void editar() {
+		usuario = new Usuario();
+	
+	}
 
-	email.send();
-    }
+	public void salvar() {
+		if (usuario.getId() != null) {
+			usuarioDao.update(usuario);
+		} else if (validarLogin()) {
+			String md5 = criptografia.criptografar(usuario.getSenha());
+			usuario.setSenha(md5);
+			if (usuario.getTipo() == null)
+				usuario.setTipo(TipoUsuario.ROLE_USER);
+			usuarioDao.salvar(usuario);
+		}
+	}
 
-    private void definirDadosEmail(Email email) throws EmailException {
-	email.setHostName("smtp.googlemail.com");
-	email.setSmtpPort(465);
-	email.setAuthenticator(new DefaultAuthenticator("splettpetbeta", "perdiojogo"));
-	email.setSSLOnConnect(true);
-	email.setFrom("splettpetbeta@gmail.com");
-	email.setSubject("SplettPet - Esqueci minha senha");
-	email.addTo(usuario.getEmail());
-    }
+	public void enviarSenha() {
+		try {
+			usuario = usuarioDao.pesquisarPorEmail(usuario.getEmail());
 
-    private String gerarSenha() {
-	char[] chart = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-		'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-		'W', 'X', 'Y', 'Z' };
+			try {
 
-	char[] senha = new char[8];
+				Email email = new SimpleEmail();
+				definirDadosEmail(email);
 
-	int chartLenght = chart.length;
-	Random rdm = new Random();
+				String senha = gerarSenha();
+				enviarEmail(email, senha);
 
-	for (int x = 0; x < 8; x++)
-	    senha[x] = chart[rdm.nextInt(chartLenght)];
+				salvarNovaSenha(senha);
 
-	return new String(senha);
-    }
+			} catch (EmailException e) {
+				e.printStackTrace();
+			}
+		} catch (NoResultException nre) {
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Erro!",
+					"Esse e-mail não está conectado a uma conta.");
+			FacesContext.getCurrentInstance().addMessage("Atenção", message);
+		}
+	}
 
-    public void remover() {
-	usuarioDao.remover(usuario);
-    }
+	private void salvarNovaSenha(String senha) {
+		usuario.setSenha(criptografia.criptografar(senha));
+		usuarioDao.update(usuario);
+	}
 
-    public UsuarioLazyDataModel getUsuarioLazyDataModel() {
-	return usuarioLazyDataModel;
-    }
+	private void enviarEmail(Email email, String senha) throws EmailException {
+		email.setMsg("Olá " + usuario.getNome()
+				+ ", \n \n Sua nova senha de acesso é:  " + senha
+				+ "\n \n Atenciosamente \n Equipe Splett");
 
-    public void setUsuarioLazyDataModel(UsuarioLazyDataModel usuarioLazyDataModel) {
-	this.usuarioLazyDataModel = usuarioLazyDataModel;
-    }
+		email.send();
+	}
 
-    public void cancelar() {
-	usuario = null;
-    }
+	private void definirDadosEmail(Email email) throws EmailException {
+		email.setHostName("smtp.googlemail.com");
+		email.setSmtpPort(465);
+		email.setAuthenticator(new DefaultAuthenticator("splettpetbeta",
+				"perdiojogo"));
+		email.setSSLOnConnect(true);
+		email.setFrom("splettpetbeta@gmail.com");
+		email.setSubject("SplettPet - Esqueci minha senha");
+		email.addTo(usuario.getEmail());
+	}
 
-    public Criptografia getCriptografia() {
-	return criptografia;
-    }
+	private String gerarSenha() {
+		char[] chart = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
+				'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+				'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-    public void setCriptografia(Criptografia criptografia) {
-	this.criptografia = criptografia;
-    }
+		char[] senha = new char[8];
 
-    public Usuario getUsuario() {
-	return usuario;
-    }
+		int chartLenght = chart.length;
+		Random rdm = new Random();
 
-    public void setUsuario(Usuario usuario) {
-	this.usuario = usuario;
-    }
+		for (int x = 0; x < 8; x++)
+			senha[x] = chart[rdm.nextInt(chartLenght)];
 
-    public List<Usuario> getUsuariosFiltered() {
-	return usuariosFiltered;
-    }
+		return new String(senha);
+	}
 
-    public void setUsuariosFiltered(List<Usuario> usuariosFiltered) {
-	this.usuariosFiltered = usuariosFiltered;
-    }
+	public void remover() {
+		usuarioDao.remover(usuario);
+	}
 
-    public UsuarioDao getUsuarioDao() {
-	return usuarioDao;
-    }
+	public UsuarioLazyDataModel getUsuarioLazyDataModel() {
+		return usuarioLazyDataModel;
+	}
 
-    public void setUsuarioDao(UsuarioDao usuarioDao) {
-	this.usuarioDao = usuarioDao;
-    }
+	public void setUsuarioLazyDataModel(
+			UsuarioLazyDataModel usuarioLazyDataModel) {
+		this.usuarioLazyDataModel = usuarioLazyDataModel;
+	}
 
-    public EnderecoDao getEnderecoDao() {
-	return enderecoDao;
-    }
+	public void cancelar() {
+		usuario = null;
+	}
 
-    public void setEnderecoDao(EnderecoDao enderecoDao) {
-	this.enderecoDao = enderecoDao;
-    }
+	public Criptografia getCriptografia() {
+		return criptografia;
+	}
+
+	public void setCriptografia(Criptografia criptografia) {
+		this.criptografia = criptografia;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Usuario> getUsuariosFiltered() {
+		return usuariosFiltered;
+	}
+
+	public void setUsuariosFiltered(List<Usuario> usuariosFiltered) {
+		this.usuariosFiltered = usuariosFiltered;
+	}
+
+	public UsuarioDao getUsuarioDao() {
+		return usuarioDao;
+	}
+
+	public void setUsuarioDao(UsuarioDao usuarioDao) {
+		this.usuarioDao = usuarioDao;
+	}
+
+	public EnderecoDao getEnderecoDao() {
+		return enderecoDao;
+	}
+
+	public void setEnderecoDao(EnderecoDao enderecoDao) {
+		this.enderecoDao = enderecoDao;
+	}
 
 }

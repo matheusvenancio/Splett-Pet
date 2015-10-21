@@ -63,15 +63,15 @@ public class Usuario {
     @OneToMany(mappedBy = "dono")
     private List<Animal> animais;
 
-    private boolean genero_isPublico;
+    private boolean genero_isPublico = false;
 
-    private boolean telefoneFixo_isPublico;
+    private boolean telefoneFixo_isPublico = false;
 
-    private boolean telefoneCelular_isPublico;
+    private boolean telefoneCelular_isPublico = false;
 
-    private boolean dataNascimento_isPublico;
+    private boolean dataNascimento_isPublico = false;
 
-    private boolean email_isPublico;
+    private boolean email_isPublico = false;
 
     public String getFotoPerfil() {
 	return fotoPerfil;
