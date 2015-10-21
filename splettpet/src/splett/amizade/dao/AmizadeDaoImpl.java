@@ -28,7 +28,7 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     List<Usuario> amigos;
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery(
-		"Select ud from Amizade a inner join a.usuarioDestino ud where ud.id != :id and a.status = :status");
+		"Select ud from Amizade a inner join a.usuarioDestino ud where ud.id != :id and a.status = :status and a.usuarioOrigem.id = :id);
 	q.setParameter("id", usuario.getId());
 	q.setParameter("status", Status.ACEITO);
 	amigos = q.getResultList();
@@ -41,7 +41,7 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     private List<Usuario> listarAmigosOrigem(Usuario usuario){
     	EntityManager em = emf.createEntityManager();
     	Query q = em.createQuery(
-    		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status");
+    		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
     	q.setParameter("id", usuario.getId());
     	q.setParameter("status", Status.ACEITO);
     	return q.getResultList();
