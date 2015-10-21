@@ -65,7 +65,7 @@
 					update=":tableForm" action="#{postagemMB.salvarPostagem}"
 					oncomplete="if(!args.validationFailed) PF('novaPostagemDialog').hide()" />
 
-				<p:commandButton id="cancelarBtE" value="Cancelar" icon="cancelar16"
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
 					oncomplete="PF('novaPostagemDialog').hide()"
 					update=":novaPostagem_form" immediate="true"
 					actionListener="#{postagemMB.cancelar}" />

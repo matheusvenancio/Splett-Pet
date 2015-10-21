@@ -43,12 +43,19 @@
 				</p:panel>
 
 				<p:panel styleClass="painelDados" id="painelDisponibilidade">
-					<f:facet name="header">
-						<h:outputText value="Disponibilidade" />
-					</f:facet>
+					<h:form id="disponibilidade_form">
+						<f:facet name="header">
+							<h:outputText value="Disponibilidade" />
+						</f:facet>
 
-					<p:calendar mode="inline">
-					</p:calendar>
+						<p:commandButton id="novaDisponibilidade"
+							value="Adicionar disponibilidade"
+							actionListener="#{disponibilidadeMB.criarPeriodoDisponivel}"
+							oncomplete="PF('disponibilidadeDialog').show()"
+							update=":disponibilidadeDlg"
+							rendered="#{perfilMB.isManagementAllowed()}" />
+
+					</h:form>
 				</p:panel>
 			</div>
 
@@ -90,6 +97,34 @@
 				</h:form>
 			</div>
 		</div>
+
+		<p:dialog id="disponibilidadeDlg" widgetVar="disponibilidadeDialog"
+			header="Período disponível" width="40%" height="40%" modal="true"
+			resizable="false" closable="false" showEffect="clip"
+			hideEffect="clip">
+			<h:form id="novaDisponibilidade_form">
+
+				<h:panelGrid columns="2">
+					<p:outputLabel for="inicio" value="Início do período" />
+					<p:outputLabel value="Fim do período" />
+
+					<p:calendar id="inicio" mode="inline"
+						value="#{disponibilidadeMB.dataInicio}" />
+					<p:calendar id="fim" mode="inline"
+						value="#{disponibilidadeMB.dataFinal}" />
+				</h:panelGrid>
+
+				<p:commandButton id="salvarBt" value="Salvar" icon="salvar16"
+					update=":disponibilidade_form"
+					action="#{disponibilidadeMB.salvarPeriodo}"
+					oncomplete="PF('disponibilidadeDialog').hide()" />
+
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('disponibilidadeDialog').hide()" immediate="true"
+					actionListener="#{postagemMB.cancelar}" />
+
+			</h:form>
+		</p:dialog>
 
 		<p:dialog id="postagemDlg" widgetVar="postagemDialog"
 			header="Postagem" width="40%" modal="true" resizable="false"

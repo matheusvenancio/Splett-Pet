@@ -83,7 +83,6 @@ public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
     }
 
     public Usuario pesquisarPorEmail(String email) {
-
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery("select u from Usuario u where lower(u.email) = :email");
 	q.setParameter("email", email);
