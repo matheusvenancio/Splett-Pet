@@ -11,6 +11,8 @@ import javax.faces.bean.ViewScoped;
 
 import splett.perfil.mb.PerfilMB;
 import splett.postagem.Postagem;
+import splett.postagem.comentario.Comentario;
+import splett.postagem.comentario.dao.ComentarioDao;
 import splett.postagem.dao.PostagemDao;
 import splett.session.SessionMB;
 
@@ -18,112 +20,170 @@ import splett.session.SessionMB;
 @ViewScoped
 public class PostagemMB {
 
-    @ManagedProperty(value = "#{postagemDao}")
-    private PostagemDao postagemDao;
+	@ManagedProperty(value = "#{postagemDao}")
+	private PostagemDao postagemDao;
 
-    private Postagem postagem;
+	private Postagem postagem;
 
-    private Postagem postagemVisualizar;
+	private Postagem postagemVisualizar;
 
-    @ManagedProperty(value = "#{sessionMB}")
-    private SessionMB sessionMB;
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
 
-    @ManagedProperty(value = "#{perfilMB}")
-    private PerfilMB perfilMB;
+	@ManagedProperty(value = "#{perfilMB}")
+	private PerfilMB perfilMB;
 
-    private List<Postagem> postagens;
+	@ManagedProperty(value = "#{comentarioDao}")
+	private ComentarioDao comentarioDao;
 
-    public PostagemMB() {
-	postagens = new ArrayList<Postagem>();
-    }
+	private List<Postagem> postagens;
 
-    @PostConstruct
-    public void init() {
-	listarPostagens();
-    }
+	private List<Comentario> comentarios;
+	
+	private Comentario comentario;
 
-    public String salvarPostagem() {
-	postagem.setDataPostagem(new Date());
-	postagem.setUsuario(sessionMB.getUsuarioLogado());
-	postagemDao.salvar(postagem);
-	listarPostagens();
-	return "postagens";
-    }
+	public PostagemMB() {
+		postagens = new ArrayList<Postagem>();
+		comentarios = new ArrayList<Comentario>();
+	}
 
-    public void setarPostagem(Integer id) {
-	postagemVisualizar = postagemDao.findByIdInteger(id);
-    }
+	@PostConstruct
+	public void init() {
+		listarPostagens();
+	}
 
-    public void criar() {
-	postagem = new Postagem();
-    }
+	public String salvarPostagem() {
+		postagem.setDataPostagem(new Date());
+		postagem.setUsuario(sessionMB.getUsuarioLogado());
+		postagemDao.salvar(postagem);
+		listarPostagens();
+		return "postagens";
+	}
+	
+	public String salvarComentario(){
+		comentario.setPostagem(postagemVisualizar);
+		comentario.setUsuario(sessionMB.getUsuarioLogado());
+		comentarioDao.salvar(comentario);
+		return "postagens";
+	}
 
-    public void remover() {
-	postagemDao.remover(postagem);
-    }
+	public void setarPostagem(Integer id) {
+		postagemVisualizar = postagemDao.findByIdInteger(id);
+	}
 
-    public void listarPostagens() {
-	postagens = postagemDao.listarPostagens(perfilMB.getUsuarioVisualizado().getId());
-    }
+	public void criar() {
+		postagem = new Postagem();
+	}
 
-    public void cancelar() {
-	postagem = null;
-    }
+	public void remover() {
+		postagemDao.remover(postagem);
+	}
+	
+	public void criarComentario() {
+		comentario = new Comentario();
+	}
 
-    public Postagem getPostagem() {
-	return postagem;
-    }
+	public void removerComentario() {
+		comentarioDao.remover(comentario);
+	}
 
-    public void setPostagem(Postagem postagem) {
-	this.postagem = postagem;
-    }
+	public void listarPostagens() {
+		postagens = postagemDao.listarPostagens(perfilMB
+				.getUsuarioVisualizado().getId());
+	}
 
-    public PostagemDao getPostagemDao() {
-	return postagemDao;
-    }
+	public void cancelar() {
+		postagem = null;
+	}
+	
+	public void cancelarComentario() {
+		comentario = null;
+	}
 
-    public void setPostagemDao(PostagemDao postagemDao) {
-	this.postagemDao = postagemDao;
-    }
+	public Postagem getPostagem() {
+		return postagem;
+	}
 
-    public SessionMB getSession() {
-	return sessionMB;
-    }
+	public void setPostagem(Postagem postagem) {
+		this.postagem = postagem;
+	}
 
-    public void setSession(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+	public PostagemDao getPostagemDao() {
+		return postagemDao;
+	}
 
-    public List<Postagem> getPostagens() {
-	return postagens;
-    }
+	public void setPostagemDao(PostagemDao postagemDao) {
+		this.postagemDao = postagemDao;
+	}
 
-    public void setPostagens(List<Postagem> postagens) {
-	this.postagens = postagens;
-    }
+	public SessionMB getSession() {
+		return sessionMB;
+	}
 
-    public Postagem getPostagemVisualizar() {
-	return postagemVisualizar;
-    }
+	public void setSession(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
 
-    public void setPostagemVisualizar(Postagem postagemVisualizar) {
-	this.postagemVisualizar = postagemVisualizar;
-    }
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
 
-    public SessionMB getSessionMB() {
-	return sessionMB;
-    }
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
+	}
 
-    public void setSessionMB(SessionMB sessionMB) {
-	this.sessionMB = sessionMB;
-    }
+	public Postagem getPostagemVisualizar() {
+		return postagemVisualizar;
+	}
 
-    public PerfilMB getPerfilMB() {
-	return perfilMB;
-    }
+	public void setPostagemVisualizar(Postagem postagemVisualizar) {
+		this.postagemVisualizar = postagemVisualizar;
+		listarComentariosPostagem(postagemVisualizar);
+	}
 
-    public void setPerfilMB(PerfilMB perfilMB) {
-	this.perfilMB = perfilMB;
-    }
+	public void listarComentariosPostagem(Postagem postagem){
+		comentarios = postagemDao.listarComentariosPostagem(postagemVisualizar.getId());
+	}
+	
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
+
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
+
+	public PerfilMB getPerfilMB() {
+		return perfilMB;
+	}
+
+	public void setPerfilMB(PerfilMB perfilMB) {
+		this.perfilMB = perfilMB;
+	}
+
+	public ComentarioDao getComentarioDao() {
+		return comentarioDao;
+	}
+
+	public void setComentarioDao(ComentarioDao comentarioDao) {
+		this.comentarioDao = comentarioDao;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Comentario getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(Comentario comentario) {
+		this.comentario = comentario;
+	}
+
 
 }
