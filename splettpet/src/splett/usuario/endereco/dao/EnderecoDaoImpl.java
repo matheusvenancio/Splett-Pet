@@ -34,10 +34,10 @@ public class EnderecoDaoImpl extends GenericDao<Endereco> implements EnderecoDao
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Endereco> pesquisarPorCidade(String nome){
+	public List<String> pesquisarPorCidade(String nome){
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select e from Endereco e where lower(e.cidade.nome) like concat('%', :nome, '%')");
+				.createQuery("select e.cidade from Endereco e where lower(e.cidade) like concat('%', :nome, '%')");
 		q.setParameter("nome", nome);
 		q.setMaxResults(50);
 		return q.getResultList();

@@ -30,7 +30,7 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>pesquisa</from-outcome>
-			<to-view-id>/user/pesquisa/pesuisa.xhtml</to-view-id>
+			<to-view-id>/user/pesquisa/pesquisa.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

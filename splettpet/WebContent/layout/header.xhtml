@@ -40,8 +40,10 @@
 					class="ui-icon ui-icon-grip-dotted-vertical" />
 				</span>
 
-				<p:commandButton style="font-weight:bold; font-size:0.6em; "
-					id="pesquisarBt" value="Procurar pessoas" type="button" />
+				<p:commandLink style="font-weight:bold; font-size:0.6em; "
+					id="pesquisarBt" value="Procurar pessoas" type="button" action="pesquisa" >
+					<f:setPropertyActionListener value="#{enderecoMB.criar()}" target="#{endereco}" />
+				</p:commandLink>
 
 				<span class="ui-separator"> <span
 					class="ui-icon ui-icon-grip-dotted-vertical" />

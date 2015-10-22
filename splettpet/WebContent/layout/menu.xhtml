@@ -46,8 +46,8 @@
 
 			<p:submenu label="Configurações" styleClass="menuBarItem"
 				rendered="#{perfilMB.isManagementAllowed()}">
-				<p:menuitem value="Editar Perfil" onclick="PF('editarPerfilDialog').show()" actionListener="#{usuarioMB.editar(sessionMB.usuarioLogado)}"/>
-				<p:menuitem value="Privacidade" onclick="PF('privacidadeDialog').show()" actionListener="#{usuarioMB.editar(sessionMB.usuarioLogado)}"/>
+				<p:menuitem value="Editar Perfil" onclick="PF('editarPerfilDialog').show()" actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}"/>
+				<p:menuitem value="Privacidade" onclick="PF('privacidadeDialog').show()" actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}"/>
 			</p:submenu>
 
 			<f:facet name="options">

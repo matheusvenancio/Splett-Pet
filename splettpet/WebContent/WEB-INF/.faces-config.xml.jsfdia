@@ -18,9 +18,9 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules::2" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="pesquisa::#user#pesquisa#pesuisa.xhtml"
-    NAME="output" PATH="/user/pesquisa/pesuisa.xhtml"
-    TARGET="rules:#user#pesquisa#pesuisa.xhtml" TITLE="pesquisa" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pesquisa::#user#pesquisa#pesquisa.xhtml"
+    NAME="output" PATH="/user/pesquisa/pesquisa.xhtml"
+    TARGET="rules:#user#pesquisa#pesquisa.xhtml" TITLE="pesquisa" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules::3" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
@@ -156,6 +156,6 @@
     PATH="/erro.xhtml" TARGET="rules:#erro.xhtml" TITLE="erro" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#user#pesquisa#pesuisa.xhtml"
-  PATH="/user/pesquisa/pesuisa.xhtml" SHAPE="240,1825,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#user#pesquisa#pesquisa.xhtml"
+  PATH="/user/pesquisa/pesquisa.xhtml" SHAPE="240,1825,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
