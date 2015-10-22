@@ -18,10 +18,19 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>editarperfil</from-outcome>
 			<to-view-id>/user/editarperfil/editarperfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>pesquisa</from-outcome>
+			<to-view-id>/user/pesquisa/pesuisa.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

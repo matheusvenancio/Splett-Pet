@@ -77,8 +77,8 @@ public class UsuarioMB {
 		}
 	}
 
-	public void editar() {
-		usuario = new Usuario();
+	public void editar(Usuario usuairo) {
+		this.usuario = usuairo;
 	
 	}
 
@@ -216,4 +216,5 @@ public class UsuarioMB {
 		this.enderecoDao = enderecoDao;
 	}
 
+	
 }
