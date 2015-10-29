@@ -19,8 +19,6 @@ public interface UsuarioDao extends Dao<Usuario> {
 	    throws Exception;
 
     public Authentication authenticate(Authentication auth);
-    
-    public List<Usuario> pesquisarUsuarioPorCidade(String cidade, Integer id);
 
     public Usuario recoverAuthenticatedUser();
 

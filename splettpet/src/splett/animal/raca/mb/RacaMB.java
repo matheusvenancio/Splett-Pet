@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import splett.amizade.Status;
 import splett.animal.raca.Raca;
 import splett.animal.raca.dao.RacaDao;
 
@@ -19,6 +20,9 @@ public class RacaMB {
 
 	@ManagedProperty(value = "#{racaLazyDataModel}")
 	private RacaLazyDataModel racaLazyDataModel;
+
+	@ManagedProperty(value = "#{solicitacaoRacaLazyDataModel}")
+	private SolicitacaoRacaLazyDataModel solicitacaoRacaLazyDataModel;
 
 	private List<Raca> racasFiltered;
 
@@ -39,6 +43,11 @@ public class RacaMB {
 			racaDao.salvar(raca);
 	}
 
+	public void aceitar() {
+		raca.setStatus(Status.ACEITO);
+		racaDao.update(raca);
+	}
+
 	public void remover() {
 		racaDao.remover(raca);
 	}
@@ -49,6 +58,15 @@ public class RacaMB {
 
 	public RacaDao getRacaDao() {
 		return racaDao;
+	}
+
+	public SolicitacaoRacaLazyDataModel getSolicitacaoRacaLazyDataModel() {
+		return solicitacaoRacaLazyDataModel;
+	}
+
+	public void setSolicitacaoRacaLazyDataModel(
+			SolicitacaoRacaLazyDataModel solicitacaoRacaLazyDataModel) {
+		this.solicitacaoRacaLazyDataModel = solicitacaoRacaLazyDataModel;
 	}
 
 	public void setRacaDao(RacaDao racaDao) {
@@ -78,5 +96,5 @@ public class RacaMB {
 	public void setRaca(Raca raca) {
 		this.raca = raca;
 	}
-	
+
 }

@@ -33,14 +33,4 @@ public class EnderecoDaoImpl extends GenericDao<Endereco> implements EnderecoDao
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<String> pesquisarPorCidade(String nome){
-		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select e.cidade from Endereco e where lower(e.cidade) like concat('%', :nome, '%')");
-		q.setParameter("nome", nome);
-		q.setMaxResults(50);
-		return q.getResultList();
-	}
-	
 }

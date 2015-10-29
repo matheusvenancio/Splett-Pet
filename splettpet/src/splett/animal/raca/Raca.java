@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import splett.amizade.Status;
 import splett.animal.tipo.TipoAnimal;
 
 @Entity
@@ -20,7 +21,10 @@ public class Raca {
 	private Integer id;
 
 	private String nome;
-	
+
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.ACEITO;
+
 	@OneToOne
 	private TipoAnimal tipoAnimal;
 
@@ -39,6 +43,14 @@ public class Raca {
 		return nome;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -49,7 +61,7 @@ public class Raca {
 
 	public void setPorte(Porte porte) {
 		this.porte = porte;
-	}	
+	}
 
 	public TipoAnimal getTipoAnimal() {
 		return tipoAnimal;
@@ -80,5 +92,5 @@ public class Raca {
 			return false;
 		return true;
 	}
-	
+
 }

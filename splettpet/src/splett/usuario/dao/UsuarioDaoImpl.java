@@ -88,17 +88,6 @@ public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
 	q.setParameter("email", email);
 	return (Usuario) q.getSingleResult();
     }
-    
-    @SuppressWarnings("unchecked")
-    public List<Usuario> pesquisarUsuarioPorCidade(String cidade , Integer id){
-    	EntityManager em = emf.createEntityManager();
-    	Query q = em.createQuery(
-    		"select u from Usuario u inner join u.endereco e where e.cidade = :cidade and u.id != :id");
-    	q.setParameter("cidade", cidade);
-    	q.setParameter("id", id);
-    	return q.getResultList();
-
-    }
 
     @SuppressWarnings("unchecked")
     public List<Usuario> listUsuariosByEmail(String email) {
