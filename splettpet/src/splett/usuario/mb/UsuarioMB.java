@@ -44,6 +44,7 @@ public class UsuarioMB {
 
 	private Usuario usuario;
 
+
 	public UsuarioMB() {
 
 		usuariosFiltered = new ArrayList<Usuario>();
@@ -74,6 +75,11 @@ public class UsuarioMB {
 		} catch (NoResultException nre) {
 			return true;
 		}
+	}
+
+	public void editar(Usuario usuairo) {
+		this.usuario = usuairo;
+	
 	}
 
 	public void salvar() {
@@ -210,4 +216,5 @@ public class UsuarioMB {
 		this.enderecoDao = enderecoDao;
 	}
 
+	
 }

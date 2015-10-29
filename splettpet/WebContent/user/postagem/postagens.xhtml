@@ -41,7 +41,7 @@
 						<h:outputText styleClass="postText" value="#{postagem.texto}" />
 					</div>
 					<p:commandButton value="Ver Mais"
-						oncomplete="PF('postagemDialog').show()" update=":postagemDlg">
+						oncomplete="PF('postagemDialog').show()" update=":postagemDlg" actionListener="#{postagemMB.criarComentario()}">
 						<f:setPropertyActionListener value="#{postagem}"
 							target="#{postagemMB.postagemVisualizar}" />
 					</p:commandButton>
