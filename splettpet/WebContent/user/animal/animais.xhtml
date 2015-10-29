@@ -105,6 +105,7 @@
 					<p:message for="peso" />
 				</h:panelGrid>
 
+
 				<h:outputLabel id="necessidadesLb" value="Necessidades Especiais:"
 					for="necessidades" style="float:left; margin-right:2px;" />
 				<br />
@@ -116,6 +117,7 @@
 				<h:outputText id="display" />
 				<br />
 
+
 				<p:commandButton style="margin-top:10px;" id="salvarBt"
 					value="salvar" icon="salvar16"
 					update=":tableForm:animaisDs :novoAnimal_form"
@@ -126,8 +128,89 @@
 					oncomplete="PF('novoAnimalDialog').hide()" immediate="true"
 					actionListener="#{animalMB.cancelar}"
 					update=":novoAnimal_form :msg" />
+
+				
+			</h:form>
+			<br/>
+			<p:commandButton id="novoTipo" styleClass="botaoCRUD"
+					value="Solicitar inserção de novo tipo de animal"
+					actionListener="#{solicitacaoTipoMB.criar}"
+					oncomplete="PF('tipoAnimalDialog').show()" update=":tipoAnimalDlg" />
+
+				<p:commandButton id="novoRaça" styleClass="botaoCRUD"
+					value="Solicitar inserção de nova raça"
+					actionListener="#{solicitacaoRacaMB.criar}"
+					oncomplete="PF('racaDialog').show()" update=":racaDlg" />
+			
+		</p:dialog>
+
+		<p:dialog id="racaDlg" widgetVar="racaDialog" header="Dados da Raça"
+			height="40%" modal="true" resizable="false" draggable="false">
+
+			<h:form id="raca_form">
+				<h:panelGrid columns="3" styleClass="CRUDform">
+
+					<h:outputLabel id="nomeLb" value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{solicitacaoRacaMB.raca.nome}" size="50"
+						required="true" requiredMessage="Nome é obrigatório" />
+					<p:message for="nome" />
+
+					<h:outputLabel id="porteLb" value="Porte:" for="porte" />
+					<p:selectOneMenu id="porte" value="#{solicitacaoRacaMB.raca.porte}"
+						required="true" requiredMessage="Porte é obrigatório">
+						<f:selectItem itemLabel="Selecione um" itemValue="" />
+						<f:selectItem itemLabel="Pequeno" itemValue="PEQUENO" />
+						<f:selectItem itemLabel="Médio" itemValue="MEDIO" />
+						<f:selectItem itemLabel="Grande" itemValue="GRANDE" />
+					</p:selectOneMenu>
+					<p:message for="porte" />
+
+					<h:outputLabel id="tipoLb" value="Tipo:" for="tipo" />
+					<p:autoComplete id="tipo" value="#{solicitacaoRacaMB.raca.tipoAnimal}"
+						size="15" completeMethod="#{tipoAnimalDao.pesquisarPorNome}"
+						converter="#{tipoAnimalConverter}" dropdown="true"
+						forceSelection="true" minQueryLength="3" />
+					<p:message for="tipo" />
+
+				</h:panelGrid>
+				<br />
+
+				<p:commandButton style="margin-top:10px;" id="salvarBt"
+					value="salvar" icon="salvar16"
+					actionListener="#{solicitacaoRacaMB.salvar}"
+					oncomplete="if(!args.validationFailed) PF('racaDialog').hide()" />
+
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('racaDialog').hide()" update=":msg" immediate="true"
+					actionListener="#{solicitacaoRacaMB.cancelar}" />
 			</h:form>
 		</p:dialog>
+
+		<p:dialog id="tipoAnimalDlg" widgetVar="tipoAnimalDialog"
+			header="Dados do Tipo do Animal" height="40%" modal="true"
+			resizable="false" draggable="false">
+
+			<h:form id="tipo_form">
+				<h:panelGrid columns="3" styleClass="CRUDform">
+
+					<h:outputLabel id="nomeLb" value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{solicitacaoTipoMB.tipoAnimal.nome}"
+						size="50" required="true" requiredMessage="Nome é obrigatório" />
+					<p:message for="nome" />
+				</h:panelGrid>
+				<br />
+
+				<p:commandButton style="margin-top:10px;" id="salvarBt"
+					value="salvar" icon="salvar16"
+					actionListener="#{solicitacaoTipoMB.salvar}"
+					oncomplete="if(!args.validationFailed) PF('tipoAnimalDialog').hide()" />
+
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('tipoAnimalDialog').hide()" update=":msg"
+					immediate="true" actionListener="#{solicitacaoTipoMB.cancelar}" />
+			</h:form>
+		</p:dialog>
+
 
 		<p:dialog id="aniDlg" widgetVar="aniDialog"
 			header="#{animalMB.animal.nome}" width="40%" modal="true"

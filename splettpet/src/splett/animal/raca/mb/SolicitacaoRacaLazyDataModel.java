@@ -1,3 +1,8 @@
+
+
+
+
+
 package splett.animal.raca.mb;
 
 import java.util.Collections;
@@ -14,9 +19,9 @@ import org.primefaces.model.SortOrder;
 import splett.animal.raca.Raca;
 import splett.animal.raca.dao.RacaDao;
 
-@ManagedBean(name = "racaLazyDataModel")
+@ManagedBean(name = "solicitacaoRacaLazyDataModel")
 @ViewScoped
-public class RacaLazyDataModel extends LazyDataModel<Raca>{
+public class SolicitacaoRacaLazyDataModel extends LazyDataModel<Raca>{
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,13 +42,7 @@ public class RacaLazyDataModel extends LazyDataModel<Raca>{
 	public List<Raca> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		List<Raca> source = null;
-
-		if (filters.containsKey("nome")) {
-			String nomePesquisa = filters.get("nome").toString();
-			source = racaDao.pesquisarPorNome(nomePesquisa);
-		} else {
-			source = racaDao.list();
-		}
+			source = racaDao.listSolicitacoes();
 
 		// sort
 		if (sortField != null) {
@@ -65,6 +64,9 @@ public class RacaLazyDataModel extends LazyDataModel<Raca>{
 		this.racaDao = racaDao;
 	}
 }
+
+
+
 
 
 

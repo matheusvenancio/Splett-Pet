@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import splett.amizade.Status;
 import splett.animal.tipo.TipoAnimal;
 import splett.animal.tipo.dao.TipoAnimalDao;
 
@@ -19,6 +20,9 @@ public class TipoAnimalMB {
 
 	@ManagedProperty(value = "#{tipoAnimalLazyDataModel}")
 	private TipoAnimalLazyDataModel tipoAnimalLazyDataModel;
+
+	@ManagedProperty(value = "#{solicitacaoTipoAnimalLazyDataModel}")
+	private SolicitacaoTipoAnimalLazyDataModel solicitacaoTipoAnimalLazyDataModel;
 
 	private List<TipoAnimal> tipoAnimalFiltered;
 
@@ -37,6 +41,21 @@ public class TipoAnimalMB {
 			tipoAnimalDao.update(tipoAnimal);
 		else
 			tipoAnimalDao.salvar(tipoAnimal);
+	}
+
+	public void aceitar() {
+		tipoAnimal.setStatus(Status.ACEITO);
+
+		tipoAnimalDao.update(tipoAnimal);
+	}
+
+	public SolicitacaoTipoAnimalLazyDataModel getSolicitacaoTipoAnimalLazyDataModel() {
+		return solicitacaoTipoAnimalLazyDataModel;
+	}
+
+	public void setSolicitacaoTipoAnimalLazyDataModel(
+			SolicitacaoTipoAnimalLazyDataModel solicitacaoTipoAnimalLazyDataModel) {
+		this.solicitacaoTipoAnimalLazyDataModel = solicitacaoTipoAnimalLazyDataModel;
 	}
 
 	public void remover() {

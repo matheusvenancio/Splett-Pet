@@ -14,9 +14,9 @@ import org.primefaces.model.SortOrder;
 import splett.animal.tipo.TipoAnimal;
 import splett.animal.tipo.dao.TipoAnimalDao;
 
-@ManagedBean(name = "tipoAnimalLazyDataModel")
+@ManagedBean(name = "solicitacaoTipoAnimalLazyDataModel")
 @ViewScoped
-public class TipoAnimalLazyDataModel extends LazyDataModel<TipoAnimal>{
+public class SolicitacaoTipoAnimalLazyDataModel extends LazyDataModel<TipoAnimal>{
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,13 +37,8 @@ public class TipoAnimalLazyDataModel extends LazyDataModel<TipoAnimal>{
 	public List<TipoAnimal> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		List<TipoAnimal> source = null;
-
-		if (filters.containsKey("nome")) {
-			String nomePesquisa = filters.get("nome").toString();
-			source = tipoAnimalDao.pesquisarPorNome(nomePesquisa);
-		} else {
-			source = tipoAnimalDao.list();
-		}
+			source = tipoAnimalDao.listSolicitacoes();
+		
 
 		// sort
 		if (sortField != null) {
@@ -66,8 +61,4 @@ public class TipoAnimalLazyDataModel extends LazyDataModel<TipoAnimal>{
 	}
 
 }
-
-
-
-
 

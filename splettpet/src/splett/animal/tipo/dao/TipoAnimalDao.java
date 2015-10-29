@@ -10,4 +10,6 @@ public interface TipoAnimalDao extends Dao<TipoAnimal> {
 
 	public List<TipoAnimal> pesquisarPorNome(String nome);
 	public List<Raca> listRacas(int id);
+	public List<TipoAnimal> listSolicitacoes();
+	public List<TipoAnimal> list();
 }
