@@ -13,4 +13,6 @@ public interface EnderecoDao extends Dao<Endereco>{
 	public List<Endereco> pesquisarPorCidade(String nome);
 	
 	public List<Endereco> pesquisarPorEstado(String nome);
+	
+	public List<Endereco> pesquisarPorBairro(String nome);
 }

@@ -21,6 +21,8 @@ public interface UsuarioDao extends Dao<Usuario> {
     public Authentication authenticate(Authentication auth);
     
     public List<Usuario> pesquisarUsuarioPorCidade(String cidade, Integer id);
+    
+    public List<Usuario> pesquisaUsuario(String uf, String cidade, String bairro, Integer id, String dataInicial, String dataFinal, String tipoAnimal);
 
     public Usuario recoverAuthenticatedUser();
 

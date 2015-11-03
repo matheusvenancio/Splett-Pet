@@ -25,7 +25,7 @@ public class TipoAnimalDaoImpl extends GenericDao<TipoAnimal> implements TipoAni
 	public List<TipoAnimal> pesquisarPorNome(String nome) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select t from TipoAnimal t where lower(t.nome) like concat('%', :nome, '%') and r.status = " + Status.class.getName() + ".ACEITO");
+				.createQuery("select t from TipoAnimal t where lower(t.nome) like concat('%', :nome, '%') and t.status = " + Status.class.getName() + ".ACEITO");
 		q.setParameter("nome", nome);
 		q.setMaxResults(50);
 		return q.getResultList();

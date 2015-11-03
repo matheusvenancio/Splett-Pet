@@ -1,6 +1,8 @@
 package splett.usuario.endereco.mb;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import splett.animal.tipo.TipoAnimal;
 import splett.session.SessionMB;
 import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
@@ -25,6 +28,12 @@ public class EnderecoMB {
 
 	private List<Usuario> usuarios;
 	
+	private Date dataInicial;
+	
+	private Date dataFinal;
+	
+	private TipoAnimal tipoAnimal;
+	
 	@ManagedProperty(value = "#{usuarioDao}")
 	private UsuarioDao usuarioDao;
 	
@@ -38,6 +47,7 @@ public class EnderecoMB {
 	@PostConstruct
 	public void criar() {
 		endereco = new Endereco();
+		tipoAnimal = new TipoAnimal();
 	}
 
 	public void salvar() {
@@ -47,6 +57,14 @@ public class EnderecoMB {
 			enderecoDao.salvar(endereco);
 	}
 
+	public List<Endereco> pegarCidades(){
+		return enderecoDao.pesquisarPorCidade(endereco.getUf());
+	}
+	
+	public List<Endereco> pegarBairros(){
+		return enderecoDao.pesquisarPorBairro(endereco.getCidade());
+	}
+	
 	public void remover() {
 		enderecoDao.remover(endereco);
 	}
@@ -72,8 +90,15 @@ public class EnderecoMB {
 	}
 
 	public List<Usuario> getUsuarios() {
-		usuarios = usuarioDao.pesquisarUsuarioPorCidade(endereco.getCidade(), sessionMB.getUsuarioLogado().getId());
 		return usuarios;
+	}
+	
+	public void setarUsuarios(){
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		String dataIncialS = sdf1.format(dataInicial);
+		String dataFinalS = sdf1.format(dataFinal);
+		
+		usuarios = usuarioDao.pesquisaUsuario(endereco.getUf(), endereco.getCidade(), endereco.getBairro(), sessionMB.getUsuarioLogado().getId(), dataIncialS, dataFinalS, "Cachorro");
 	}
 
 	public void setUsuarios(List<Usuario> usuarios) {
@@ -100,4 +125,33 @@ public class EnderecoMB {
 		return (usuarios==null);
 	}
 
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+	
+	public void criarDatasPesquisa(){
+		dataInicial = new Date();
+		dataFinal = new Date();
+	}
+
+	public TipoAnimal getTipoAnimal() {
+		return tipoAnimal;
+	}
+
+	public void setTipoAnimal(TipoAnimal tipoAnimal) {
+		this.tipoAnimal = tipoAnimal;
+	}
+	
 }
