@@ -41,6 +41,8 @@ public class DisponibilidadeMB {
     private Date dataInicio;
 
     private Date dataFinal;
+    
+    private Date dataHoje;
 
     @PostConstruct
     public void init() {
@@ -169,5 +171,17 @@ public class DisponibilidadeMB {
 	    List<Disponibilidade> disponibilidadesUsuarioVisualizado) {
 	this.disponibilidadesUsuarioVisualizado = disponibilidadesUsuarioVisualizado;
     }
+
+	public Date getDataHoje() {
+		Calendar c = Calendar.getInstance(); 
+		dataHoje = c.getTime(); 
+		return dataHoje;
+	}
+
+	public void setDataHoje(Date dataHoje) {
+		this.dataHoje = dataHoje;
+	}
+    
+    
 
 }

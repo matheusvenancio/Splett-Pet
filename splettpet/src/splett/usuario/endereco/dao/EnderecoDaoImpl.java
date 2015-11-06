@@ -47,7 +47,7 @@ public class EnderecoDaoImpl extends GenericDao<Endereco> implements EnderecoDao
 	public List<Endereco> pesquisarPorCidade(String nome){
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select distinct e.cidade from Endereco e where lower(e.cidade) like concat('%', :nome, '%')");
+				.createQuery("select distinct e.cidade from Endereco e where e.uf = :nome");
 		q.setParameter("nome", nome);
 		q.setMaxResults(50);
 		return q.getResultList();
@@ -57,7 +57,7 @@ public class EnderecoDaoImpl extends GenericDao<Endereco> implements EnderecoDao
 	public List<Endereco> pesquisarPorBairro(String nome){
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select distinct e.bairro from Endereco e where lower(e.bairro) like concat('%', :nome, '%')");
+				.createQuery("select distinct e.bairro from Endereco e where e.cidade = :nome");
 		q.setParameter("nome", nome);
 		q.setMaxResults(50);
 		return q.getResultList();

@@ -23,8 +23,12 @@ public class DisponibilidadeDaoImpl extends GenericDao<Disponibilidade>
 
     public Disponibilidade findByData(Date data) {
 	EntityManager em = emf.createEntityManager();
-	Query q = em.createQuery("select d from Disponibilidade d where d.data = :data");
-	q.setParameter("data", data);
+	String sql = "select * from tbdisponibilidade d where d.data = ?";
+	Query q = em.createNativeQuery(sql, Disponibilidade.class);
+	q.setParameter(1, data);
+	//Query q = em.createQuery("select d from Disponibilidade d where d.data = :data");
+	//q.setParameter("data", data);
+	
 	return (Disponibilidade) q.getSingleResult();
     }
 }

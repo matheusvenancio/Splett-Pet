@@ -102,30 +102,57 @@ public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
     
     @SuppressWarnings("unchecked")
     public List<Usuario> pesquisaUsuario(String uf, String cidade, String bairro, Integer id, String dataInicial, String dataFinal, String tipoAnimal){
-    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id "
-    			+ "from tbusuario "
-    			+ "inner join tbusuariodisponibilidade on tbusuario.id = tbusuariodisponibilidade.usuario_id  "
-    			+ "inner join tbanimal on tbusuario.id = tbanimal.dono_id  "
-    			+ "inner join tbraca on tbraca.id = tbanimal.raca_id  "
-    			+ "inner join tbtipoanimal on tbtipoanimal.id = tbraca.tipoAnimal_id "
-    			+ "inner join tbdisponibilidade on tbdisponibilidade.id = tbusuariodisponibilidade.disponibilidade_id "
-    			+ "inner join tbendereco on tbendereco.id = tbusuario.endereco_id "
-    			+ "where tbendereco.uf = ? "
-    			+ "and tbendereco.cidade = ? "
-    			+ "and tbendereco.bairro = ?  "
-    			+ "and tbtipoanimal.nome = ?  "
-    			+ "and tbdisponibilidade.`data` BETWEEN ? and ? "
-    			+ "and tbusuario.id != ?";
-    	EntityManager em = emf.createEntityManager();
-    	Query q = em.createNativeQuery(sqlQuery, Usuario.class);
-    	q.setParameter(1, uf);
-    	q.setParameter(2, cidade);
-    	q.setParameter(3, bairro);
-    	q.setParameter(4, tipoAnimal);
-    	q.setParameter(5, dataInicial);
-    	q.setParameter(6, dataFinal);
-    	q.setParameter(7, id);
-    	return q.getResultList();
+    	if(bairro != null)
+    	{
+	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id "
+	    			+ "from tbusuario "
+	    			+ "inner join tbusuariodisponibilidade on tbusuario.id = tbusuariodisponibilidade.usuario_id  "
+	    			+ "inner join tbanimal on tbusuario.id = tbanimal.dono_id  "
+	    			+ "inner join tbraca on tbraca.id = tbanimal.raca_id  "
+	    			+ "inner join tbtipoanimal on tbtipoanimal.id = tbraca.tipoAnimal_id "
+	    			+ "inner join tbdisponibilidade on tbdisponibilidade.id = tbusuariodisponibilidade.disponibilidade_id "
+	    			+ "inner join tbendereco on tbendereco.id = tbusuario.endereco_id "
+	    			+ "where tbendereco.uf = ? "
+	    			+ "and tbendereco.cidade = ? "
+	    			+ "and tbendereco.bairro = ?  "
+	    			+ "and tbtipoanimal.nome = ?  "
+	    			+ "and tbdisponibilidade.`data` BETWEEN ? and ? "
+	    			+ "and tbusuario.id != ?";
+	    	EntityManager em = emf.createEntityManager();
+	    	Query q = em.createNativeQuery(sqlQuery, Usuario.class);
+	    	q.setParameter(1, uf);
+	    	q.setParameter(2, cidade);
+	    	q.setParameter(3, bairro);
+	    	q.setParameter(4, tipoAnimal);
+	    	q.setParameter(5, dataInicial);
+	    	q.setParameter(6, dataFinal);
+	    	q.setParameter(7, id);
+	    	return q.getResultList();
+    	}
+    	else{
+	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id "
+	    			+ "from tbusuario "
+	    			+ "inner join tbusuariodisponibilidade on tbusuario.id = tbusuariodisponibilidade.usuario_id  "
+	    			+ "inner join tbanimal on tbusuario.id = tbanimal.dono_id  "
+	    			+ "inner join tbraca on tbraca.id = tbanimal.raca_id  "
+	    			+ "inner join tbtipoanimal on tbtipoanimal.id = tbraca.tipoAnimal_id "
+	    			+ "inner join tbdisponibilidade on tbdisponibilidade.id = tbusuariodisponibilidade.disponibilidade_id "
+	    			+ "inner join tbendereco on tbendereco.id = tbusuario.endereco_id "
+	    			+ "where tbendereco.uf = ? "
+	    			+ "and tbendereco.cidade = ? "
+	    			+ "and tbtipoanimal.nome = ?  "
+	    			+ "and tbdisponibilidade.`data` BETWEEN ? and ? "
+	    			+ "and tbusuario.id != ?";
+	    	EntityManager em = emf.createEntityManager();
+	    	Query q = em.createNativeQuery(sqlQuery, Usuario.class);
+	    	q.setParameter(1, uf);
+	    	q.setParameter(2, cidade);
+	    	q.setParameter(3, tipoAnimal);
+	    	q.setParameter(4, dataInicial);
+	    	q.setParameter(5, dataFinal);
+	    	q.setParameter(6, id);
+	    	return q.getResultList();    		
+    	}
     }
 
     @SuppressWarnings("unchecked")

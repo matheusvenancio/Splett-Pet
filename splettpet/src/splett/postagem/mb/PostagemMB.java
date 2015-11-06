@@ -41,10 +41,13 @@ public class PostagemMB {
 	private List<Comentario> comentarios;
 	
 	private Comentario comentario;
+	
+
 
 	public PostagemMB() {
 		postagens = new ArrayList<Postagem>();
 		comentarios = new ArrayList<Comentario>();
+		comentario = new Comentario();
 	}
 
 	@PostConstruct
@@ -78,8 +81,9 @@ public class PostagemMB {
 		postagemDao.remover(postagem);
 	}
 	
-	public void criarComentario() {
+	public boolean criarComentario() {
 		comentario = new Comentario();
+		return true;
 	}
 
 	public void removerComentario() {

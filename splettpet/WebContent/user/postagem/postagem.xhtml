@@ -26,12 +26,11 @@
 			<h:outputText styleClass="postText"
 				value="#{postagemMB.postagemVisualizar.texto}" />
 		</div>
-			<p:inputTextarea rows="1" cols="60" value="#{postagemMB.comentario.texto}"/>
 			<p:commandButton id="novoComentario" value="Comentar"
-				actionListener="#{postagemMB.salvarComentario()}"
-				update=":novoComentarioDlg :novoComentario_form :ComentarioForm"
-				/>
-		
+				actionListener="#{postagemMB.criarComentario()}"
+				oncomplete="PF('novoComentarioDialog').show()"
+				update=":novoComentarioDlg :novoComentario_form"/>
+				<h:panelGrid columns="1">		
 		
 
 
@@ -72,12 +71,12 @@
 				<h:panelGrid columns="1">
 					<p:inputTextarea rows="5" cols="60" counter="display"
 						maxlength="255" counterTemplate="{0} Caracteres restantes."
-						autoResize="false" value="#{postagemMB.comentario.texto}" />
+						autoResize="true" value="#{postagemMB.comentario.texto}" />
 					<h:outputText id="display" />
 				</h:panelGrid>
 
 				<p:commandButton id="enviarBt" value="Salvar" icon="salvar16"
-					update=":tableForm" action="#{postagemMB.salvarComentario()}"
+					update=":ComentarioForm" action="#{postagemMB.salvarComentario()}"
 					oncomplete="if(!args.validationFailed) PF('novoComentarioDialog').hide()" />
 
 				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"

@@ -111,9 +111,9 @@
 					<p:outputLabel for="fim" value="Fim do período" />
 
 					<p:calendar id="inicio" mode="inline"
-						value="#{disponibilidadeMB.dataInicio}" />
+						value="#{disponibilidadeMB.dataInicio}" mindate="#{disponibilidadeMB.dataHoje}"/>
 					<p:calendar id="fim" mode="inline"
-						value="#{disponibilidadeMB.dataFinal}" />
+						value="#{disponibilidadeMB.dataFinal}" mindate="#{disponibilidadeMB.dataHoje}"/>
 				</h:panelGrid>
 
 				<p:commandButton id="salvarBt" value="Salvar" icon="salvar16"

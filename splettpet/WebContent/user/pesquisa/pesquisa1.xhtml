@@ -8,31 +8,41 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="body">
+	<p:growl id="msg" showDetail="true"></p:growl>
 		<p:panel>
 			<h:form id="pesquisaCidade_form">
 				<h:panelGrid columns="1" styleClass="CRUDform">
 					<h:outputLabel id="estadoLb" value="Estado:" for="estado" />
-					<p:autoComplete id="estado" value="#{enderecoMB.endereco.uf}"
+					<p:autoComplete id="estado" value="#{enderecoMB.endereco.uf}" 
 						size="15" completeMethod="#{enderecoDao.pesquisarPorEstado}"
-						converter="#{enderecoEstadoConverter}" dropdown="true"
+						converter="#{enderecoEstadoConverter}" dropdown="true" required="true" requiredMessage="Estado é obrigatorio"
 						forceSelection="true" minQueryLength="0" 
-						/>
+						>
+						<p:ajax listener="#{enderecoMB.listarCidades}"
+						event="blur" update="pesquisaCidade_form:cidade"/>
+						</p:autoComplete>
 					<p:message for="estado" />
 
 					<h:outputLabel id="cidadeLb" value="Cidade:" for="cidade" />
-					<p:autoComplete id="cidade" value="#{enderecoMB.endereco.cidade}"
-						size="15" completeMethod="#{enderecoDao.pesquisarPorCidade}"
-						converter="#{EnderecoConverter}" dropdown="true"
-						forceSelection="true" minQueryLength="3" 
-						/>
+					<p:selectOneMenu id="cidade" value="#{enderecoMB.endereco.cidade}" style="width:150px" 
+						converter="#{EnderecoConverter}" required="true" requiredMessage="Cidade é obrigatorio" 
+						forceSelection="true" 
+						>
+						<p:ajax  listener="#{enderecoMB.listarBairros}"
+						event="blur" update="pesquisaCidade_form:bairro"/>
+						<f:selectItem itemLabel="Selecione uma" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{enderecoMB.cidades}"/>
+						</p:selectOneMenu>
 					<p:message for="cidade" />
 					
 					<h:outputLabel id="bairroLb" value="Bairro:" for="bairro" />
-					<p:autoComplete id="bairro" value="#{enderecoMB.endereco.bairro}"
-						size="15" completeMethod="#{enderecoDao.pesquisarPorBairro}"
-						converter="#{EnderecoConverter}" dropdown="true"
-						forceSelection="true" minQueryLength="3" 
-						/>
+					<p:selectOneMenu id="bairro" value="#{enderecoMB.endereco.bairro}" style="width:150px" 
+						converter="#{EnderecoConverter}" required="true" requiredMessage="bairro é obrigatorio"
+						forceSelection="true"
+						>
+						<f:selectItem itemLabel="Selecione uma" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{enderecoMB.bairros}" />
+						</p:selectOneMenu>
 					<p:message for="bairro" />
 					
 					<h:outputLabel id="tipoLb" value="Tipo do Animal:" for="tipo" />
@@ -40,20 +50,20 @@
 						value="#{enderecoMB.tipoAnimal.nome}" size="15"
 						completeMethod="#{tipoAnimalDao.pesquisarPorNome}"
 						converter="#{tipoAnimalConverter}" dropdown="true"
-						forceSelection="true" minQueryLength="3" required="true">
+						forceSelection="true" minQueryLength="3" required="true"  requiredMessage="Tipo do Animal é obrigatorio">
 					</p:autoComplete>
 					<p:message for="tipo" />
 					
 					<p:commandButton id="pesquisaDisponibilidade"
 					value="Pesquisar disponibilidade"
 					actionListener="#{enderecoMB.criarDatasPesquisa}"
-					oncomplete="PF('disponibilidadeDialog').show()"/>
+					oncomplete="PF('disponibilidadeDialog').show()" />
 					
 					
 					
 										
 					<p:commandButton id="buscarPessoas" value="Buscar" actionListener="#{enderecoMB.setarUsuarios()}"
-						update=":pesquisa_form" />
+						update=":pesquisa_form :msg"/>
 				</h:panelGrid>
 			</h:form>
 		</p:panel>
@@ -97,13 +107,15 @@
 					<p:outputLabel for = "fim" value="Fim do período" />
 
 					<p:calendar id="inicio" mode="inline"
-						value="#{enderecoMB.dataInicial}" />
+						value="#{enderecoMB.dataInicial}" mindate="#{disponibilidadeMB.dataHoje}"  required="true" requiredMessage="Data de inicio da busca é obrigatorio"/>
 					<p:calendar id="fim" mode="inline"
-						value="#{enderecoMB.dataFinal}" />
+						value="#{enderecoMB.dataFinal}"  mindate="#{disponibilidadeMB.dataHoje}" required="true" requiredMessage="Data final da busca é obrigatorio"/>
 				</h:panelGrid>
 
-				<p:commandButton id="salvarBt" value="Selecionar" icon="salvar16"
-					oncomplete="PF('disponibilidadeDialog').hide()" />
+				<p:commandButton id="salvarBt" value="Selecionar" icon="salvar16" update=":msg"
+					oncomplete="if(!args.validationFailed) PF('disponibilidadeDialog').hide()" />
+				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+					oncomplete="PF('disponibilidadeDialog').hide()" update=":msg" immediate="true"  />
 
 			</h:form>
 		</p:dialog>
