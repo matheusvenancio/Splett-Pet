@@ -35,8 +35,8 @@ public class RacaDaoImpl extends GenericDao<Raca> implements RacaDao {
 	@Override
 	public List<Raca> listSolicitacoes() {
 		EntityManager em = emf.createEntityManager();
-		Query q = em.createQuery("select r from Raca r.status =  = "
-				+ Status.class.getName() + ".ACEITO");
+		Query q = em.createQuery("select r from Raca r where r.status = "
+				+ Status.class.getName() + ".ESPERA");
 		q.setMaxResults(50);
 		return q.getResultList();
 	}
@@ -45,7 +45,7 @@ public class RacaDaoImpl extends GenericDao<Raca> implements RacaDao {
 	@Override
 	public List<Raca> list() {
 		EntityManager em = emf.createEntityManager();
-		Query q = em.createQuery("select r from Raca r.status  = "
+		Query q = em.createQuery("select r from Raca r where r.status  = "
 				+ Status.class.getName() + ".ACEITO");
 		q.setMaxResults(50);
 		return q.getResultList();

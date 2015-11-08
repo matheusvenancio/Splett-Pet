@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import splett.amizade.Status;
 import splett.animal.raca.Raca;
 import splett.animal.raca.dao.RacaDao;
+import splett.animal.tipo.TipoAnimal;
 
 @ManagedBean(name = "racaMB")
 @ViewScoped
@@ -34,6 +35,7 @@ public class RacaMB {
 
 	public void criar() {
 		raca = new Raca();
+		raca.setTipoAnimal(new TipoAnimal());
 	}
 
 	public void salvar() {

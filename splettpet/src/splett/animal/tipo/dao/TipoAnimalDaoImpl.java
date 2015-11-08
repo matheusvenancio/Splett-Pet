@@ -14,7 +14,8 @@ import splett.dao.GenericDao;
 
 @ManagedBean(name = "tipoAnimalDao")
 @ApplicationScoped
-public class TipoAnimalDaoImpl extends GenericDao<TipoAnimal> implements TipoAnimalDao {
+public class TipoAnimalDaoImpl extends GenericDao<TipoAnimal> implements
+		TipoAnimalDao {
 	private static final long serialVersionUID = 1L;
 
 	public TipoAnimalDaoImpl() {
@@ -25,7 +26,8 @@ public class TipoAnimalDaoImpl extends GenericDao<TipoAnimal> implements TipoAni
 	public List<TipoAnimal> pesquisarPorNome(String nome) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select t from TipoAnimal t where lower(t.nome) like concat('%', :nome, '%') and t.status = " + Status.class.getName() + ".ACEITO");
+				.createQuery("select t from TipoAnimal t where lower(t.nome) like concat('%', :nome, '%') and t.status = "
+						+ Status.class.getName() + ".ACEITO");
 		q.setParameter("nome", nome);
 		q.setMaxResults(50);
 		return q.getResultList();
@@ -36,28 +38,29 @@ public class TipoAnimalDaoImpl extends GenericDao<TipoAnimal> implements TipoAni
 	public List<Raca> listRacas(int id) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em
-				.createQuery("select r from Raca r where r.tipoAnimal.id = :id and r.status  = " + Status.class.getName() + ".ACEITO");
+				.createQuery("select r from Raca r where r.tipoAnimal.id = :id and r.status  = "
+						+ Status.class.getName() + ".ACEITO");
 		q.setParameter("id", id);
 		q.setMaxResults(50);
 		return q.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoAnimal> listSolicitacoes() {
 		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select t from TipoAnimal t where t.status = " + Status.class.getName() + ".ESPERA");
+		Query q = em.createQuery("select t from TipoAnimal t where t.status = "
+				+ Status.class.getName() + ".ESPERA");
 		q.setMaxResults(50);
 		return q.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoAnimal> list() {
 		EntityManager em = emf.createEntityManager();
-		Query q = em
-				.createQuery("select t from TipoAnimal t where t.status = " + Status.class.getName() + ".ACEITO");
+		Query q = em.createQuery("select t from TipoAnimal t where t.status = "
+				+ Status.class.getName() + ".ACEITO");
 		q.setMaxResults(50);
 		return q.getResultList();
 	}
