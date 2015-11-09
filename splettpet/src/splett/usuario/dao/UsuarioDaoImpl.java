@@ -104,7 +104,7 @@ public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
     public List<Usuario> pesquisaUsuario(String uf, String cidade, String bairro, Integer id, String dataInicial, String dataFinal, String tipoAnimal){
     	if(bairro != null)
     	{
-	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id "
+	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id, tbusuario.endereco_isPublico "
 	    			+ "from tbusuario "
 	    			+ "inner join tbusuariodisponibilidade on tbusuario.id = tbusuariodisponibilidade.usuario_id  "
 	    			+ "inner join tbanimal on tbusuario.id = tbanimal.dono_id  "
@@ -127,10 +127,10 @@ public class UsuarioDaoImpl extends GenericDao<Usuario>implements UsuarioDao {
 	    	q.setParameter(5, dataInicial);
 	    	q.setParameter(6, dataFinal);
 	    	q.setParameter(7, id);
-	    	return q.getResultList();
+	    	return q.getResultList(); 
     	}
     	else{
-	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id "
+	    	String sqlQuery = "select tbusuario.id, tbusuario.dataNascimento, tbusuario.dataNascimento_isPublico, tbusuario.username, tbusuario.email_isPublico, tbusuario.fotoPerfil, tbusuario.genero, tbusuario.genero_isPublico, tbusuario.isFacebook, tbusuario.nome, tbusuario.nomeFotoPerfil, tbusuario.password, tbusuario.telefoneCelular, tbusuario.telefoneCelular_isPublico, tbusuario.telefoneFixo, tbusuario.telefoneFixo_isPublico, tbusuario.telefoneFixo_isPublico, tbusuario.authority, tbusuario.endereco_id, tbusuario.endereco_isPublico "
 	    			+ "from tbusuario "
 	    			+ "inner join tbusuariodisponibilidade on tbusuario.id = tbusuariodisponibilidade.usuario_id  "
 	    			+ "inner join tbanimal on tbusuario.id = tbanimal.dono_id  "
