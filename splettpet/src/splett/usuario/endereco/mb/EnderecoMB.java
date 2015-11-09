@@ -34,14 +34,6 @@ public class EnderecoMB {
 	
 	private TipoAnimal tipoAnimal;
 	
-	private List<Endereco> cidades;
-	
-	private List<Endereco> bairros;
-	
-	private String cidade;
-	
-	private String bairro;
-	
 	@ManagedProperty(value = "#{usuarioDao}")
 	private UsuarioDao usuarioDao;
 	
@@ -56,8 +48,6 @@ public class EnderecoMB {
 	public void criar() {
 		endereco = new Endereco();
 		tipoAnimal = new TipoAnimal();
-		cidades = new ArrayList<Endereco>();
-		bairros = new ArrayList<Endereco>();
 	}
 
 	public void salvar() {
@@ -67,21 +57,14 @@ public class EnderecoMB {
 			enderecoDao.salvar(endereco);
 	}
 
-	public void listarCidades(){
-		
-		cidades = enderecoDao.pesquisarPorCidade(this.endereco.getUf());
-		return ;
+	public List<Endereco> listarCidades(){
+		return enderecoDao.pesquisarPorCidade(this.endereco.getUf());
 	}
 	
-	public void listarBairros(){
-		
-		bairros = enderecoDao.pesquisarPorBairro(cidade);
-		return ;
+	public List<Endereco> listarBairros(){
+		return enderecoDao.pesquisarPorBairro(this.endereco.getCidade());
 	}
 	
-	public void teste(){
-		return;
-	}
 	public void remover() {
 		enderecoDao.remover(endereco);
 	}
@@ -170,39 +153,5 @@ public class EnderecoMB {
 	public void setTipoAnimal(TipoAnimal tipoAnimal) {
 		this.tipoAnimal = tipoAnimal;
 	}
-
-	public List<Endereco> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Endereco> cidades) {
-		this.cidades = cidades;
-	}
-
-	public List<Endereco> getBairros() {
-		return bairros;
-	}
-
-	public void setBairros(List<Endereco> bairros) {
-		this.bairros = bairros;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	
-	
 	
 }
