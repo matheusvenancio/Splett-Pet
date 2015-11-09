@@ -27,13 +27,13 @@
 					<p:column headerText="Ações">
 						<p:panelGrid columns="2">
 							<p:commandButton id="aceitarTipo" value="Aceitar" icon="editar16"
-								actionListener="#{tipoAnimalMB.aceitar}">
+								action="#{tipoAnimalMB.aceitar}" update = ":tableForm">
 								<f:setPropertyActionListener value="#{tipoAnimal}"
 									target="#{tipoAnimalMB.tipoAnimal}" />
 							</p:commandButton>
 
 							<p:commandButton id="removerTipo" value="Rejeitar"
-								actionListener="#{tipoAnimalMB.remover}">
+								action="#{tipoAnimalMB.remover}" update = ":tableForm">
 								<f:setPropertyActionListener value="#{tipoAnimal}"
 									target="#{tipoAnimalMB.tipoAnimal}" />
 							</p:commandButton>

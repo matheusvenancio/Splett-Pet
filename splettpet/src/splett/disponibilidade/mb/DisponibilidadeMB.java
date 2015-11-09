@@ -41,7 +41,7 @@ public class DisponibilidadeMB {
     private Date dataInicio;
 
     private Date dataFinal;
-    
+
     private Date dataHoje;
 
     @PostConstruct
@@ -60,9 +60,8 @@ public class DisponibilidadeMB {
     public void getDatasPeriodo() {
 	Calendar cal = Calendar.getInstance();
 	cal.setTime(dataInicio);
-	periodoDisponivel.add(getDisponibilidadeData(dataFinal));
 	for (Date dt = dataInicio; dt.compareTo(dataFinal) <= 0;) {
-	    periodoDisponivel.add(getDisponibilidadeData(dataInicio));
+	    periodoDisponivel.add(getDisponibilidadeData(dt));
 	    cal.add(Calendar.DATE, +1);
 	    dt = cal.getTime();
 	}
@@ -74,7 +73,7 @@ public class DisponibilidadeMB {
 		: criarDisponibilidade(data);
     }
 
-    public Disponibilidade criarDisponibilidade(Date data) {
+    private Disponibilidade criarDisponibilidade(Date data) {
 	Disponibilidade nova = new Disponibilidade();
 	nova.setData(data);
 	salvarDisponibilidade(nova);
@@ -172,16 +171,13 @@ public class DisponibilidadeMB {
 	this.disponibilidadesUsuarioVisualizado = disponibilidadesUsuarioVisualizado;
     }
 
-	public Date getDataHoje() {
-		Calendar c = Calendar.getInstance(); 
-		dataHoje = c.getTime(); 
-		return dataHoje;
-	}
+    public Date getDataHoje() {
+	Calendar c = Calendar.getInstance();
+	dataHoje = c.getTime();
+	return dataHoje;
+    }
 
-	public void setDataHoje(Date dataHoje) {
-		this.dataHoje = dataHoje;
-	}
-    
-    
-
+    public void setDataHoje(Date dataHoje) {
+	this.dataHoje = dataHoje;
+    }
 }
