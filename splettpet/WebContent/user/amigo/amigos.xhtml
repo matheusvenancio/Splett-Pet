@@ -11,7 +11,7 @@
 			style="width: 65%; float: left; margin-bottom: 10px; margin-left: 10px;">
 			<h:form id="tableForm">
 				<p:dataScroller value="#{amizadeMB.amigosUsuarioVisualizado}"
-					var="usuario" chunkSize="10" id="postagensDs">
+					var="usuario" chunkSize="10" id="amigosDs">
 					<f:facet name="header">
 						<h:outputText value="Amigos" />
 					</f:facet>
@@ -37,14 +37,47 @@
 
 		<div
 			style="width: 31%; float: right; margin-right: 10px; margin-top: -50px;">
-			<p:panel id="solicitacoes_amizade" style="margin-top: 50px;">
+			<p:panel id="solicitacoes_amizade" style="margin-top: 50px;"
+				rendered="#{perfilMB.isManagementAllowed()}">
 				<f:facet name="header">
 					<h:outputText value="Solicitações de amizade" />
 				</f:facet>
 				<p:dataList emptyMessage="Nenhuma nova solicitação de amizade"
 					value="#{amizadeMB.solicitacoesAmizadeUsuarioVisualizado}"
-					type="definition">
-					<p:panel style="margin: 10px;"></p:panel>
+					type="definition" var="solicitacao">
+					<p:panel style="margin: 10px;">
+						<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
+							style="width:100%;">
+							<p:graphicImage library="img" name="android_icon.png"
+								style="width:100%; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+							<p:panelGrid columns="1">
+								<p:commandLink value="#{solicitacao.usuarioOrigem.nome}"
+									styleClass="label"
+									style="color: #6DB6D5; text-decoration: none; float: left; margin-top: -10px"
+									action="perfil">
+									<f:setPropertyActionListener
+										value="#{solicitacao.usuarioOrigem}"
+										target="#{perfilMB.usuarioVisualizado}" />
+								</p:commandLink>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:panelGrid columns="2">
+							<p:commandButton value="Aceitar" icon="ok16"
+								update=":solicitacoes_amizade :tableForm"
+								action="#{amizadeMB.aceitarSolicitacao}">
+								<f:setPropertyActionListener
+									value="#{solicitacao.usuarioOrigem}"
+									target="#{amizadeMB.usuarioSolicitacao}" />
+							</p:commandButton>
+							<p:commandButton value="Recusar" icon="cancel16"
+								update=":solicitacoes_amizade"
+								action="#{amizadeMB.recusarSolicitacao}">
+								<f:setPropertyActionListener
+									value="#{solicitacao.usuarioOrigem}"
+									target="#{amizadeMB.usuarioSolicitacao}" />
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panel>
 				</p:dataList>
 			</p:panel>
 

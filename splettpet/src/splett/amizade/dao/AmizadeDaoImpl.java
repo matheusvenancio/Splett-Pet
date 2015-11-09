@@ -15,7 +15,6 @@ import splett.usuario.Usuario;
 @ManagedBean(name = "amizadeDao")
 @ApplicationScoped
 public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
-
     private static final long serialVersionUID = 1L;
 
     public AmizadeDaoImpl() {
@@ -49,10 +48,10 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Usuario> listSolicitacoes(Usuario usuario) {
+    public List<Amizade> listSolicitacoes(Usuario usuario) {
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery(
-		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
+		"Select a from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
 	q.setParameter("id", usuario.getId());
 	q.setParameter("status", Status.ESPERA);
 	return q.getResultList();
