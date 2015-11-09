@@ -10,5 +10,5 @@ public interface AmizadeDao extends Dao<Amizade> {
 
     public List<Usuario> listAmigos(Usuario usuario);
 
-    public List<Usuario> listSolicitacoes(Usuario usuario);
+    public List<Amizade> listSolicitacoes(Usuario usuario);
 }

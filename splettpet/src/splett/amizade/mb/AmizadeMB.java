@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import splett.amizade.Amizade;
+import splett.amizade.Status;
 import splett.amizade.dao.AmizadeDao;
 import splett.perfil.mb.PerfilMB;
 import splett.session.SessionMB;
@@ -30,7 +31,9 @@ public class AmizadeMB {
 
     private List<Usuario> amigosUsuarioVisualizado;
 
-    private List<Usuario> solicitacoesAmizadeUsuarioVisualizado;
+    private List<Amizade> solicitacoesAmizadeUsuarioVisualizado;
+
+    private Usuario usuarioSolicitacao;
 
     public void addFriend() {
 	Amizade amizade = new Amizade();
@@ -39,6 +42,34 @@ public class AmizadeMB {
 	amizade.setUsuarioDestino(perfilMB.getUsuarioVisualizado());
 
 	amizadeDao.salvar(amizade);
+    }
+
+    public void aceitarSolicitacao() {
+	for (Amizade amizade : solicitacoesAmizadeUsuarioVisualizado) {
+	    if (usuarioSolicitacao.equals(amizade.getUsuarioOrigem())) {
+		amizade.setStatus(Status.ACEITO);
+		salvar(amizade);
+		break;
+	    }
+	}
+    }
+
+    public void recusarSolicitacao() {
+	for (Amizade amizade : solicitacoesAmizadeUsuarioVisualizado) {
+	    if (usuarioSolicitacao.equals(amizade.getUsuarioOrigem())) {
+		amizade.setStatus(Status.RECUSADO);
+		salvar(amizade);
+		break;
+	    }
+	}
+    }
+
+    public void salvar(Amizade amizade) {
+	if (amizade.getId() != null) {
+	    amizadeDao.update(amizade);
+	} else {
+	    amizadeDao.salvar(amizade);
+	}
     }
 
     public AmizadeDao getAmizadeDao() {
@@ -82,14 +113,22 @@ public class AmizadeMB {
 	this.amigosUsuarioVisualizado = amigosUsuarioVisualizado;
     }
 
-    public List<Usuario> getSolicitacoesAmizadeUsuarioVisualizado() {
+    public List<Amizade> getSolicitacoesAmizadeUsuarioVisualizado() {
 	solicitacoesAmizadeUsuarioVisualizado = amizadeDao
 		.listSolicitacoes(perfilMB.getUsuarioVisualizado());
 	return solicitacoesAmizadeUsuarioVisualizado;
     }
 
     public void setSolicitacoesAmizadeUsuarioVisualizado(
-	    List<Usuario> solicitacoesAmizadeUsuarioVisualizado) {
+	    List<Amizade> solicitacoesAmizadeUsuarioVisualizado) {
 	this.solicitacoesAmizadeUsuarioVisualizado = solicitacoesAmizadeUsuarioVisualizado;
+    }
+
+    public Usuario getUsuarioSolicitacao() {
+	return usuarioSolicitacao;
+    }
+
+    public void setUsuarioSolicitacao(Usuario usuarioSolicitacao) {
+	this.usuarioSolicitacao = usuarioSolicitacao;
     }
 }

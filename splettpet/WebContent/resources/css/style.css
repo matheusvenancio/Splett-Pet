@@ -394,28 +394,3 @@ a img {
 	margin-bottom: 15px;
 	margin-top: 5px;
 }
-
-.circle {
-	background: rgb(255, 255, 255);
-	border-radius: 100%;
-	cursor: pointer;
-	position: relative;
-	margin: 0 auto;
-	width: 100px;
-	height: 100px;
-	overflow: hidden;
-	transform: translateZ(0);
-}
-
-.circle {
-	color: rgba(189, 185, 199, 0);
-	font-family: 'Lato', sans-serif;
-	font-weight: 900;
-	font-size: 1em;
-	line-height: 8.2em;
-	text-align: center;
-	text-transform: uppercase;
-	-webkit-font-smoothing: antialiased;
-	user-select: none;
-	transition: color 0.8s ease-in-out;
-}
