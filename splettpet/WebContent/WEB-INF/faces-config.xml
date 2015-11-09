@@ -92,6 +92,14 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+		<navigation-case>
+			<from-outcome>mensagens</from-outcome>
+			<to-view-id>/user/mensagem/mensagens.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
 	<navigation-case>
 			<from-outcome>postagem</from-outcome>
 			<to-view-id>/user/postagem/postagem.xhtml</to-view-id>
