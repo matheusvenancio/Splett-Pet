@@ -15,6 +15,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.UploadedFile;
 
+import splett.animal.Animal;
+import splett.animal.dao.AnimalDao;
 import splett.foto.Foto;
 import splett.foto.dao.FotoDao;
 import splett.perfil.mb.PerfilMB;
@@ -36,7 +38,7 @@ public class FotoMB {
 
 	@ManagedProperty(value = "#{perfilMB}")
 	private PerfilMB perfilMB;
-	
+
 	private List<Foto> fotoFiltered;
 
 	private Foto foto;
@@ -46,6 +48,11 @@ public class FotoMB {
 	private String destino = "//image//";
 
 	private UploadArquivo arquivo = new UploadArquivo();
+
+	@ManagedProperty(value = "#{animalDao}")
+	private AnimalDao animalDao;
+
+	private Animal animal;
 
 	public FotoMB() {
 		fotoFiltered = new ArrayList<Foto>();
@@ -60,7 +67,7 @@ public class FotoMB {
 			File file = new File(caminho);
 			file.mkdir();
 			File f = new File(caminho + nome);
-			
+
 			f.createNewFile();
 			OutputStream out = new FileOutputStream(f);
 			int reader = 0;
@@ -78,8 +85,8 @@ public class FotoMB {
 	}
 
 	public void doUpload() {
-		Date data = new Date(); 
-		String nome =  data.getTime() + fileUp.getFileName();
+		Date data = new Date();
+		String nome = data.getTime() + fileUp.getFileName();
 		if (fileUp != null) {
 			try {
 				transferirArquivo(arquivo.getRealPath() + destino, nome,
@@ -88,8 +95,8 @@ public class FotoMB {
 
 			}
 
-			foto.setCaminho(arquivo.getRealPath() + destino
-					+ data.getTime() + fileUp.getFileName());
+			foto.setCaminho(arquivo.getRealPath() + destino + data.getTime()
+					+ fileUp.getFileName());
 			foto.setNome(nome);
 			foto.setUsuario(new Usuario());
 			foto.setUsuario(perfilMB.getUsuarioVisualizado());
@@ -110,10 +117,10 @@ public class FotoMB {
 		file.delete();
 		fotoDao.remover(foto);
 	}
-	
+
 	public void doUploadFotoPerfil() {
-		Date data = new Date(); 
-		String nome =  data.getTime() + fileUp.getFileName();
+		Date data = new Date();
+		String nome = data.getTime() + fileUp.getFileName();
 		if (fileUp != null) {
 			try {
 				transferirArquivo(arquivo.getRealPath() + destino, nome,
@@ -128,6 +135,26 @@ public class FotoMB {
 
 			usuario.setNomeFotoPerfil(nome);
 			perfilMB.getUsuarioDao().salvar(usuario);
+		}
+	}
+
+	public void doUploadFotoAnimal() {
+		Date data = new Date();
+		String nome = data.getTime() + fileUp.getFileName();
+		if (fileUp != null) {
+			try {
+				transferirArquivo(arquivo.getRealPath() + destino, nome,
+						getFileUp().getInputstream());
+			} catch (IOException exception) {
+
+			}
+
+			animal.setFotoCaminho(arquivo.getRealPath() + destino
+					+ data.getTime() + fileUp.getFileName());
+
+			animal.setFotoNome(nome);
+			animalDao.update(animal);
+
 		}
 	}
 
@@ -159,8 +186,24 @@ public class FotoMB {
 		return fotoLazyDataModel;
 	}
 
+	public AnimalDao getAnimalDao() {
+		return animalDao;
+	}
+
+	public void setAnimalDao(AnimalDao animalDao) {
+		this.animalDao = animalDao;
+	}
+
 	public void setFotoLazyDataModel(FotoLazyDataModel fotoLazyDataModel) {
 		this.fotoLazyDataModel = fotoLazyDataModel;
+	}
+
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 
 	public List<Foto> getFotoFiltered() {
@@ -170,7 +213,7 @@ public class FotoMB {
 	public void setFotoFiltered(List<Foto> fotoFiltered) {
 		this.fotoFiltered = fotoFiltered;
 	}
-	
+
 	public PerfilMB getPerfilMB() {
 		return perfilMB;
 	}

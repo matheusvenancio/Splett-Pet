@@ -19,100 +19,109 @@ import splett.usuario.Usuario;
 @Table(name = "tbAnimal")
 public class Animal {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    private String nome;
+	private String nome;
 
-    private int idade;
+	private int idade;
 
-    private float peso;
+	private float peso;
 
-    private String necessidades;
+	private String necessidades;
 
-    @Enumerated(EnumType.STRING)
-    private Genero genero;
+	@Enumerated(EnumType.STRING)
+	private Genero genero;
 
-    @OneToOne
-    private Raca raca;
+	@OneToOne
+	private Raca raca;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
-    private Usuario dono;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Usuario dono;
 
-    private String foto;
+	private String fotoCaminho;
+	private String fotoNome;
 
-    public Integer getId() {
-	return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-	return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-	this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public int getIdade() {
-	return idade;
-    }
+	public int getIdade() {
+		return idade;
+	}
 
-    public void setIdade(int idade) {
-	this.idade = idade;
-    }
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
 
-    public float getPeso() {
-	return peso;
-    }
+	public float getPeso() {
+		return peso;
+	}
 
-    public void setPeso(float peso) {
-	this.peso = peso;
-    }
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
 
-    public String getNecessidades() {
-	return necessidades;
-    }
+	public String getNecessidades() {
+		return necessidades;
+	}
 
-    public void setNecessidades(String necessidades) {
-	this.necessidades = necessidades;
-    }
+	public void setNecessidades(String necessidades) {
+		this.necessidades = necessidades;
+	}
 
-    public Genero getGenero() {
-	return genero;
-    }
+	public Genero getGenero() {
+		return genero;
+	}
 
-    public void setGenero(Genero genero) {
-	this.genero = genero;
-    }
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
 
-    public Raca getRaca() {
-	return raca;
-    }
+	public Raca getRaca() {
+		return raca;
+	}
 
-    public void setRaca(Raca raca) {
-	this.raca = raca;
-    }
+	public void setRaca(Raca raca) {
+		this.raca = raca;
+	}
 
-    public Usuario getDono() {
-	return dono;
-    }
+	public Usuario getDono() {
+		return dono;
+	}
 
-    public void setDono(Usuario dono) {
-	this.dono = dono;
-    }
+	public void setDono(Usuario dono) {
+		this.dono = dono;
+	}
 
-    public String getFoto() {
-	return foto;
-    }
+	public String getFotoCaminho() {
+		return fotoCaminho;
+	}
 
-    public void setFoto(String foto) {
-	this.foto = foto;
-    }
+	public void setFotoCaminho(String fotoCaminho) {
+		this.fotoCaminho = fotoCaminho;
+	}
+
+	public String getFotoNome() {
+		return fotoNome;
+	}
+
+	public void setFotoNome(String fotoNome) {
+		this.fotoNome = fotoNome;
+	}
 
 }
