@@ -25,7 +25,7 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Usuario> listAmigos(Usuario usuario) {
-    List<Usuario> amigos;
+	List<Usuario> amigos;
 	EntityManager em = emf.createEntityManager();
 	Query q = em.createQuery(
 		"Select ud from Amizade a inner join a.usuarioDestino ud where ud.id != :id and a.status = :status and a.usuarioOrigem.id = :id");
@@ -36,14 +36,25 @@ public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {
 	amigos.addAll(amigosOrigem);
 	return amigos;
     }
-    
+
     @SuppressWarnings("unchecked")
-    private List<Usuario> listarAmigosOrigem(Usuario usuario){
-    	EntityManager em = emf.createEntityManager();
-    	Query q = em.createQuery(
-    		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
-    	q.setParameter("id", usuario.getId());
-    	q.setParameter("status", Status.ACEITO);
-    	return q.getResultList();
+    private List<Usuario> listarAmigosOrigem(Usuario usuario) {
+	EntityManager em = emf.createEntityManager();
+	Query q = em.createQuery(
+		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
+	q.setParameter("id", usuario.getId());
+	q.setParameter("status", Status.ACEITO);
+	return q.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Usuario> listSolicitacoes(Usuario usuario) {
+	EntityManager em = emf.createEntityManager();
+	Query q = em.createQuery(
+		"Select uo from Amizade a inner join a.usuarioOrigem uo where uo.id != :id and a.status = :status and a.usuarioDestino.id = :id");
+	q.setParameter("id", usuario.getId());
+	q.setParameter("status", Status.ESPERA);
+	return q.getResultList();
     }
 }

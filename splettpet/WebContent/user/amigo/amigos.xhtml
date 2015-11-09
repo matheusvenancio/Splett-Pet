@@ -7,30 +7,52 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="body">
-		<h:form id="tableForm">
-			<p:dataScroller value="#{amizadeMB.amigosUsuarioVisualizado}"
-				var="usuario" chunkSize="10" id="postagensDs">
-				<f:facet name="header">
-					<h:outputText value="Amigos" />
-				</f:facet>
+		<div
+			style="width: 65%; float: left; margin-bottom: 10px; margin-left: 10px;">
+			<h:form id="tableForm">
+				<p:dataScroller value="#{amizadeMB.amigosUsuarioVisualizado}"
+					var="usuario" chunkSize="10" id="postagensDs">
+					<f:facet name="header">
+						<h:outputText value="Amigos" />
+					</f:facet>
 
-				<div class="amigo">
-					<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
-						style="width:100%;">
-						<p:graphicImage library="img" name="android_icon.png"
-							style="width:110px; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
-						<p:panelGrid columns="1">
-							<p:commandLink value="#{usuario.nome}" styleClass="label"
-								style="color: #6DB6D5; text-decoration: none; float: left; margin-top: -45px;"
-								action="perfil">
-								<f:setPropertyActionListener value="#{usuario}"
-									target="#{perfilMB.usuarioVisualizado}" />
-							</p:commandLink>
+					<div class="amigo">
+						<p:panelGrid columns="2" columnClasses="coluna1,coluna2"
+							style="width:100%;">
+							<p:graphicImage library="img" name="android_icon.png"
+								style="width:110px; border-style: solid; border-width: 1px; border-color: #6DB6D5" />
+							<p:panelGrid columns="1">
+								<p:commandLink value="#{usuario.nome}" styleClass="label"
+									style="color: #6DB6D5; text-decoration: none; float: left; margin-top: -45px;"
+									action="perfil">
+									<f:setPropertyActionListener value="#{usuario}"
+										target="#{perfilMB.usuarioVisualizado}" />
+								</p:commandLink>
+							</p:panelGrid>
 						</p:panelGrid>
-					</p:panelGrid>
-				</div>
+					</div>
+				</p:dataScroller>
+			</h:form>
+		</div>
 
-			</p:dataScroller>
-		</h:form>
+		<div
+			style="width: 31%; float: right; margin-right: 10px; margin-top: -50px;">
+			<p:panel id="solicitacoes_amizade" style="margin-top: 50px;">
+				<f:facet name="header">
+					<h:outputText value="Solicitações de amizade" />
+				</f:facet>
+				<p:dataList emptyMessage="Nenhuma nova solicitação de amizade"
+					value="#{amizadeMB.solicitacoesAmizadeUsuarioVisualizado}"
+					type="definition">
+					<p:panel style="margin: 10px;"></p:panel>
+				</p:dataList>
+			</p:panel>
+
+			<p:sticky target="solicitacoes_amizade">
+			</p:sticky>
+		</div>
+
+
+
 	</ui:define>
 </ui:composition>

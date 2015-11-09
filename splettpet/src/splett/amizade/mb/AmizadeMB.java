@@ -30,7 +30,7 @@ public class AmizadeMB {
 
     private List<Usuario> amigosUsuarioVisualizado;
 
-    private List<Usuario> amigosUsuarioLogado;
+    private List<Usuario> solicitacoesAmizadeUsuarioVisualizado;
 
     public void addFriend() {
 	Amizade amizade = new Amizade();
@@ -82,11 +82,14 @@ public class AmizadeMB {
 	this.amigosUsuarioVisualizado = amigosUsuarioVisualizado;
     }
 
-    public List<Usuario> getAmigosUsuarioLogado() {
-	return amigosUsuarioLogado;
+    public List<Usuario> getSolicitacoesAmizadeUsuarioVisualizado() {
+	solicitacoesAmizadeUsuarioVisualizado = amizadeDao
+		.listSolicitacoes(perfilMB.getUsuarioVisualizado());
+	return solicitacoesAmizadeUsuarioVisualizado;
     }
 
-    public void setAmigosUsuarioLogado(List<Usuario> amigosUsuarioLogado) {
-	this.amigosUsuarioLogado = amigosUsuarioLogado;
+    public void setSolicitacoesAmizadeUsuarioVisualizado(
+	    List<Usuario> solicitacoesAmizadeUsuarioVisualizado) {
+	this.solicitacoesAmizadeUsuarioVisualizado = solicitacoesAmizadeUsuarioVisualizado;
     }
 }

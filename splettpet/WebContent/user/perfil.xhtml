@@ -9,7 +9,7 @@
 
 		<div>
 			<div
-				style="width: 35%; height: 100%; float: left; margin-left: 10px;">
+				style="width: 40%; height: 100%; float: left; margin-left: 10px;">
 
 				<p:panel styleClass="painelDados">
 					<f:facet name="header">
@@ -46,13 +46,17 @@
 
 						<h:outputLabel styleClass="coisa" value="Telefone celular:" />
 						<h:outputText
-							value="#{perfilMB.usuarioVisualizado.telefoneCelular}" />
+							value="#{perfilMB.usuarioVisualizado.telefoneCelular}"
+							rendered="#{perfilMB.usuarioVisualizado.telefoneCelular_isPublico}" />
 						<h:outputText value="Essa informação é privada"
 							rendered="#{!(perfilMB.usuarioVisualizado.telefoneCelular_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone Fixo:" />
-						<h:outputText value="#{perfilMB.usuarioVisualizado.telefoneFixo}" />
-						<h:outputText value="Essa informação é privada"
+						<h:outputText value="#{perfilMB.usuarioVisualizado.telefoneFixo}"
+							rendered="#{perfilMB.usuarioVisualizado.telefoneFixo_isPublico}" />
+						<h:outputText value="
+							Essa informação é
+							privada"
 							rendered="#{!(perfilMB.usuarioVisualizado.telefoneFixo_isPublico)}" />
 					</p:panelGrid>
 				</p:panel>
@@ -77,7 +81,7 @@
 			</div>
 
 			<div
-				style="margin-right: 10px; float: right; width: 60%; margin-bottom: 10px;">
+				style="margin-right: 10px; float: right; width: 55%; margin-bottom: 10px;">
 				<h:form id="tableForm">
 					<p:dataScroller value="#{postagemMB.postagens}" var="postagem"
 						chunkSize="3" id="postagensDs">
