@@ -1,0 +1,101 @@
+package splett.mensagem.mb;
+
+import java.util.Date;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+
+import splett.mensagem.Mensagem;
+import splett.mensagem.dao.MensagemDao;
+import splett.perfil.mb.PerfilMB;
+import splett.session.SessionMB;
+import splett.usuario.Usuario;
+
+@ManagedBean(name = "mensagemMB")
+@ViewScoped
+public class MensagemMB {
+
+	@ManagedProperty(value = "#{mensagemDao}")
+	private MensagemDao mensagemDao;
+
+	@ManagedProperty(value = "#{mensagemLazyDataModel}")
+	private MensagemLazyDataModel mensagemLazyDataModel;
+
+	@ManagedProperty(value = "#{sessionMB}")
+	private SessionMB sessionMB;
+
+	@ManagedProperty(value = "#{perfilMB}")
+	private PerfilMB perfilMB;
+
+	private Mensagem mensagem;
+
+	public void criar() {
+		mensagem = new Mensagem();
+	}
+
+	public void salvar() {
+		if (mensagem.getId() != null) {
+			mensagemDao.update(mensagem);
+		} else {
+			mensagem.setEmissor(new Usuario());
+			mensagem.setReceptor(new Usuario());
+			mensagem.setEmissor(sessionMB.getUsuarioLogado());
+			mensagem.setReceptor(perfilMB.getUsuarioVisualizado());
+			mensagem.setData(new Date());
+			mensagem.setHora(new Date());
+			mensagemDao.salvar(mensagem);
+			mensagem = null;
+		}
+	}
+
+	public PerfilMB getPerfilMB() {
+		return perfilMB;
+	}
+
+	public void setPerfilMB(PerfilMB perfilMB) {
+		this.perfilMB = perfilMB;
+	}
+
+	public void remover() {
+		mensagemDao.remover(mensagem);
+	}
+
+	public void cancelar() {
+		mensagem = null;
+	}
+
+	public MensagemDao getMensagemDao() {
+		return mensagemDao;
+	}
+
+	public void setMensagemDao(MensagemDao mensagemDao) {
+		this.mensagemDao = mensagemDao;
+	}
+
+	public SessionMB getSessionMB() {
+		return sessionMB;
+	}
+
+	public MensagemLazyDataModel getMensagemLazyDataModel() {
+		return mensagemLazyDataModel;
+	}
+
+	public void setMensagemLazyDataModel(
+			MensagemLazyDataModel mensagemLazyDataModel) {
+		this.mensagemLazyDataModel = mensagemLazyDataModel;
+	}
+
+	public void setSessionMB(SessionMB sessionMB) {
+		this.sessionMB = sessionMB;
+	}
+
+	public Mensagem getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(Mensagem mensagem) {
+		this.mensagem = mensagem;
+	}
+
+}
