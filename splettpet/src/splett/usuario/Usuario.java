@@ -73,6 +73,8 @@ public class Usuario {
 
     private boolean email_isPublico = false;
 
+    private boolean endereco_isPublico = false;
+
     public String getFotoPerfil() {
 	return fotoPerfil;
     }
@@ -119,6 +121,14 @@ public class Usuario {
 
     public void setDataNascimento_isPublico(boolean dataNascimento_isPublico) {
 	this.dataNascimento_isPublico = dataNascimento_isPublico;
+    }
+
+    public boolean isEndereco_isPublico() {
+	return endereco_isPublico;
+    }
+
+    public void setEndereco_isPublico(boolean endereco_isPublico) {
+	this.endereco_isPublico = endereco_isPublico;
     }
 
     public boolean isEmail_isPublico() {

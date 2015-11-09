@@ -18,31 +18,49 @@
 					<p:panelGrid id="dadosPessoais" columns="2" layout="tabular">
 						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
 						<h:outputText
-							value="#{perfilMB.usuarioVisualizado.dataNascimento}">
+							value="#{perfilMB.usuarioVisualizado.dataNascimento}"
+							rendered="#{perfilMB.usuarioVisualizado.dataNascimento_isPublico}">
 							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
 						</h:outputText>
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.dataNascimento_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="E-mail:" />
-						<h:outputText value="#{perfilMB.usuarioVisualizado.email}" />
+						<h:outputText value="#{perfilMB.usuarioVisualizado.email}"
+							rendered="#{perfilMB.usuarioVisualizado.email_isPublico}" />
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.email_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="Gênero:" />
 						<h:outputText
-							value="#{perfilMB.usuarioVisualizado.genero.toString()}" />
+							value="#{perfilMB.usuarioVisualizado.genero.toString()}"
+							rendered="#{perfilMB.usuarioVisualizado.genero_isPublico}" />
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.genero_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="Endereço:" />
-						<h:outputText value="#{perfilMB.usuarioVisualizado.endereco}" />
+						<h:outputText value="#{perfilMB.usuarioVisualizado.endereco}"
+							rendered="#{perfilMB.usuarioVisualizado.endereco_isPublico}" />
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.endereco_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone celular:" />
 						<h:outputText
 							value="#{perfilMB.usuarioVisualizado.telefoneCelular}" />
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.telefoneCelular_isPublico)}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone Fixo:" />
 						<h:outputText value="#{perfilMB.usuarioVisualizado.telefoneFixo}" />
-
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!(perfilMB.usuarioVisualizado.telefoneFixo_isPublico)}" />
 					</p:panelGrid>
 				</p:panel>
 
 				<p:panel styleClass="painelDados" id="painelDisponibilidade">
+					<f:facet name="header">
+						<h:outputText value="Datas disponíveis" />
+					</f:facet>
 					<h:form id="disponibilidade_form">
 						<f:facet name="header">
 							<h:outputText value="Disponibilidade" />
@@ -54,7 +72,6 @@
 							oncomplete="PF('disponibilidadeDialog').show()"
 							update=":disponibilidadeDlg"
 							rendered="#{perfilMB.isManagementAllowed()}" />
-
 					</h:form>
 				</p:panel>
 			</div>
@@ -111,9 +128,11 @@
 					<p:outputLabel for="fim" value="Fim do período" />
 
 					<p:calendar id="inicio" mode="inline"
-						value="#{disponibilidadeMB.dataInicio}" mindate="#{disponibilidadeMB.dataHoje}"/>
+						value="#{disponibilidadeMB.dataInicio}"
+						mindate="#{disponibilidadeMB.dataHoje}" />
 					<p:calendar id="fim" mode="inline"
-						value="#{disponibilidadeMB.dataFinal}" mindate="#{disponibilidadeMB.dataHoje}"/>
+						value="#{disponibilidadeMB.dataFinal}"
+						mindate="#{disponibilidadeMB.dataHoje}" />
 				</h:panelGrid>
 
 				<p:commandButton id="salvarBt" value="Salvar" icon="salvar16"

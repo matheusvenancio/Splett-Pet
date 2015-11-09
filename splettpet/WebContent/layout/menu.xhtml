@@ -46,8 +46,12 @@
 
 			<p:submenu label="Configurações" styleClass="menuBarItem"
 				rendered="#{perfilMB.isManagementAllowed()}">
-				<p:menuitem value="Editar Perfil" onclick="PF('editarPerfilDialog').show()" actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}"/>
-				<p:menuitem value="Privacidade" onclick="PF('privacidadeDialog').show()" actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}"/>
+				<p:menuitem value="Editar Perfil"
+					onclick="PF('editarPerfilDialog').show()"
+					actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}" />
+				<p:menuitem value="Privacidade"
+					onclick="PF('privacidadeDialog').show()"
+					actionListener="#{usuarioMB.editar(perfilMB.usuarioVisualizado)}" />
 			</p:submenu>
 
 			<f:facet name="options">
@@ -59,7 +63,7 @@
 		</p:menubar>
 
 	</h:form>
-	
-				<ui:include src="/user/privacidade/privacidade.xhtml"/>
-				<ui:include src="/user/editarperfil/editarperfil.xhtml"/>
+
+	<ui:include src="/user/privacidade/privacidade.xhtml" />
+	<ui:include src="/user/editarperfil/editarperfil.xhtml" />
 </ui:composition>

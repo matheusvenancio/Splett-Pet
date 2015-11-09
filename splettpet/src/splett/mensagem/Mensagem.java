@@ -20,7 +20,7 @@ public class Mensagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String texto;
 
@@ -38,15 +38,17 @@ public class Mensagem {
     @ManyToOne
     private Usuario receptor;
 
-    public int getId() {
-	return id;
-    }
+   
 
-    public void setId(int id) {
-	this.id = id;
-    }
+    public Integer getId() {
+		return id;
+	}
 
-    public String getTexto() {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTexto() {
 	return texto;
     }
 
