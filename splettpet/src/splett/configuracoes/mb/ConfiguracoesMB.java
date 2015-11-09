@@ -33,7 +33,7 @@ public class ConfiguracoesMB {
 	private String senha = "";
 	
 	private Usuario usuario;
-
+	
 	@PostConstruct
 	public void criar() {
 		usuario = new Usuario();
@@ -52,10 +52,9 @@ public class ConfiguracoesMB {
 	}
 
 	public void salvar() {
-		usuario.setSenha(criptografia.criptografar(senha));
 		usuarioDao.update(usuario);
 	}
-
+	
 	public void cancelar() {
 		usuario = null;
 	}

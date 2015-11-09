@@ -77,11 +77,6 @@ public class UsuarioMB {
 		}
 	}
 
-	public void editar(Usuario usuairo) {
-		this.usuario = usuairo;
-	
-	}
-
 	public void salvar() {
 		if (usuario.getId() != null) {
 			usuarioDao.update(usuario);
