@@ -46,6 +46,9 @@ public class ConfiguracoesMB {
 		Logradouro l = enderecos.get(0);
 		usuario.getEndereco().setLogradouro(l.getNome());
 		usuario.getEndereco().setBairro(l.getBairroInicial().getNome());
+		usuario.getEndereco().setCidade(l.getLocalidade().getNome());
+		usuario.getEndereco().setUf(l.getUf());
+		
 	}
 
 	public void salvar() {

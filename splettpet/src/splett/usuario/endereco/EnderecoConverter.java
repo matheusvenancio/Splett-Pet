@@ -22,7 +22,7 @@ public class EnderecoConverter implements Converter {
 			String value) throws ConverterException {
 		if (value != null && !value.isEmpty()
 				&& !value.equalsIgnoreCase("Selecione um"))
-			return enderecoDao.pesquisarPorCidade(value).get(0);
+			return enderecoDao.pesquisarNomeCidade(value).get(0);
 		return null;
 	}
 
