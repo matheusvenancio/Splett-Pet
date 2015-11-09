@@ -18,7 +18,9 @@
 			rendered="#{perfilMB.isManagementAllowed()}" />
 		<p:commandButton id="enviarMensagemBt" style="margin-top:-8.7%"
 			value="Enviar Mensagem" icon="" styleClass="notification"
-			rendered="#{!perfilMB.isSelfProfile()}" />
+			rendered="#{!perfilMB.isSelfProfile()}"
+			onclick="PF('enviarMsgDialog').show()"
+					actionListener="#{mensagemMB.criar}" />
 	</div>
 
 	<h:form>
@@ -66,4 +68,6 @@
 
 	<ui:include src="/user/privacidade/privacidade.xhtml" />
 	<ui:include src="/user/editarperfil/editarperfil.xhtml" />
+	
+	<ui:include src="/user/mensagem/enviarmensagem.xhtml" />
 </ui:composition>

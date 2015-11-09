@@ -35,18 +35,15 @@ public class MensagemMB {
 	}
 
 	public void salvar() {
-		if (mensagem.getId() != null) {
-			mensagemDao.update(mensagem);
-		} else {
-			mensagem.setEmissor(new Usuario());
-			mensagem.setReceptor(new Usuario());
-			mensagem.setEmissor(sessionMB.getUsuarioLogado());
-			mensagem.setReceptor(perfilMB.getUsuarioVisualizado());
-			mensagem.setData(new Date());
-			mensagem.setHora(new Date());
-			mensagemDao.salvar(mensagem);
-			mensagem = null;
-		}
+
+		mensagem.setEmissor(new Usuario());
+		mensagem.setReceptor(new Usuario());
+		mensagem.setEmissor(sessionMB.getUsuarioLogado());
+		mensagem.setReceptor(perfilMB.getUsuarioVisualizado());
+		mensagem.setData(new Date());
+		mensagem.setHora(new Date());
+		mensagemDao.salvar(mensagem);
+		mensagem = null;
 	}
 
 	public PerfilMB getPerfilMB() {
