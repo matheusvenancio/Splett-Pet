@@ -26,11 +26,19 @@
 			<h:outputText styleClass="postText"
 				value="#{postagemMB.postagemVisualizar.texto}" />
 		</div>
-			<p:commandButton id="novoComentario" value="Comentar"
+		<h:form id="comentario_form">
+			<p:inputTextarea rows="1" cols="45"
+					autoResize="true" value="#{postagemMB.comentario.texto}" >
+					</p:inputTextarea>
+			<p:commandButton id="enviarBt" value="Comentar" action="#{postagemMB.salvarComentario()}" 
+					update=":ComentarioForm:comentariosDs :ComentarioForm :comentario_form" />
+					
+			</h:form>
+<!-- 			<p:commandButton id="novoComentario" value="Comentar"
 				actionListener="#{postagemMB.criarComentario()}"
 				oncomplete="PF('novoComentarioDialog').show()"
 				update=":novoComentarioDlg :novoComentario_form"/>
-				<h:panelGrid columns="1">		</h:panelGrid>
+				<h:panelGrid columns="1">		</h:panelGrid> -->
 		
 
 

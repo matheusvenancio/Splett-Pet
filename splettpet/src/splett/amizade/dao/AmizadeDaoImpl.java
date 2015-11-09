@@ -12,6 +12,7 @@ import splett.amizade.Status;
 import splett.dao.GenericDao;
 import splett.usuario.Usuario;
 
+
 @ManagedBean(name = "amizadeDao")
 @ApplicationScoped
 public class AmizadeDaoImpl extends GenericDao<Amizade>implements AmizadeDao {

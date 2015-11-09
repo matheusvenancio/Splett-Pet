@@ -43,6 +43,9 @@
 					statusChangeCallback(response);
 				});
 			}
+			function facebook_onlogin() {
+				  document.location.href = "/j_spring_facebook_security_check";
+			}
 
 			window.fbAsyncInit = function() {
 				FB.init({
@@ -78,7 +81,7 @@
 					return;
 				js = d.createElement(s);
 				js.id = id;
-				js.src = "//connect.facebook.net/en_US/sdk.js";
+				js.src = "//connect.facebook.net/pt_BR/sdk.js";
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 
@@ -128,6 +131,7 @@
 
 					<div class="fb-login-button" data-max-rows="1" data-size="xlarge"
 						data-show-faces="false" data-auto-logout-link="false" ></div>
+					<p><fb:login-button onlogin="$('#fb_signin').submit();" v="2" length="long">Signin with Facebook</fb:login-button></p>
 						
 					<p:commandLink style="font-size: 1.2em;"
 						actionListener="#{usuarioMB.criar}"
