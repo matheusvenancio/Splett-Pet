@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import splett.dao.GenericDao;
@@ -23,12 +24,15 @@ public class DisponibilidadeDaoImpl extends GenericDao<Disponibilidade>
 
     public Disponibilidade findByData(Date data) {
 	EntityManager em = emf.createEntityManager();
-	String sql = "select * from tbdisponibilidade d where d.data = ?";
-	Query q = em.createNativeQuery(sql, Disponibilidade.class);
-	q.setParameter(1, data);
-	//Query q = em.createQuery("select d from Disponibilidade d where d.data = :data");
-	//q.setParameter("data", data);
-	
-	return (Disponibilidade) q.getSingleResult();
+	Query q = em.createQuery("select d from Disponibilidade d where d.data = :data");
+	q.setParameter("data", data);
+
+	Disponibilidade retorno;
+	try {
+	    retorno = (Disponibilidade) q.getSingleResult();
+	} catch (NoResultException e) {
+	    return null;
+	}
+	return retorno;
     }
 }
