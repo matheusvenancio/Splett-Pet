@@ -29,9 +29,14 @@ public class MensagemMB {
 	private PerfilMB perfilMB;
 
 	private Mensagem mensagem;
+	private Mensagem resposta;
 
 	public void criar() {
 		mensagem = new Mensagem();
+	}
+
+	public void criarResposta() {
+		resposta = new Mensagem();
 	}
 
 	public void salvar() {
@@ -44,6 +49,26 @@ public class MensagemMB {
 		mensagem.setHora(new Date());
 		mensagemDao.salvar(mensagem);
 		mensagem = null;
+	}
+
+	public Mensagem getResposta() {
+		return resposta;
+	}
+
+	public void setResposta(Mensagem resposta) {
+		this.resposta = resposta;
+	}
+
+	public void responder() {
+
+		resposta.setEmissor(new Usuario());
+		resposta.setReceptor(new Usuario());
+		resposta.setEmissor(perfilMB.getUsuarioVisualizado());
+		resposta.setReceptor(mensagem.getEmissor());
+		resposta.setData(new Date());
+		resposta.setHora(new Date());
+		mensagemDao.salvar(resposta);
+		resposta = null;
 	}
 
 	public PerfilMB getPerfilMB() {
