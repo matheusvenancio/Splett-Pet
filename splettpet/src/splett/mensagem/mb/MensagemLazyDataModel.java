@@ -19,54 +19,54 @@ import splett.usuario.Usuario;
 @ViewScoped
 public class MensagemLazyDataModel extends LazyDataModel<Mensagem> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{mensagemDao}")
-	private MensagemDao mensagemDao;
+    @ManagedProperty(value = "#{mensagemDao}")
+    private MensagemDao mensagemDao;
 
-	@ManagedProperty(value = "#{perfilMB}")
-	private PerfilMB perfilMB;
+    @ManagedProperty(value = "#{perfilMB}")
+    private PerfilMB perfilMB;
 
-	@Override
-	public List<Mensagem> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters) {
-		List<Mensagem> source = null;
+    @Override
+    public List<Mensagem> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	    Map<String, Object> filters) {
+	List<Mensagem> source = null;
 
-		Usuario u = new Usuario();
-		u = perfilMB.getUsuarioVisualizado();
+	Usuario u = new Usuario();
+	u = perfilMB.getUsuarioVisualizado();
 
-		source = mensagemDao.listMensagens(u.getId());
+	source = mensagemDao.listMensagens(u.getId());
 
-		// rowCount
-		this.setRowCount(mensagemDao.getRowCount());
+	// rowCount
+	this.setRowCount(mensagemDao.getRowCount());
 
-		return source;
-	}
+	return source;
+    }
 
-	@Override
-	public Mensagem getRowData(String rowKey) {
-		return mensagemDao.findById(Integer.parseInt(rowKey));
-	}
+    @Override
+    public Mensagem getRowData(String rowKey) {
+	return mensagemDao.findById(Integer.parseInt(rowKey));
+    }
 
-	@Override
-	public Object getRowKey(Mensagem mensagem) {
-		return mensagem.getId();
-	}
+    @Override
+    public Object getRowKey(Mensagem mensagem) {
+	return mensagem.getId();
+    }
 
-	public MensagemDao getMensagemDao() {
-		return mensagemDao;
-	}
+    public MensagemDao getMensagemDao() {
+	return mensagemDao;
+    }
 
-	public void setMensagemDao(MensagemDao mensagemDao) {
-		this.mensagemDao = mensagemDao;
-	}
+    public void setMensagemDao(MensagemDao mensagemDao) {
+	this.mensagemDao = mensagemDao;
+    }
 
-	public PerfilMB getPerfilMB() {
-		return perfilMB;
-	}
+    public PerfilMB getPerfilMB() {
+	return perfilMB;
+    }
 
-	public void setPerfilMB(PerfilMB perfilMB) {
-		this.perfilMB = perfilMB;
-	}
+    public void setPerfilMB(PerfilMB perfilMB) {
+	this.perfilMB = perfilMB;
+    }
 
 }
