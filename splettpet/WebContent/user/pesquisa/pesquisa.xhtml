@@ -60,13 +60,14 @@
 				</p:autoComplete>
 				<p:message for="tipo" />
 
-				<h:panelGrid columns="4">
+				<h:panelGrid columns="4" style="margin-top: 20px; margin-left: 10px; margin-bottom: 10px;">
 					<p:outputLabel for="inicio" value="Data inicial:" />
-					<p:outputLabel for="fim" value="Data final:" />
-
 					<p:calendar id="inicio" value="#{enderecoMB.dataInicial}"
 						mindate="#{disponibilidadeMB.dataHoje}" required="true"
 						requiredMessage="Data de inicio da busca é obrigatorio" />
+
+
+					<p:outputLabel for="fim" value="Data final:" style="margin-left: 10px;" />
 					<p:calendar id="fim" value="#{enderecoMB.dataFinal}"
 						mindate="#{disponibilidadeMB.dataHoje}" required="true"
 						requiredMessage="Data final da busca é obrigatorio" />
