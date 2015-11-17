@@ -34,7 +34,7 @@ public class PostagemDaoImpl extends GenericDao<Postagem>implements PostagemDao 
     public List<Comentario> listarComentariosPostagem(Integer id) {
 	EntityManager em = emf.createEntityManager();
 	Query query = em.createQuery(
-		"SELECT c from Comentario c where postagem_id IN :id_postagem order by c.id desc");
+		"SELECT c from Comentario c where postagem_id IN :id_postagem");
 	query.setParameter("id_postagem", id);
 	return query.getResultList();
     }
