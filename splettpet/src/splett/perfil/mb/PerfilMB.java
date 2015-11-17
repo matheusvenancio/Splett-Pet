@@ -5,6 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import splett.amizade.dao.AmizadeDao;
 import splett.session.SessionMB;
 import splett.usuario.Usuario;
 import splett.usuario.dao.UsuarioDao;
@@ -21,6 +22,9 @@ public class PerfilMB {
 	@ManagedProperty(value = "#{usuarioVisualizado}")
 	private Usuario usuarioVisualizado;
 
+	@ManagedProperty(value = "#{amizadeDao}")
+	private AmizadeDao amizadeDao;
+
 	@PostConstruct
 	public void init() {
 		usuarioVisualizado = sessionMB.getUsuarioLogado();
@@ -28,6 +32,10 @@ public class PerfilMB {
 
 	public boolean isSelfProfile() {
 		return usuarioVisualizado == sessionMB.getUsuarioLogado();
+	}
+
+	public boolean isEvaluationAllowed() {
+		return !isSelfProfile() || sessionMB.isUserAdm();
 	}
 
 	public SessionMB getSessionMB() {
@@ -51,7 +59,22 @@ public class PerfilMB {
 	}
 
 	public boolean isFriendshipRequestAllowed() {
-		return !isSelfProfile();
+		return !isSelfProfile() && !isFriend() && !isFriendshipRequested();
+	}
+
+	public boolean isFriend() {
+		return amizadeDao.isAmigo(usuarioVisualizado,
+				sessionMB.getUsuarioLogado());
+	}
+
+	public boolean isFriendshipRequested() {
+		return amizadeDao.isSolicitado(usuarioVisualizado,
+				sessionMB.getUsuarioLogado());
+	}
+
+	public boolean isFriendshipRequestSent() {
+		return amizadeDao.isSolicitacaoEnviada(usuarioVisualizado,
+				sessionMB.getUsuarioLogado());
 	}
 
 	public Usuario getUsuarioVisualizado() {
@@ -60,6 +83,14 @@ public class PerfilMB {
 
 	public void setUsuarioVisualizado(Usuario usuarioVisualizado) {
 		this.usuarioVisualizado = usuarioVisualizado;
+	}
+
+	public AmizadeDao getAmizadeDao() {
+		return amizadeDao;
+	}
+
+	public void setAmizadeDao(AmizadeDao amizadeDao) {
+		this.amizadeDao = amizadeDao;
 	}
 
 }

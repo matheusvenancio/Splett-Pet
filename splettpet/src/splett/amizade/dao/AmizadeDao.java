@@ -8,7 +8,13 @@ import splett.usuario.Usuario;
 
 public interface AmizadeDao extends Dao<Amizade> {
 
-    public List<Usuario> listAmigos(Usuario usuario);
+	public List<Usuario> listAmigos(Usuario usuario);
 
-    public List<Amizade> listSolicitacoes(Usuario usuario);
+	public List<Amizade> listSolicitacoes(Usuario usuario);
+
+	public boolean isAmigo(Usuario u1, Usuario u2);
+	
+	public boolean isSolicitado(Usuario u1, Usuario u2);
+	
+	public boolean isSolicitacaoEnviada(Usuario receptor, Usuario emissor);
 }

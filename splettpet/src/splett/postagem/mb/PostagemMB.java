@@ -67,8 +67,6 @@ public class PostagemMB {
 		comentario.setPostagem(postagemVisualizar);
 		comentario.setUsuario(sessionMB.getUsuarioLogado());
 		comentarioDao.salvar(comentario);
-		listarComentariosPostagem(postagemVisualizar);
-		criarComentario();
 	}
 
 	public void setarPostagem(Integer id) {

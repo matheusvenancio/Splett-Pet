@@ -83,7 +83,7 @@ public class Endereco {
 
     public String toString() {
 	return logradouro + ", " + numero
-		+ ((complemento == null) ? ", " : (", " + complemento + ", ")) + bairro + ", "
+		+ ((complemento == null || complemento.equals("")) ? ", " : (", " + complemento + ", ")) + bairro + ", "
 		+ cidade + ".";
     }
 
