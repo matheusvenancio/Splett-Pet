@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jstl/core">
 
-	
+
 	<f:facet name="header">
          	Postagens
    	</f:facet>
@@ -26,20 +26,13 @@
 			<h:outputText styleClass="postText"
 				value="#{postagemMB.postagemVisualizar.texto}" />
 		</div>
-		<h:form id="comentario_form">
-			<p:inputTextarea rows="1" cols="45"
-					autoResize="true" value="#{postagemMB.comentario.texto}" >
-					</p:inputTextarea>
-			<p:commandButton id="enviarBt" value="Comentar" action="#{postagemMB.salvarComentario()}" 
-					update=":ComentarioForm:comentariosDs :ComentarioForm :comentario_form" />
-					
-			</h:form>
-<!-- 			<p:commandButton id="novoComentario" value="Comentar"
-				actionListener="#{postagemMB.criarComentario()}"
-				oncomplete="PF('novoComentarioDialog').show()"
-				update=":novoComentarioDlg :novoComentario_form"/>
-				<h:panelGrid columns="1">		</h:panelGrid> -->
-		
+		<p:commandButton id="novoComentario" value="Comentar"
+			actionListener="#{postagemMB.criarComentario()}"
+			oncomplete="PF('novoComentarioDialog').show()"
+			update=":novoComentarioDlg :novoComentario_form" />
+		<h:panelGrid columns="1">
+		</h:panelGrid>
+
 
 
 		<h:form id="ComentarioForm">
@@ -56,7 +49,7 @@
 						<p:panelGrid columns="1">
 							<p:outputLabel value="#{comentario.usuario.nome}"
 								styleClass="label" style="color: #6DB6D5;" />
-<!-- 							<h:outputText value="#{postagem.dataPostagem}"
+							<!-- 							<h:outputText value="#{postagem.dataPostagem}"
 								style="font-size: 0.8em; color:gray">
 								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
 							</h:outputText> -->
@@ -70,28 +63,28 @@
 			</p:dataScroller>
 		</h:form>
 	</p:panel>
-	
+
 	<p:dialog id="novoComentarioDlg" widgetVar="novoComentarioDialog"
-			header="Novo Comentario" width="40%" modal="true" resizable="false"
-			closable="false" showEffect="clip" hideEffect="clip">
-			<h:form id="novoComentario_form">
+		header="Novo Comentario" width="40%" modal="true" resizable="false"
+		closable="false" showEffect="clip" hideEffect="clip">
+		<h:form id="novoComentario_form">
 
-				<h:panelGrid columns="1">
-					<p:inputTextarea rows="5" cols="60" counter="display"
-						maxlength="255" counterTemplate="{0} Caracteres restantes."
-						autoResize="true" value="#{postagemMB.comentario.texto}" />
-					<h:outputText id="display" />
-				</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:inputTextarea rows="5" cols="60" counter="display"
+					maxlength="255" counterTemplate="{0} Caracteres restantes."
+					autoResize="true" value="#{postagemMB.comentario.texto}" />
+				<h:outputText id="display" />
+			</h:panelGrid>
 
-				<p:commandButton id="enviarBt" value="Salvar" icon="salvar16"
-					update=":ComentarioForm" action="#{postagemMB.salvarComentario()}"
-					oncomplete="if(!args.validationFailed) PF('novoComentarioDialog').hide()" />
+			<p:commandButton id="enviarBt" value="Salvar" icon="salvar16"
+				update=":ComentarioForm" action="#{postagemMB.salvarComentario()}"
+				oncomplete="if(!args.validationFailed) PF('novoComentarioDialog').hide()" />
 
-				<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
-					oncomplete="PF('novoComentarioDialog').hide()"
-					update=":novoComentario_form" immediate="true"
-					actionListener="#{postagemMB.cancelarComentario()}" />
-			</h:form>
-		</p:dialog>
+			<p:commandButton id="cancelarBt" value="Cancelar" icon="cancelar16"
+				oncomplete="PF('novoComentarioDialog').hide()"
+				update=":novoComentario_form" immediate="true"
+				actionListener="#{postagemMB.cancelarComentario()}" />
+		</h:form>
+	</p:dialog>
 
 </ui:composition>

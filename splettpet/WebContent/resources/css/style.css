@@ -328,6 +328,10 @@ a img {
 	background-image: url('../../resources/img/16/admin_16.png') !important
 }
 
+.user {
+	background-image: url('../../resources/img/user.png') !important
+}
+
 .teacher16 {
 	background-image: url('../../resources/img/16/teacher_clock_16.png')
 		!important

@@ -13,7 +13,7 @@
 		<p:commandButton id="addAvaliacao" value="Avaliar"
 			actionListener="#{avaliacaoMB.criar}"
 			oncomplete="PF('avaliacaoDialog').show()" update=":avaliacaoDlg"
-			rendered="#{perfilMB.isManagementAllowed()}" />
+			rendered="#{perfilMB.isEvaluationAllowed()}" />
 		<br />
 
 		<h:form id="tableForm">

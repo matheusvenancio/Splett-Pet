@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<div
-		style="background-image: url('../resources/img/menu_background/slide2.jpg'); background-color: #6DB6D5; padding: 20px; border-style: solid; border-width: 1px; border-color: aqua; border-radius: 10px;">
+		style="background-image: url('http://localhost:8080/splettpet/resources/img/menu_background/slide2.jpg'); background-color: #6DB6D5; padding: 20px; border-style: solid; border-width: 1px; border-color: aqua; border-radius: 10px;">
 		<div align="left">
 			<p:graphicImage name="img/android_icon.png" styleClass="fotoPerfil" />
 			<p:outputLabel value="#{perfilMB.usuarioVisualizado.nome}"
@@ -15,16 +15,15 @@
 
 		<p:commandButton id="caixaDeEntradaBt" value="Caixa de entrada"
 			icon="caixaDeEntrada" styleClass="notification"
-			rendered="#{perfilMB.isManagementAllowed()}"
-			action = "mensagens" />
+			rendered="#{perfilMB.isManagementAllowed()}" action="mensagens" />
 		<p:commandButton id="enviarMensagemBt" style="margin-top:-8.7%"
 			value="Enviar Mensagem" icon="" styleClass="notification"
 			rendered="#{!perfilMB.isSelfProfile()}"
 			onclick="PF('enviarMsgDialog').show()"
-					actionListener="#{mensagemMB.criar}" update = ":mensagem_form" />
+			actionListener="#{mensagemMB.criar}" update=":mensagem_form" />
 	</div>
 
-	<h:form>
+	<h:form id="menu_form">
 		<p:menubar>
 			<p:menuitem styleClass="menuBarItem" id="InicioMn" value="Início"
 				action="perfil" />
@@ -53,14 +52,22 @@
 					onclick="PF('editarPerfilDialog').show()"
 					actionListener="#{configuracoesMB.criar}" />
 				<p:menuitem value="Privacidade"
-					onclick="PF('privacidadeDialog').show()" 
-					actionListener="#{configuracoesMB.criar}"/>
+					onclick="PF('privacidadeDialog').show()"
+					actionListener="#{configuracoesMB.criar}" />
 			</p:submenu>
 
 			<f:facet name="options">
 				<p:commandButton id="addFriendButton" icon="plus16"
 					value="Adicionar amigo" actionListener="#{amizadeMB.addFriend()}"
-					rendered="#{perfilMB.isFriendshipRequestAllowed()}" />
+					rendered="#{perfilMB.isFriendshipRequestAllowed()}"
+					update=":menu_form" />
+
+				<p:commandButton id="RequestSentButton" icon="user"
+					value="Solicitação enviada"
+					rendered="#{perfilMB.isFriendshipRequested()}" disabled="true" />
+
+				<p:commandButton id="FriendButton" icon="ok16" value="Amigos"
+					rendered="#{perfilMB.isFriend()}" disabled="true" />
 			</f:facet>
 
 		</p:menubar>
@@ -69,6 +76,6 @@
 
 	<ui:include src="/user/privacidade/privacidade.xhtml" />
 	<ui:include src="/user/editarperfil/editarperfil.xhtml" />
-	
+
 	<ui:include src="/user/mensagem/enviarmensagem.xhtml" />
 </ui:composition>

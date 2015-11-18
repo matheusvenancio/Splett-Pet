@@ -39,6 +39,14 @@
 				for="telefoneCelularPublico" />
 
 			<br />
+			
+			<p:selectBooleanCheckbox id="enderecoPublico"
+				value="#{configuracoesMB.usuario.endereco_isPublico}" />
+			<h:outputText id="enderecoPublicoLb"
+				value="Todos podem ver meu endereço. "
+				for="enderecoPublico" />
+
+			<br />
 			<p:commandButton id="salvarBt" value="salvar" icon="salvar16"
 				actionListener="#{configuracoesMB.salvar}"
 				oncomplete="if(!args.validationFailed) PF('privacidadeDialog').hide()" />

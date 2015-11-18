@@ -22,7 +22,6 @@
 		<property name="password" value="" />
 	</bean>
 
-
 	<sec:http auto-config="false" create-session="ifRequired" access-denied-page="/negado.splett">
 		<sec:logout logout-success-url="/index.splett" />
 		<sec:form-login login-page="/index.html"
@@ -42,9 +41,6 @@
 				authorities-by-username-query = "SELECT username, authority FROM tbUsuario WHERE username=?" />
 				</sec:authentication-provider>
 	</sec:authentication-manager>
-	
-	
-					 
 		
 
 </beans>
