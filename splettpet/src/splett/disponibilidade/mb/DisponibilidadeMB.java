@@ -163,6 +163,8 @@ public class DisponibilidadeMB {
     }
 
     public List<Disponibilidade> getDisponibilidadesUsuarioVisualizado() {
+	disponibilidadesUsuarioVisualizado = disponibilidadeDao
+		.list(perfilMB.getUsuarioVisualizado());
 	return disponibilidadesUsuarioVisualizado;
     }
 

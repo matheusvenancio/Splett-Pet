@@ -19,65 +19,70 @@
 						<h:outputLabel styleClass="coisa" value="Data de Nascimento:" />
 						<h:outputText
 							value="#{perfilMB.usuarioVisualizado.dataNascimento}"
-							rendered="#{perfilMB.usuarioVisualizado.dataNascimento_isPublico}">
+							rendered="#{perfilMB.mostrarDataNascimento()}">
 							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
 						</h:outputText>
 						<h:outputText value="Essa informação é privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.dataNascimento_isPublico)}" />
+							rendered="#{!perfilMB.mostrarDataNascimento()}" />
 
 						<h:outputLabel styleClass="coisa" value="E-mail:" />
 						<h:outputText value="#{perfilMB.usuarioVisualizado.email}"
-							rendered="#{perfilMB.usuarioVisualizado.email_isPublico}" />
+							rendered="#{perfilMB.mostrarEmail()}" />
 						<h:outputText value="Essa informação é privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.email_isPublico)}" />
+							rendered="#{!perfilMB.mostrarEmail()}" />
 
 						<h:outputLabel styleClass="coisa" value="Gênero:" />
 						<h:outputText
 							value="#{perfilMB.usuarioVisualizado.genero.toString()}"
-							rendered="#{perfilMB.usuarioVisualizado.genero_isPublico}" />
+							rendered="#{perfilMB.mostrarGenero()}" />
 						<h:outputText value="Essa informação é privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.genero_isPublico)}" />
+							rendered="#{!perfilMB.mostrarGenero()}" />
 
 						<h:outputLabel styleClass="coisa" value="Endereço:" />
 						<h:outputText value="#{perfilMB.usuarioVisualizado.endereco}"
-							rendered="#{perfilMB.usuarioVisualizado.endereco_isPublico}" />
+							rendered="#{perfilMB.mostrarEndereco()}" />
 						<h:outputText value="Essa informação é privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.endereco_isPublico)}" />
+							rendered="#{!perfilMB.mostrarEndereco()}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone celular:" />
 						<h:outputText
 							value="#{perfilMB.usuarioVisualizado.telefoneCelular}"
-							rendered="#{perfilMB.usuarioVisualizado.telefoneCelular_isPublico}" />
+							rendered="#{perfilMB.mostrarTelefoneCelular()}" />
 						<h:outputText value="Essa informação é privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.telefoneCelular_isPublico)}" />
+							rendered="#{!perfilMB.mostrarTelefoneCelular()}" />
 
 						<h:outputLabel styleClass="coisa" value="Telefone Fixo:" />
 						<h:outputText value="#{perfilMB.usuarioVisualizado.telefoneFixo}"
-							rendered="#{perfilMB.usuarioVisualizado.telefoneFixo_isPublico}" />
-						<h:outputText value="
-							Essa informação é
-							privada"
-							rendered="#{!(perfilMB.usuarioVisualizado.telefoneFixo_isPublico)}" />
+							rendered="#{perfilMB.mostrarTelefoneFixo()}" />
+						<h:outputText value="Essa informação é privada"
+							rendered="#{!perfilMB.mostrarTelefoneFixo()}" />
 					</p:panelGrid>
 				</p:panel>
 
-				<p:panel styleClass="painelDados" id="painelDisponibilidade">
-					<f:facet name="header">
-						<h:outputText value="Datas disponíveis" />
-					</f:facet>
-					<h:form id="disponibilidade_form">
+				<h:form id="disponibilidade_form">
+
+					<p:commandButton id="novaDisponibilidade"
+						value="Adicionar disponibilidade"
+						actionListener="#{disponibilidadeMB.criarPeriodoDisponivel}"
+						oncomplete="PF('disponibilidadeDialog').show()"
+						update=":disponibilidadeDlg"
+						rendered="#{perfilMB.isManagementAllowed()}" />
+
+					<p:dataList type="unordered" itemType="none" rows="7"
+						emptyMessage="Nenhuma data disponível"
+						value="#{disponibilidadeMB.disponibilidadesUsuarioVisualizado}"
+						var="dispo" styleClass="painelDados">
+
 						<f:facet name="header">
-							<h:outputText value="Disponibilidade" />
+							<h:outputText value="Próximas datas disponíveis" />
 						</f:facet>
 
-						<p:commandButton id="novaDisponibilidade"
-							value="Adicionar disponibilidade"
-							actionListener="#{disponibilidadeMB.criarPeriodoDisponivel}"
-							oncomplete="PF('disponibilidadeDialog').show()"
-							update=":disponibilidadeDlg"
-							rendered="#{perfilMB.isManagementAllowed()}" />
-					</h:form>
-				</p:panel>
+						<h:outputText value="#{dispo.data}" style="margin-left: -10px;">
+							<f:convertDateTime dateStyle="full" type="date" locale="pt" />
+						</h:outputText>
+
+					</p:dataList>
+				</h:form>
 			</div>
 
 			<div
@@ -87,9 +92,11 @@
 						chunkSize="3" id="postagensDs">
 						<f:facet name="header">
 							<h:outputText value="Últimas Postagens" />
+							<p:commandButton value="Ver mais" action="postagens"
+								style="position:absolute; margin-left: 150px; margin-top: 25px; margin-bottom: 20px;" />
 						</f:facet>
 						<f:facet name="loader">
-							<p:commandButton type="button" value="Ver mais"
+							<p:commandButton type="button" value="Mostrar mais postagens"
 								icon="ui-icon-circle-triangle-s" />
 						</f:facet>
 						<p:panel style="width: 96%;" styleClass="post">

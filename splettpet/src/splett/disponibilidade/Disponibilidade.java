@@ -35,6 +35,5 @@ public class Disponibilidade {
 
     public void setData(Date data) {
 	this.data = data;
-    }
-
+    }    
 }

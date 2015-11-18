@@ -64,10 +64,15 @@
 
 				<p:commandButton id="RequestSentButton" icon="user"
 					value="Solicitação enviada"
-					rendered="#{perfilMB.isFriendshipRequested()}" disabled="true" />
+					rendered="#{perfilMB.isFriendshipRequestSent()}" disabled="true" />
 
 				<p:commandButton id="FriendButton" icon="ok16" value="Amigos"
 					rendered="#{perfilMB.isFriend()}" disabled="true" />
+
+				<p:commandButton id="RequestReceivedButton" icon="user"
+					value="Solicitação recebida"
+					rendered="#{perfilMB.isFriendshipRequestReceived()}"
+					disabled="true" />
 			</f:facet>
 
 		</p:menubar>
